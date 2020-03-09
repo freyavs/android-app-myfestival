@@ -1,0 +1,44 @@
+SELAB1 Testrapport MyFestival
+
+OPDRACHTEN:
+
+1. ga naar rock werchter, we gebruiken dit festival voor de opdrachten
+2. vindt vegetarische etenskraampjes
+3. vind de lineup voor forest stage
+4. vind updates of nieuws van het festival zelf
+5. zet notificaties aan voor een artiest
+6. zoek de main stage op de kaart
+
+PROTOTYPE: https://marvelapp.com/86dff0h/screen/66608133
+
+RESULTATEN TESTPERSONEN:
+
+GOED:
+- In het algemeen vonden de testpersonen het een duidelijke en intuitieve UI en ook het concept werd enthousiast ontvangen.
+- Het festival zoeken op naam en de mogelijkheid om de menu's van de etenskraampjes te bekijken leek een handige optie te zijn. 
+- Icoontjes op het kiesmenu zijn leuk.
+
+SLECHT:
+- Wanneer er gevraagd werd om notificaties voor de artiest aan te zetten, verwarde het belicoontje van de newsfeed de testpersonen.
+- De tekst op het lineup gedeelte moet groter (uren zijn niet goed te lezen), ook de knop voor notificaties aan te zetten moet zichtbaarder zijn.
+- De kleuren zouden beter kunnen.
+
+
+SUGGESTIES OM TOE TE VOEGEN:
+- Zoeken op artiest zodat je niet heel de lineup moet doorlopen.
+- Mogelijkheid om kleuren te kiezen (dus themes).
+- De dag van vandaag laten veranderen naar "today" bij de lineup.
+- Podia en eten linken aan de kaart.
+- Suggesties geven voor andere festivals op basis van je aanwezigheid.
+- Naam van festival tonen in plaats van "Welcome"
+- Zorgen dat festivals die voorbij zijn niet meer getoond worden.
+
+WAT WE GAAN DOEN:
+- Belicoontje aanpassen in het kiesmenu voor minder verwarring.
+- Zoeken op artiest mogelijk maken.
+- Lineup opmaak en layout verbeteren (bv. lijn trekken op huidig uur, andere kleuren, ...).
+- Duidelijk maken in welk festival je aan het navigeren bent (de naam tonen).
+- In het homescherm de backknop veranderen door een "change festival" knop.
+
+Freya Van Speybroeck, Thor Dossche, Ward Meersman, Robin De Croock
+
