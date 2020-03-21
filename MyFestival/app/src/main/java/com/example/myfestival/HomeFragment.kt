@@ -17,12 +17,27 @@ class HomeFragment : Fragment() {
     ): View? {
         val binding : HomeFragmentBinding = HomeFragmentBinding.inflate(inflater,container,false)
         binding.lifecycleOwner = this
-
-        // stelt de knop voor de newsfeed in
+        
         binding.newsfeedHandler = View.OnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToNewsfeedFragment()
             findNavController().navigate(action)
         }
+
+        binding.foodHandler = View.OnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToFoodFragment()
+            findNavController().navigate(action)
+        }
+
+        binding.lineupHandler = View.OnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToLineupFragment()
+            findNavController().navigate(action)
+        }
+
+        binding.mapHandler = View.OnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToMapFragment()
+            findNavController().navigate(action)
+        }
+
         return binding.root
     }
 

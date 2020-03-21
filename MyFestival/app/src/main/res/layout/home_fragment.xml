@@ -6,6 +6,9 @@
 
     <data>
         <variable name="newsfeedHandler" type="android.view.View.OnClickListener" />
+        <variable name="foodHandler" type="android.view.View.OnClickListener" />
+        <variable name="lineupHandler" type="android.view.View.OnClickListener" />
+        <variable name="mapHandler" type="android.view.View.OnClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,16 +16,52 @@
         android:layout_height="match_parent">
 
         <Button
-            android:id="@+id/reg_create_btn"
+            android:id="@+id/newsfeed_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="160dp"
-            android:layout_marginTop="296dp"
+            android:layout_marginStart="112dp"
+            android:layout_marginTop="256dp"
+            android:onClick="@{newsfeedHandler::onClick}"
             android:text="@string/newsfeed"
             android:textAllCaps="false"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:onClick="@{newsfeedHandler::onClick}" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/food_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="236dp"
+            android:layout_marginTop="256dp"
+            android:onClick="@{foodHandler::onClick}"
+            android:text="@string/food"
+            android:textAllCaps="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/lineup_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="236dp"
+            android:layout_marginTop="340dp"
+            android:onClick="@{lineupHandler::onClick}"
+            android:text="@string/line_up"
+            android:textAllCaps="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/map_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="112dp"
+            android:layout_marginTop="340dp"
+            android:onClick="@{mapHandler::onClick}"
+            android:text="@string/map"
+            android:textAllCaps="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

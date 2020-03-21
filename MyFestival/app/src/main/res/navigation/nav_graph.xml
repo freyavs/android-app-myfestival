@@ -12,10 +12,34 @@
         <action
             android:id="@+id/action_homeFragment_to_newsfeedFragment"
             app:destination="@id/newsfeedFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_foodFragment"
+            app:destination="@id/foodFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_lineupFragment"
+            app:destination="@id/lineupFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
     </fragment>
     <fragment
         android:id="@+id/newsfeedFragment"
         android:name="com.example.myfestival.NewsfeedFragment"
-        android:label="Newsfeed"
+        android:label="@string/newsfeed"
         tools:layout="@layout/newsfeed_fragment" />
+    <fragment
+        android:id="@+id/foodFragment"
+        android:name="com.example.myfestival.FoodFragment"
+        android:label="@string/food"
+        tools:layout="@layout/food_fragment" />
+    <fragment
+        android:id="@+id/lineupFragment"
+        android:name="com.example.myfestival.LineupFragment"
+        android:label="@string/line_up"
+        tools:layout="@layout/lineup_fragment" />
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.example.myfestival.mapFragment"
+        android:label="@string/map"
+        tools:layout="@layout/map_fragment" />
 </navigation>
