@@ -39,7 +39,7 @@
         tools:layout="@layout/lineup_fragment" />
     <fragment
         android:id="@+id/mapFragment"
-        android:name="com.example.myfestival.mapFragment"
+        android:name="com.example.myfestival.MapFragment"
         android:label="@string/map"
         tools:layout="@layout/map_fragment" />
 </navigation>
