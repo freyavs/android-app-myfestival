@@ -9,11 +9,22 @@
         <variable name="foodHandler" type="android.view.View.OnClickListener" />
         <variable name="lineupHandler" type="android.view.View.OnClickListener" />
         <variable name="mapHandler" type="android.view.View.OnClickListener" />
+        <variable name="viewModel" type="com.example.myfestival.viewmodels.FestivalViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="180dp"
+            android:text="@{viewModel.welcomeString}"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/newsfeed_btn"

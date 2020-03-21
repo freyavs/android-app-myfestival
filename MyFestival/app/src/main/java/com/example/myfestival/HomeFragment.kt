@@ -5,9 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import be.ugent.utilities.InjectorUtils
 import com.example.myfestival.R
 import com.example.myfestival.databinding.HomeFragmentBinding
+import com.example.myfestival.viewmodels.FestivalViewModel
 
 class HomeFragment : Fragment() {
 
@@ -17,6 +20,12 @@ class HomeFragment : Fragment() {
     ): View? {
         val binding : HomeFragmentBinding = HomeFragmentBinding.inflate(inflater,container,false)
         binding.lifecycleOwner = this
+
+        val viewModel by activityViewModels<FestivalViewModel> {
+            InjectorUtils.provideForecastViewModelFactory(requireActivity())
+        }
+
+        binding.viewModel = viewModel
         
         binding.newsfeedHandler = View.OnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToNewsfeedFragment()
