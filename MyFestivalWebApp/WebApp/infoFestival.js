@@ -8,33 +8,37 @@ function toonInfo() {
     refFoodstands.on('value', gotFoodstands, errData);
     refMessages.on('value', gotMessages, errData);
 }
-function gotStages(data){
+function gotStages(data) {
     let divStages = document.getElementById('id_stages');
     let stages = data.val();
-    let keys = Object.keys(stages);
     let innerHTML = "";
-    keys.forEach(key =>{
-        let naam = stages[key].naam;
-        innerHTML +=
-            "<p class=\"card-text\">Naam: "+naam+" <br>"+
-            "<a href=\'infoConcert.html?id_festival\="+ id + "/stages/" + key +"\' class='btn btn-primary'>Meer info</a>" +
-            "</p>";
-    });
+    if (stages !== null) {
+        let keys = Object.keys(stages);
+        keys.forEach(key => {
+            let naam = stages[key].naam;
+            innerHTML +=
+                "<p class=\"card-text\">Naam: " + naam + " <br>" +
+                "<a href=\'infoConcert.html?id_festival\=" + id + "/stages/" + key + "\' class='btn btn-primary'>Meer info</a>" +
+                "</p>";
+        });
+    }
     innerHTML+="<button class='btn btn-success btn-block'  data-toggle=\"modal\" data-target=\"#addStage\">Toevoegen</button>"
     divStages.innerHTML = innerHTML;
 }
 function gotFoodstands(data) {
     let divFoodstands = document.getElementById('id_foodstands');
     let foodstands = data.val();
-    let keys = Object.keys(foodstands);
     let innerHTML = "";
-    keys.forEach(key => {
-        let naam = foodstands[key].naam;
-        innerHTML +=
-            "<p class=\"card-text\">Naam: "+naam+" <br>"+
-            "<a href=\'infoConcert.html?id_festival\="+ id + "/foodstands/" + key +"\' class='btn btn-primary'>Meer info</a>" +
-            "</p>";
-    });
+    if(foodstands !== null) {
+        let keys = Object.keys(foodstands);
+        keys.forEach(key => {
+            let naam = foodstands[key].naam;
+            innerHTML +=
+                "<p class=\"card-text\">Naam: " + naam + " <br>" +
+                "<a href=\'infoConcert.html?id_festival\=" + id + "/foodstands/" + key + "\' class='btn btn-primary'>Meer info</a>" +
+                "</p>";
+        });
+    }
     innerHTML+="<button class='btn btn-success btn-block'  data-toggle=\"modal\" data-target=\"#addFoodstand\">Toevoegen</button>"
     divFoodstands.innerHTML = innerHTML;
 
@@ -42,16 +46,18 @@ function gotFoodstands(data) {
 function gotMessages(data) {
     let divFoodstands = document.getElementById('id_messages');
     let messages = data.val();
-    let keys = Object.keys(messages);
     let innerHTML = "";
-    keys.forEach(key => {
-        let titel = messages[key].titel;
-        let bericht = messages[key].bericht;
-        innerHTML +=
-            "<p class=\"card-text\"><b>"+titel+":</b> <br>"+
-            bericht+
-            "</p>";
-    });
+    if(messages !== null) {
+        let keys = Object.keys(messages);
+        keys.forEach(key => {
+            let titel = messages[key].titel;
+            let bericht = messages[key].bericht;
+            innerHTML +=
+                "<p class=\"card-text\"><b>" + titel + ":</b> <br>" +
+                bericht +
+                "</p>";
+        });
+    }
     innerHTML+="<button class='btn btn-success btn-block'  data-toggle=\"modal\" data-target=\"#addMessage\">Toevoegen</button>"
     divFoodstands.innerHTML = innerHTML;
 }
