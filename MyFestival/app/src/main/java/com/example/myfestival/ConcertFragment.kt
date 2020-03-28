@@ -15,5 +15,4 @@ class ConcertFragment: Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.concert_fragment, container, false)
     }
-
 }
