@@ -23,7 +23,7 @@ class ConcertAdapter(private val concertList: List<Concert>) : RecyclerView.Adap
 
         holder.textView1.text = concert.artist
         holder.textView2.text = concert.start
-        holder.textView3.text = concert.artist
+        holder.textView3.text = concert.stop
     }
 
     override fun getItemCount() = concertList.size

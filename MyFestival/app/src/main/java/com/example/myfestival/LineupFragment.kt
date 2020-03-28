@@ -24,8 +24,7 @@ class LineupFragment : Fragment() {
 
         val binding : LineupFragmentBinding = LineupFragmentBinding.inflate(inflater, container, false)
         context ?: return binding.root
-        val concert = Concert("Zwangere Guy", "20:30", "22:00")
-        val concertList = listOf<Concert>(concert)
+        val concertList = listOf<Concert>(Concert("Json Derulo", "18:30", "20:00"), Concert("Zwangere Guy", "20:30", "22:00"))
 
         binding.recyclerView.adapter = ConcertAdapter(concertList)
         binding.recyclerView.layoutManager = LinearLayoutManager(this.context)
