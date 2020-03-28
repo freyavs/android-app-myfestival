@@ -18,7 +18,7 @@ function gotStages(data) {
             let naam = stages[key].naam;
             innerHTML +=
                 "<p class=\"card-text\">Naam: " + naam + " <br>" +
-                "<a href=\'infoConcert.html?id_festival\=" + id + "/stages/" + key + "\' class='btn btn-primary'>Meer info</a>" +
+                "<a href=\'extraInfo.html?id_festival\=" + id + "/stages/" + key + "\' class='btn btn-primary'>Meer info</a>" +
                 "</p>";
         });
     }
@@ -35,7 +35,7 @@ function gotFoodstands(data) {
             let naam = foodstands[key].naam;
             innerHTML +=
                 "<p class=\"card-text\">Naam: " + naam + " <br>" +
-                "<a href=\'infoConcert.html?id_festival\=" + id + "/foodstands/" + key + "\' class='btn btn-primary'>Meer info</a>" +
+                "<a href=\'extraInfo.html?id_festival\=" + id + "/foodstand/" + key + "\' class='btn btn-primary'>Meer info</a>" +
                 "</p>";
         });
     }
