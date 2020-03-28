@@ -20,59 +20,81 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="100dp"
-            android:layout_marginTop="180dp"
+            android:layout_marginTop="140dp"
             android:text="@{viewModel.welcomeString}"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/newsfeed_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="112dp"
-            android:layout_marginTop="256dp"
+            android:layout_marginTop="244dp"
             android:onClick="@{newsfeedHandler::onClick}"
-            android:text="@string/newsfeed"
-            android:textAllCaps="false"
+            android:padding="10dp"
+            android:textColor="?attr/colorPrimary"
+            app:backgroundTint="?attr/colorOnPrimary"
+            app:icon="@drawable/newsfeed_50dp"
+            app:iconTint="@color/colorAccent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:rippleColor="@color/backgroundColor"
+            app:shapeAppearance="@style/ShapeAppearance.MyFestival.Button.Home" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/food_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="236dp"
-            android:layout_marginTop="256dp"
+            android:layout_marginStart="216dp"
+            android:layout_marginTop="244dp"
             android:onClick="@{foodHandler::onClick}"
-            android:text="@string/food"
-            android:textAllCaps="false"
+            android:padding="10dp"
+            android:textColor="?attr/colorPrimary"
+            app:backgroundTint="?attr/colorOnPrimary"
+            app:icon="@drawable/food"
+            app:iconTint="@color/colorAccent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:rippleColor="@color/backgroundColor"
+            app:shapeAppearance="@style/ShapeAppearance.MyFestival.Button.Home" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/lineup_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="236dp"
+            android:layout_marginStart="216dp"
             android:layout_marginTop="340dp"
             android:onClick="@{lineupHandler::onClick}"
-            android:text="@string/line_up"
-            android:textAllCaps="false"
+            android:padding="10dp"
+            android:textColor="?attr/colorPrimary"
+            app:backgroundTint="?attr/colorOnPrimary"
+            app:icon="@drawable/lineup_50dp"
+            app:iconTint="@color/colorAccent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:rippleColor="@color/backgroundColor"
+            app:shapeAppearance="@style/ShapeAppearance.MyFestival.Button.Home" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/map_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="112dp"
             android:layout_marginTop="340dp"
             android:onClick="@{mapHandler::onClick}"
-            android:text="@string/map"
-            android:textAllCaps="false"
+            android:padding="10dp"
+            android:textColor="?attr/colorPrimary"
+            app:backgroundTint="?attr/colorOnPrimary"
+            app:icon="@drawable/map_50dp"
+            app:iconTint="@color/colorAccent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:rippleColor="@color/backgroundColor"
+            app:shapeAppearance="@style/ShapeAppearance.MyFestival.Button.Home" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
