@@ -6,20 +6,46 @@
         android:layout_height="match_parent"
         xmlns:tools="http://schemas.android.com/tools">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="8dp">
+            android:orientation="vertical"
+            android:weightSum="10"
+            android:background="@color/backgroundColor">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/stage_recycler"
-                android:padding="4dp"
-                android:clipToPadding="false"
+            <RelativeLayout
+                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:listitem="@layout/concert_item"
-                />
+                android:layout_height="0dp">
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/stage_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:padding="8dp"
+                android:layout_weight="9">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/stage_recycler"
+                    android:padding="4dp"
+                    android:clipToPadding="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/backgroundColor"
+                    tools:listitem="@layout/concert_item"
+                    />
+
+            </RelativeLayout>
+
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 </layout>

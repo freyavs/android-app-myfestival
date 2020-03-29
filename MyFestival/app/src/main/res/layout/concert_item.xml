@@ -1,42 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="25dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/concert_bacground"
-        android:padding="8dp">
+        android:background="@drawable/concert_bacground">
 
-        <TextView
-            android:id="@+id/artist"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="25dp"
-            android:layout_gravity="center_horizontal"
-            android:textColor="#FFFF"
-            android:textSize="40sp"/>
+            android:orientation="vertical"
+            android:weightSum="4"
+            android:layout_marginTop="20dp"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp">
 
-        <TextView
-            android:id="@+id/start"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:layout_marginStart="15dp"
-            android:textColor="#FFFF"
-            android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/artist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#FFFF"
+                android:textSize="40sp"
+                android:text="TTTTTTTTTTTTTTTTT"/>
 
-        <TextView
-            android:id="@+id/stop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="125dp"
-            android:layout_marginStart="15dp"
-            android:textColor="#FFFF"
-            android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFF"
+                android:textSize="20sp"
+                android:text="TTTTTTTTTTTTTTTTT"
+                android:padding="4dp"/>
+
+            <TextView
+                android:id="@+id/stop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFF"
+                android:textSize="20sp"
+                android:text="TTTTTTTTTTTTTTTTT"
+                android:padding="4dp"/>
+
+            <Space
+                android:id="@+id/spacer"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end">
+
+                <Switch
+                    android:id="@+id/switch1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:padding="4dp"
+                    android:checked="false"
+                    android:switchPadding="10dp"
+                    android:text="@string/concert_notify"
+                    android:textColor="#FFFF"
+                    android:textSize="20sp"
+                    android:track="@drawable/switch_track"
+                    android:layout_alignParentEnd="true"/>
+
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+
+
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

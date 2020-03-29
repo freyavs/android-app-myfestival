@@ -3,9 +3,10 @@ package com.example.myfestival.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Space
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myfestival.Concert
+import com.example.myfestival.data.Concert
 import com.example.myfestival.R
 import kotlinx.android.synthetic.main.concert_item.view.*
 
@@ -23,6 +24,7 @@ class StageAdapter(private val concertList: List<Concert>) : RecyclerView.Adapte
         holder.textView1.text = concert.artist
         holder.textView2.text = concert.start
         holder.textView3.text = concert.stop
+        holder.spacer.layoutParams.height = (1..500).shuffled().first()
     }
 
     override fun getItemCount() = concertList.size
@@ -31,6 +33,7 @@ class StageAdapter(private val concertList: List<Concert>) : RecyclerView.Adapte
         val textView1: TextView = itemView.artist
         val textView2: TextView = itemView.start
         val textView3: TextView = itemView.stop
+        val spacer: Space = itemView.spacer
     }
 
 }

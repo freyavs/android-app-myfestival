@@ -9,5 +9,6 @@
 
     <string name="previous_day_button_text">&lt;</string>
     <string name="next_day_button_text">&gt;</string>
+    <string name="concert_notify">Notify</string>
 
 </resources>
