@@ -1,16 +1,16 @@
 const database = firebase.database();
 var id = parent.document.URL.substring(parent.document.URL.indexOf('?')+13, parent.document.URL.length);
-let wat = (id.includes("/stages/")) ? "/concerten" : "/menu";
+let wat = (id.includes("/stages/")) ? "/concerts" : "/menu";
 function extraInfoLaden() {
     laadModal();
     let refInfo = database.ref(id + wat);
-    let gotInfo = (wat === "/concerten") ? gotConcerten : gotMenu;
-    refInfo.orderByChild('starttijd').on('value', gotInfo, errData);
+    let gotInfo = (wat === "/concerts") ? gotConcerten : gotMenu;
+    refInfo.on('value', gotInfo, errData);
 }
 function laadModal() {
     let modalDiv = document.getElementById("exampleModal");
     let modal = "";
-    if(wat === "/concerten"){
+    if(wat === "/concerts"){
         modal += "<!-- Modal -->\n" +
             "       <div class=\"modal-dialog\" role=\"document\">\n" +
             "                <div class=\"modal-content\">\n" +
@@ -90,9 +90,9 @@ function maakConcert() {
     if(artiest !== "" && start !== "" && eind !== ""){
         let ref = database.ref(id + wat);
         let concert = {
-            artiest : artiest,
-            eindtijd: eind,
-            starttijd: start
+            artist : artiest,
+            enddate: eind,
+            startdate: start
         };
         ref.push(concert);
     }
@@ -105,8 +105,8 @@ function maakMenu() {
     if(gerecht !== "" && prijs !== ""){
         let ref = database.ref(id + wat);
         let menu = {
-            gerecht: gerecht,
-            prijs: prijs,
+            dish: gerecht,
+            price: prijs,
             veggie: veggie,
             vegan: vegan
         };
@@ -122,9 +122,9 @@ function gotConcerten(data) {
     if (info !== null) {
         let keys = Object.keys(info);
         keys.forEach(key => {
-            let artiest = info[key].artiest;
-            let einddatum = new Date(info[key].eindtijd).toLocaleString().replace(/-/g,'/');
-            let startdatum = new Date(info[key].starttijd).toLocaleString().replace(/-/g,'/');
+            let artiest = info[key].artist;
+            let einddatum = new Date(info[key].enddate).toLocaleString().replace(/-/g,'/');
+            let startdatum = new Date(info[key].startdate).toLocaleString().replace(/-/g,'/');
             innerHTML +=
                 "<div class='row'>" +
                 "<div class='col-md-12'>" +
@@ -150,8 +150,8 @@ function gotMenu(data) {
     if (info !== null) {
         let keys = Object.keys(info);
         keys.forEach(key => {
-            let gerecht = info[key].gerecht;
-            let prijs = info[key].prijs;
+            let gerecht = info[key].dish;
+            let prijs = info[key].price;
             let vegan = info[key].vegan;
             let veggie = info[key].veggie;
             innerHTML +=

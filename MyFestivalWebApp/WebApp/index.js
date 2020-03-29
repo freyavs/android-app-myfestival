@@ -34,28 +34,30 @@ function festivalLaden() {
 function gotFestivals(data) {
     let divFestival = document.getElementById('id_festivals');
     let festivals = data.val();
-    let keys = Object.keys(festivals);
     let innerHTML="";
-    keys.forEach(key =>{
-        let naam = festivals[key].naam;
-        let plaats = festivals[key].plaats;
-        let startdatum = new Date(festivals[key].startDatum).toLocaleDateString().replace(/-/g,'/');
-        let einddatum = new Date(festivals[key].eindDatum).toLocaleDateString().replace(/-/g,'/');
-        innerHTML +=
-            "<div class='row'>" +
+    if(festivals !== null) {
+        let keys = Object.keys(festivals);
+        keys.forEach(key => {
+            let naam = festivals[key].name;
+            let plaats = festivals[key].location;
+            let startdatum = new Date(festivals[key].startdate).toLocaleDateString().replace(/-/g, '/');
+            let einddatum = new Date(festivals[key].enddate).toLocaleDateString().replace(/-/g, '/');
+            innerHTML +=
+                "<div class='row'>" +
                 "<div class='col-md-12'>" +
-                    "<div class='card'>" +
-                        "<h3 class='card-header'>" + naam + "</h3>" +
-                        "<div class=\"card-body\">\n" +
-                            "<h5 class=\"card-title\">Extra info</h5>" +
-                            "<p class=\"card-text\">Plaats: " + plaats + "</p>" +
-                            "<p class=\"card-text\">Periode: " + startdatum + " - " + einddatum + "</p>" +
-                            "<a href=\'infoFestival.html?id_festival\="+ key +"\' class='btn btn-primary'>Meer info</a>" +
-                        "</div>" +
-                    "</div>" +
+                "<div class='card'>" +
+                "<h3 class='card-header'>" + naam + "</h3>" +
+                "<div class=\"card-body\">\n" +
+                "<h5 class=\"card-title\">Extra info</h5>" +
+                "<p class=\"card-text\">Plaats: " + plaats + "</p>" +
+                "<p class=\"card-text\">Periode: " + startdatum + " - " + einddatum + "</p>" +
+                "<a href=\'infoFestival.html?id_festival\=" + key + "\' class='btn btn-primary'>Meer info</a>" +
                 "</div>" +
-            "</div><br>";
-    });
+                "</div>" +
+                "</div>" +
+                "</div><br>";
+        });
+    }
     innerHTML += "<div class='row'><div class='col-md-12'><button class='btn btn-success btn-block'  data-toggle=\"modal\" data-target=\"#exampleModal\">Toevoegen</button></div></div>";
     divFestival.innerHTML = innerHTML;
 
@@ -74,10 +76,10 @@ function test() {
     if(naam !=='' && plaats !== '' && startdatum !== '' && einddatum !== ''){
         ref = database.ref();
             let festival = {
-                naam: naam,
-                plaats: plaats,
-                startDatum: new Date(startdatum).toString(),
-                eindDatum: new Date(einddatum).toString()
+                name: naam,
+                location: plaats,
+                startdate: new Date(startdatum).toString(),
+                enddate: new Date(einddatum).toString()
             };
         ref.push(festival);
     }
