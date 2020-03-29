@@ -13,16 +13,36 @@ class FestivalViewModel : ViewModel() {
 
     val TAG = "FIREBASEtag"
 
+    //voor debug redenen:
+    val connectedRef = Firebase.database.getReference(".info/connected")
+    fun addConnectionListener(){
+        connectedRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val connected = snapshot.getValue(Boolean::class.java) ?: false
+                if (connected) {
+                    Log.d(TAG, "connected")
+                } else {
+                    Log.d(TAG, "not connected")
+                }
+            }
 
-    fun getWelcomeString(): LiveData<String> {
+            override fun onCancelled(error: DatabaseError) {
+                Log.w(TAG, "Listener was cancelled")
+            }
+        })
+    }
+
+
+    fun getWelcomeString(): MutableLiveData<String> {
         if (name.value == null) {
+            addConnectionListener()
             Log.d(TAG, "Adding listener to name")
             FirebaseDatabase.getInstance()
-                .getReference("-M3b9hJNsFaCXAi8Gegq/name")
+                .getReference("-M3b9hJNsFaCXAi8Gegq").child("name")
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         if (dataSnapshot.exists()) {
-                            //name.postValue(dataSnapshot.value.toString())
+                            name.value = dataSnapshot.value.toString()
                             Log.d(TAG, "getName:onDataChange -> name exists")
                         }
                     }
