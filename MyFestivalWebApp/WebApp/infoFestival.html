@@ -12,9 +12,112 @@
             <h1>Festivals</h1>
         </div>
     </div>
-    <div id="id_info"></div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class='card'>
+                <h3 class='card-header'>Stages</h3>
+                <div class="card-body" id="id_stages"></div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class='card'>
+                <h3 class='card-header'>Foodstands</h3>
+                <div class="card-body" id="id_foodstands"></div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class='card'>
+                <h3 class='card-header'>Messages</h3>
+                <div class="card-body" id="id_messages"></div>
+            </div>
+        </div>
+    </div>
 </div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="addStage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="id_naam_stage">Naam stage</label>
+                        <input type="text" id="id_naam_stage" class="form-control" placeholder="Enter naam">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="addStage()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="addFoodstand" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel2">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="id_naam_foodstand">Naam Foodstand</label>
+                        <input type="text" id="id_naam_foodstand" class="form-control" placeholder="Enter naam">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="addFoodstand()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="addMessage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel3">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="id_titel_message">Titel Message</label>
+                        <input type="text" id="id_titel_message" class="form-control" placeholder="Enter titel">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_bericht_message">Message</label>
+                        <textarea  id="id_bericht_message" class="form-control">
+
+                        </textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="addMessage()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
 <script>
     const firebaseConfig = {
