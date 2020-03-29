@@ -19,8 +19,11 @@ class LineupDataObject {
         val Forestage = Stage("Foreststage", concertsForest)
         val Herbakkerstage = Stage("Herbakkerstage", concertsHerbakker)
 
-        val stages = listOf<Stage>(Mainstage, Forestage, Herbakkerstage)
+        val stages = listOf<Stage>(Mainstage, Forestage)
 
-        return Lineup(stages)
+        val day1 = LineupDay("Donderdag", stages)
+        val day2 = LineupDay("Vrijdag", listOf(Herbakkerstage))
+
+        return Lineup(listOf(day1, day2))
     }
 }

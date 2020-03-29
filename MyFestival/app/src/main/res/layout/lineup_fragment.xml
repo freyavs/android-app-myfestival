@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-<data>
-</data>
+    <data>
+        <variable name="previousDayHandler" type="android.view.View.OnClickListener" />
+        <variable name="nextDayHandler" type="android.view.View.OnClickListener" />
+    </data>
     <FrameLayout
         android:id="@+id/lineup_fragment"
         android:layout_width="match_parent"
@@ -32,6 +34,7 @@
                         android:text="@string/previous_day_button_text"
                         android:textSize="40sp"
                         android:textStyle="bold"
+                        android:onClick="@{previousDayHandler::onClick}"
                         style="@style/Widget.MaterialComponents.Button.TextButton"
                         />
 
@@ -40,7 +43,6 @@
                         android:layout_weight="3"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:text="Donderdag"
                         android:textSize="40sp"
                         android:gravity="center"
                         android:textStyle="bold"/>
@@ -53,6 +55,7 @@
                         android:text="@string/next_day_button_text"
                         android:textSize="40sp"
                         android:textStyle="bold"
+                        android:onClick="@{nextDayHandler::onClick}"
                         style="@style/Widget.MaterialComponents.Button.TextButton"
                         />
                 </LinearLayout>
