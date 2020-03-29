@@ -7,13 +7,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myfestival.Concert
 import com.example.myfestival.R
-import kotlinx.android.synthetic.main.concert_fragment.view.*
+import kotlinx.android.synthetic.main.concert_item.view.*
 import kotlinx.android.synthetic.main.lineup_fragment.view.*
 
 class ConcertAdapter(private val concertList: List<Concert>) : RecyclerView.Adapter<ConcertAdapter.ConcertViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConcertViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.concert_fragment, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.concert_item, parent, false)
 
         return ConcertViewHolder(itemView)
     }

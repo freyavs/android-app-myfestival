@@ -8,8 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/concert_bacground"
-        android:layout_margin="8dp">
+        android:background="@drawable/concert_bacground">
 
         <TextView
             android:id="@+id/artist"
