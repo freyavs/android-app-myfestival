@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
+apply plugin: 'com.google.gms.google-services'  // Google Services plugin
 
 android {
     compileSdkVersion 29
@@ -55,9 +56,11 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
 
     // Room
+    /*
     implementation 'androidx.room:room-runtime:2.2.4'
     kapt 'androidx.room:room-compiler:2.2.4'
     implementation 'androidx.room:room-ktx:2.2.4'
+     */
 
     // Navigation
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0-alpha02'
@@ -65,4 +68,8 @@ dependencies {
 
     //Material components
     implementation "com.google.android.material:material:1.2.0-alpha05"
+
+    //Firebase
+    implementation "com.google.firebase:firebase-analytics:17.2.3"
+    implementation "com.google.firebase:firebase-database-ktx:19.2.1"
 }

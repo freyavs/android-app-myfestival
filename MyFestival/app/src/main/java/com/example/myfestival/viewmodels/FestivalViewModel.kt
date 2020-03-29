@@ -1,38 +1,37 @@
 package com.example.myfestival.viewmodels
 
+
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.myfestival.data.FestivalEntity
-import com.example.myfestival.data.FestivalRepository
-import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
+import androidx.lifecycle.*
+import com.google.firebase.database.*
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
-class FestivalViewModel(private val repository: FestivalRepository) : ViewModel() {
 
-    private val festival: LiveData<FestivalEntity> by lazy {
-        repository.getFestival()
-    }
+class FestivalViewModel : ViewModel() {
+    var name: MutableLiveData<String> = MutableLiveData()
 
-    private val formatter = SimpleDateFormat("HH:mm:ss")
+    val TAG = "FIREBASEtag"
 
-    fun getLocationString(): LiveData<String> = Transformations.map(festival) {
-        value -> "${value.location}°"
-    }
 
-    fun getWelcomeString(): LiveData<String> = Transformations.map(festival) {
-            value -> "Welcome to ${value.name}!"
+    fun getWelcomeString(): LiveData<String> {
+        if (name.value == null) {
+            Log.d(TAG, "Adding listener to name")
+            FirebaseDatabase.getInstance()
+                .getReference("-M3b9hJNsFaCXAi8Gegq/name")
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            //name.postValue(dataSnapshot.value.toString())
+                            Log.d(TAG, "getName:onDataChange -> name exists")
+                        }
+                    }
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        Log.d(TAG, "getName:onCancelled", databaseError.toException())
+                    }
+                })
         }
-
-    fun getLastUpdatedString(): LiveData<String> = Transformations.map(festival) {
-        value -> "Last updated: ${formatter.format(value.lastUpdated)}"
-    }
-
-    fun update() {
-        viewModelScope.launch {
-            repository.update()
-        }
+        Log.d(TAG, "getWelcome string: " + name.value)
+        return name
     }
 }

@@ -22,7 +22,7 @@ class HomeFragment : Fragment() {
         binding.lifecycleOwner = this
 
         val viewModel by activityViewModels<FestivalViewModel> {
-            InjectorUtils.provideForecastViewModelFactory(requireActivity())
+            InjectorUtils.provideForecastViewModelFactory()
         }
 
         binding.viewModel = viewModel
