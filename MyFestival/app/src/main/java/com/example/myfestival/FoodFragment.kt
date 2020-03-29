@@ -31,7 +31,9 @@ class FoodFragment : Fragment() {
         val binding: FoodFragmentBinding = FoodFragmentBinding.inflate(inflater, container, false)
         context?: return binding.root
         val data = FoodStandDataSet.createDataSet()
-        initAdapter(data)
+        binding.foodstandRecyclerView.adapter = FoodStandAdapter(data)
+        binding.foodstandRecyclerView.layoutManager = LinearLayoutManager(this.context)
+        binding.foodstandRecyclerView.setHasFixedSize(true)
 
         return binding.root
     }
