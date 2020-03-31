@@ -294,5 +294,6 @@ class MenuDataSet {
                 false
             )
         )
+        return list
     }
 }

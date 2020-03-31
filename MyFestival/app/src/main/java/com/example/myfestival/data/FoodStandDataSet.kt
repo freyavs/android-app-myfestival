@@ -77,7 +77,9 @@ class FoodStandDataSet {
                 list.add(
                     FoodStand(
                         "Friet Shop",
-                        R.drawable.ic_fastfood                    )
+                        R.drawable.ic_fastfood,
+                        menus.frenchFriesList
+                    )
                 )
                 list.add(
                     FoodStand(
