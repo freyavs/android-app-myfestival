@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="2cea6213-53ca-41eb-9cc0-e58333aafbe1" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../../java/com/example/myfestival/FoodStandRecyclerAdapter.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../java/com/example/myfestival/data/FoodStandDataSet.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../java/com/example/myfestival/models/FoodStandModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/baseline_fastfood_black_18dp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/baseline_local_pizza_black_18dp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../layout/foodstand_list_item.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/example/myfestival/FoodFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/example/myfestival/FoodFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../layout/food_fragment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../layout/food_fragment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../build.gradle" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../../../.." />
+  </component>
+  <component name="ProjectId" id="1ZlE3hVOydlmrlMGEz0kgToDvFS" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2cea6213-53ca-41eb-9cc0-e58333aafbe1" name="Default Changelist" comment="" />
+      <created>1585405082340</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1585405082340</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

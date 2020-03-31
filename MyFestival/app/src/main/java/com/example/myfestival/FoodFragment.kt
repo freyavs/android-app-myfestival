@@ -5,6 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.myfestival.adapters.FoodStandAdapter
+import com.example.myfestival.data.FoodStandDataSet
+import com.example.myfestival.databinding.FoodFragmentBinding
+import com.example.myfestival.models.FoodStand
 
 /**
  * A simple [Fragment] subclass.
@@ -12,11 +17,30 @@ import android.view.ViewGroup
 class FoodFragment : Fragment() {
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.food_fragment, container, false)
+        val binding: FoodFragmentBinding = FoodFragmentBinding.inflate(inflater, container, false)
+        context?: return binding.root
+
+        val data = FoodStandDataSet.createDataSet()
+        initAdapter(binding, data)
+
+        return binding.root
     }
+
+    fun initAdapter(binding: FoodFragmentBinding, data: List<FoodStand>) {
+        binding.foodstandRecyclerView.apply {
+            adapter = FoodStandAdapter(data)
+            layoutManager = LinearLayoutManager(this.context)
+            setHasFixedSize(true)
+        }
+    }
+
+
+
+
+
 
 }
