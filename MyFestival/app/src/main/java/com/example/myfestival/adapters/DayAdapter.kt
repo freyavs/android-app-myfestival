@@ -4,12 +4,9 @@ package com.example.myfestival.adapters
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.PagerAdapter
 import com.example.myfestival.StageFragment
-import com.example.myfestival.data.Lineup
-import com.example.myfestival.data.LineupDay
-import com.example.myfestival.data.Stage
+import com.example.myfestival.models.Stage
 
 
 class DayAdapter(private var currentStages: List<Stage>, manager: FragmentManager) : FragmentPagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
