@@ -16,7 +16,6 @@ class FoodStandAdapter(private val foodStandList: List<FoodStand>) :
     class FoodStandViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.fastfood_image_view
         val textView1: TextView = itemView.fastfood_name_text_view
-        val textView2: TextView = itemView.fastfood_diets_text_view
 
     }
 
@@ -34,7 +33,6 @@ class FoodStandAdapter(private val foodStandList: List<FoodStand>) :
 
         holder.imageView.setImageResource(currentItem.foodstandImg)
         holder.textView1.text = currentItem.name
-        holder.textView2.text = currentItem.diets
     }
 
     override fun getItemCount(): Int {
