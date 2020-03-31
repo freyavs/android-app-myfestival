@@ -7,9 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import be.ugent.utilities.InjectorUtils
-import com.example.myfestival.R
 import com.example.myfestival.databinding.HomeFragmentBinding
+import com.example.myfestival.utilities.InjectorUtils
 import com.example.myfestival.viewmodels.FestivalViewModel
 
 class HomeFragment : Fragment() {
@@ -18,7 +17,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding : HomeFragmentBinding = HomeFragmentBinding.inflate(inflater,container,false)
+        val binding = HomeFragmentBinding.inflate(inflater,container,false)
         binding.lifecycleOwner = this
 
         val viewModel by activityViewModels<FestivalViewModel> {

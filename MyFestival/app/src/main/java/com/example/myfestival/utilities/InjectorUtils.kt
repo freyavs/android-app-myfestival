@@ -1,13 +1,15 @@
-package be.ugent.utilities
+package com.example.myfestival.utilities
 
-import android.content.Context
+import com.example.myfestival.data.FestivalRepository
 import com.example.myfestival.viewmodels.FestivalViewModelFactory
+import com.google.firebase.database.FirebaseDatabase
 
 object InjectorUtils {
+    private val db = FirebaseDatabase.getInstance()
+
+    private fun getForecastRepository(database: FirebaseDatabase) =
+        FestivalRepository.getInstance(database)
 
     fun provideForecastViewModelFactory() =
-        FestivalViewModelFactory()
-
+        FestivalViewModelFactory(getForecastRepository(db))
 }
-
-//TODO: eig is deze klasse niet nodig? tenzij je terug met repository begint te werken
