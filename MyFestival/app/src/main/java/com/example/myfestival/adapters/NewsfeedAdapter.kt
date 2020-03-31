@@ -1,6 +1,5 @@
 package com.example.myfestival.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myfestival.R
-import com.example.myfestival.data.NewsfeedItem
+import com.example.myfestival.models.NewsfeedItem
 import kotlinx.android.synthetic.main.newsfeed_item.view.*
 
 class NewsfeedAdapter(val posts: List<NewsfeedItem>) : RecyclerView.Adapter<NewsfeedAdapter.NewsItemViewHolder>(){

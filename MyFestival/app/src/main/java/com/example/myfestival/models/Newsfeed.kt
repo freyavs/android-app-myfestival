@@ -1,4 +1,4 @@
-package com.example.myfestival.data
+package com.example.myfestival.models
 
 import android.graphics.drawable.Drawable
 

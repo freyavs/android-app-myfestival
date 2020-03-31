@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.Space
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myfestival.data.Concert
+import com.example.myfestival.models.Concert
 import com.example.myfestival.R
 import kotlinx.android.synthetic.main.concert_item.view.*
 

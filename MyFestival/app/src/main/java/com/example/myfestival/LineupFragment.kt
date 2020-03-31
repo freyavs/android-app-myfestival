@@ -6,15 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.databinding.ObservableField
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.activityViewModels
 import com.example.myfestival.adapters.DayAdapter
-import com.example.myfestival.data.Lineup
-import com.example.myfestival.data.LineupDataObject
 import com.example.myfestival.databinding.LineupFragmentBinding
+import com.example.myfestival.utilities.InjectorUtils
+import com.example.myfestival.viewmodels.FestivalViewModel
 
 
 /**
@@ -24,8 +20,6 @@ class LineupFragment : Fragment() {
 
     lateinit var adapter: DayAdapter
 
-    //todo(livedata in viewmodel)
-    val lineup: Lineup = LineupDataObject().getData()
     var currentDay: Int = 0
     var day: String = ""
     //TODO ZEKER WEG DOEN
@@ -38,6 +32,14 @@ class LineupFragment : Fragment() {
 
         val binding : LineupFragmentBinding = LineupFragmentBinding.inflate(inflater, container, false)
         context ?: return binding.root
+
+        val viewModel by activityViewModels<FestivalViewModel> {
+            InjectorUtils.provideFestivalViewModelFactory()
+        }
+
+        //TODO dit moet nog met livedata uit viewmodel
+        //binding.viewModel = viewModel
+        val lineup = viewModel.getLineup()
 
         adapter = DayAdapter(lineup.days[currentDay].stages, this.childFragmentManager)
         binding.stageViewer.adapter = adapter

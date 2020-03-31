@@ -5,14 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myfestival.adapters.NewsfeedAdapter
-import com.example.myfestival.adapters.StageAdapter
-import com.example.myfestival.data.NewsfeedItem
+import com.example.myfestival.models.NewsfeedItem
 import com.example.myfestival.databinding.NewsfeedFragmentBinding
-import com.example.myfestival.databinding.StageFragmentBinding
+import com.example.myfestival.utilities.InjectorUtils
+import com.example.myfestival.viewmodels.FestivalViewModel
 
 /**
  * A simple [Fragment] subclass.
@@ -26,16 +25,17 @@ class NewsfeedFragment : Fragment() {
         val binding : NewsfeedFragmentBinding = NewsfeedFragmentBinding.inflate(inflater, container, false)
         context ?: return binding.root
 
+        //val logo = ResourcesCompat.getDrawable(resources, R.mipmap.bakfietslogo, null)
+        //val img = ResourcesCompat.getDrawable(resources, R.mipmap.uberdope, null)
 
+        val viewModel by activityViewModels<FestivalViewModel> {
+            InjectorUtils.provideFestivalViewModelFactory()
+        }
 
-        val logo = ResourcesCompat.getDrawable(resources, R.mipmap.bakfietslogo, null)
-        val img = ResourcesCompat.getDrawable(resources, R.mipmap.uberdope, null)
+        //TODO: werken met livedata!
+        //binding.viewModel = viewModel
 
-        val item1 = NewsfeedItem(R.mipmap.bakfietslogo, "Bakfiets","16:40", R.mipmap.uberdope, "Vanavond aan de dope met Uberdope")
-        val item2 = NewsfeedItem(R.mipmap.bakfietslogo, "Bakfiets","16:40", R.mipmap.martinipost, "Even weg van uw kinderen? Kom genieten aan onze martinistand")
-        val item3 = NewsfeedItem(R.mipmap.bakfietslogo, "Bakfiets","16:40", R.mipmap.randanimatie, "Uw kinderen even beu? Laat ze achter bij onze volkspelen")
-
-        binding.stageRecycler.adapter = NewsfeedAdapter(listOf(item1, item2, item3))
+        binding.stageRecycler.adapter = NewsfeedAdapter(viewModel.getNewsfeedItems())
         binding.stageRecycler.layoutManager = LinearLayoutManager(this.context)
         binding.stageRecycler.setHasFixedSize(true)
 
