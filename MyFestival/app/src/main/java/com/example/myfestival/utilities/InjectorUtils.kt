@@ -1,18 +1,15 @@
-package be.ugent.utilities
+package com.example.myfestival.utilities
 
-import android.content.Context
-import com.example.myfestival.data.FestivalDatabase
 import com.example.myfestival.data.FestivalRepository
 import com.example.myfestival.viewmodels.FestivalViewModelFactory
+import com.google.firebase.database.FirebaseDatabase
 
 object InjectorUtils {
+    private val db = FirebaseDatabase.getInstance()
 
-    private fun getForecastRepository(context: Context) =
-        FestivalRepository.getInstance(
-            FestivalDatabase.getInstance(context).festivalDao()
-        )
+    private fun getFestivalRepository(database: FirebaseDatabase) =
+        FestivalRepository.getInstance(database)
 
-    fun provideForecastViewModelFactory(context: Context) =
-        FestivalViewModelFactory(getForecastRepository(context))
-
+    fun provideFestivalViewModelFactory() =
+        FestivalViewModelFactory(getFestivalRepository(db))
 }

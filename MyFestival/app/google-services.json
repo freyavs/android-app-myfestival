@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "317592654462",
+    "firebase_url": "https://myfestival-cf939.firebaseio.com",
+    "project_id": "myfestival-cf939",
+    "storage_bucket": "myfestival-cf939.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:317592654462:android:2db3e43f7234f04e293e2f",
+        "android_client_info": {
+          "package_name": "com.example.myfestival"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "317592654462-728iq2fso932ldrdpp8in58l2ua94c2e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0j-n1uyJaUjusI6dfDZrUUMRMv0CuQ1o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "317592654462-728iq2fso932ldrdpp8in58l2ua94c2e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

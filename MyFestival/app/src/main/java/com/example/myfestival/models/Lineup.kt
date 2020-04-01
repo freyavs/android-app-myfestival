@@ -1,4 +1,4 @@
-package com.example.myfestival.data
+package com.example.myfestival.models
 
 class Concert(val artist: String, val start : String, val stop : String) {}
 

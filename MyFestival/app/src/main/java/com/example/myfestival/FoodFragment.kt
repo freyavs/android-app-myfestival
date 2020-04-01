@@ -5,11 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myfestival.adapters.FoodStandAdapter
-import com.example.myfestival.data.FoodStandDataSet
 import com.example.myfestival.databinding.FoodFragmentBinding
 import com.example.myfestival.models.FoodStand
+import com.example.myfestival.utilities.InjectorUtils
+import com.example.myfestival.viewmodels.FestivalViewModel
 
 /**
  * A simple [Fragment] subclass.
@@ -24,7 +26,14 @@ class FoodFragment : Fragment() {
         val binding: FoodFragmentBinding = FoodFragmentBinding.inflate(inflater, container, false)
         context?: return binding.root
 
-        val data = FoodStandDataSet.createDataSet()
+        val viewModel by activityViewModels<FestivalViewModel> {
+            InjectorUtils.provideFestivalViewModelFactory()
+        }
+
+        //TODO: met livedata werken
+        //binding.viewModel = viewModel
+
+        val data = viewModel.getFoodstandList()
         initAdapter(binding, data)
 
         return binding.root
