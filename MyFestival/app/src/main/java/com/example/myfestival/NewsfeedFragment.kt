@@ -1,17 +1,19 @@
 package com.example.myfestival
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myfestival.adapters.NewsfeedAdapter
-import com.example.myfestival.models.NewsfeedItem
 import com.example.myfestival.databinding.NewsfeedFragmentBinding
 import com.example.myfestival.utilities.InjectorUtils
 import com.example.myfestival.viewmodels.FestivalViewModel
+import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
+import com.example.myfestival.models.NewsfeedItem
 
 /**
  * A simple [Fragment] subclass.
@@ -32,10 +34,11 @@ class NewsfeedFragment : Fragment() {
             InjectorUtils.provideFestivalViewModelFactory()
         }
 
-        //TODO: werken met livedata!
-        //binding.viewModel = viewModel
+        val adapter =  NewsfeedAdapter()
 
-        binding.stageRecycler.adapter = NewsfeedAdapter(viewModel.getNewsfeedItems())
+        viewModel.getNewsfeedItems().observe(viewLifecycleOwner, Observer { posts -> adapter.posts = posts })
+
+        binding.stageRecycler.adapter = adapter
         binding.stageRecycler.layoutManager = LinearLayoutManager(this.context)
         binding.stageRecycler.setHasFixedSize(true)
 

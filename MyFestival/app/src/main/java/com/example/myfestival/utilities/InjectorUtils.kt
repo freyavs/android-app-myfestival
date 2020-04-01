@@ -5,6 +5,8 @@ import com.example.myfestival.viewmodels.FestivalViewModelFactory
 import com.google.firebase.database.FirebaseDatabase
 
 object InjectorUtils {
+
+    //todo: db moet je eigenlijk niet meegeven
     private val db = FirebaseDatabase.getInstance()
 
     private fun getFestivalRepository(database: FirebaseDatabase) =

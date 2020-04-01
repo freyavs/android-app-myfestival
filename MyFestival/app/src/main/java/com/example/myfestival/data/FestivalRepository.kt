@@ -118,82 +118,69 @@ class FestivalRepository(val database : FirebaseDatabase ) {
     }
 
     // ------------------- (hardcoded) data voor de foodstands -------------------------
-    fun getFoodstandList(): ArrayList<FoodStand> {
-        val list = ArrayList<FoodStand>()
-        list.add(
+    fun getFoodstandList(): MutableLiveData<List<FoodStand>> {
+        return MutableLiveData(listOf(
             FoodStand(
                 "123abc",
                 "Hotter Dogs",
                 R.drawable.ic_fastfood
             )
-        )
-        list.add(
+        ,
             FoodStand(
                 "123abc",
                 "Burger Boy's",
                 R.drawable.ic_fastfood                    )
-        )
-        list.add(
+        ,
             FoodStand(
                 "123abc",
                 "Pizza Town",
                 R.drawable.ic_pizza                    )
-        )
-        list.add(
+        ,
             FoodStand(
                 "123abc",
                 "Donny's Burgers",
                 R.drawable.ic_fastfood                    )
-        )
-        list.add(
+        ,
             FoodStand(
                 "123abc",
                 "Pizza For You",
                 R.drawable.ic_pizza                    )
-        )
-        list.add(
+        ,
             FoodStand(
                 "123abc",
                 "Frietjes bij Pol",
                 R.drawable.ic_fastfood                    )
-        )
-        list.add(
+        ,
             FoodStand(
                 "123abc",
                 "French Fries",
                 R.drawable.ic_fastfood                    )
-        )
-        list.add(
+        ,
             FoodStand(
                 "123abc",
                 "Pizza Lovers",
                 R.drawable.ic_pizza                    )
-        )
-        list.add(
+        ,
             FoodStand(
                 "123abc",
                 "Kebab 'n' Burgers",
                 R.drawable.ic_fastfood                    )
-        )
-        list.add(
+        ,
             FoodStand(
                 "123abc",
                 "Kebab Shop",
                 R.drawable.ic_fastfood                    )
-        )
-        list.add(
+        ,
             FoodStand(
                 "123abc",
                 "Friet Shop",
                 R.drawable.ic_fastfood                    )
-        )
-        list.add(
+        ,
             FoodStand(
                 "123abc",
                 "Burger Shop",
                 R.drawable.ic_fastfood                    )
-        )
-        return list
+        ))
     }
 
     fun getFoodstandMenu(id: String) : List<Dish> {
@@ -335,7 +322,7 @@ class FestivalRepository(val database : FirebaseDatabase ) {
 
     // -------------- (hardcoded) data voor newsfeed ------------------
 
-    fun getNewsfeedItems() : List<NewsfeedItem> {
+    fun getNewsfeedItems() : MutableLiveData<List<NewsfeedItem>> {
         val item1 = NewsfeedItem(
             R.mipmap.bakfietslogo,
             "Bakfiets",
@@ -358,7 +345,7 @@ class FestivalRepository(val database : FirebaseDatabase ) {
             "Uw kinderen even beu? Laat ze achter bij onze volkspelen"
         )
 
-        return listOf(item1, item2, item3)
+        return MutableLiveData(listOf(item1, item2, item3))
     }
 
 
