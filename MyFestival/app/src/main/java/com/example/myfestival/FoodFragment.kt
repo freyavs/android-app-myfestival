@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myfestival.adapters.FoodStandAdapter
@@ -41,13 +42,15 @@ class FoodFragment : Fragment() {
 
     fun initAdapter(binding: FoodFragmentBinding, data: List<FoodStand>) {
         binding.foodstandRecyclerView.apply {
-            adapter = FoodStandAdapter(data)
+            adapter = FoodStandAdapter(data) { foodStand: FoodStand -> handleItemClick(foodStand)}
             layoutManager = LinearLayoutManager(this.context)
             setHasFixedSize(true)
         }
     }
 
-
+    fun handleItemClick(foodStand: FoodStand) {
+        Toast.makeText(this.context, "Clicked: ${foodStand.name}", Toast.LENGTH_LONG).show()
+    }
 
 
 

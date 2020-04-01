@@ -10,13 +10,12 @@ import com.example.myfestival.R
 import com.example.myfestival.models.FoodStand
 import kotlinx.android.synthetic.main.foodstand_item.view.*
 
-class FoodStandAdapter(private val foodStandList: List<FoodStand>) :
+class FoodStandAdapter(private val foodStandList: List<FoodStand>, val clickListener: (FoodStand) -> Unit) :
     RecyclerView.Adapter<FoodStandAdapter.FoodStandViewHolder>() {
 
     class FoodStandViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.fastfood_image_view
         val textView1: TextView = itemView.fastfood_name_text_view
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodStandViewHolder {
@@ -33,6 +32,7 @@ class FoodStandAdapter(private val foodStandList: List<FoodStand>) :
 
         holder.imageView.setImageResource(currentItem.foodstandImg)
         holder.textView1.text = currentItem.name
+        holder.itemView.setOnClickListener{clickListener(currentItem)}
     }
 
     override fun getItemCount(): Int {
