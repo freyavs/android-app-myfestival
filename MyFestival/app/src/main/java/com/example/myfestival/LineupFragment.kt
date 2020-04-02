@@ -23,10 +23,6 @@ class LineupFragment : Fragment() {
 
     lateinit var adapter: DayAdapter
 
-    var currentDay: Int = 0
-    var day: String = ""
-    //TODO ZEKER WEG DOEN
-    lateinit var dagtext: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,37 +36,17 @@ class LineupFragment : Fragment() {
             InjectorUtils.provideLineupViewModelFactory()
         }
 
+        binding.viewModel = viewModel
+
         adapter = DayAdapter(this.childFragmentManager)
         binding.stageViewer.adapter = adapter
 
         viewModel.getCurrentStages().observe(viewLifecycleOwner, Observer { stages -> adapter.notifyChange(stages)} )
 
-        //todo: haal dag uit getCurrentDayString
-        day = lineup[currentDay].day
-
-        binding.day.text = day
-
-        dagtext = binding.day
-
-
         binding.previousDayHandler = View.OnClickListener {
-            /*if (currentDay > 0) {
-                currentDay--
-                adapter.notifyChange(lineup.days[currentDay].stages)
-                day = lineup.days[currentDay].day
-                dagtext.text = day
-            }*/
             viewModel.nextDayClicked()
         }
         binding.nextDayHandler = View.OnClickListener {
-            /*
-            if (currentDay < lineup.days.size-1){
-                currentDay++
-                adapter.notifyChange(lineup.days[currentDay].stages)
-                day = lineup.days[currentDay].day
-                dagtext.text = day
-            }
-             */
             viewModel.previousDayClicked()
         }
 

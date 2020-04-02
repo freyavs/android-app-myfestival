@@ -9,38 +9,39 @@ import com.example.myfestival.models.Stage
 
 class LineupViewModel(private val festivalRepo : FestivalRepository) : ViewModel() {
 
+    //todo: lineup moet ook currentStages beinvloeden
     //dit is MutableLiveData<List<LineupDay>>
     var lineup = festivalRepo.getLineup()
 
     //moet eig mutablelivedata zijn
-    var currentDay = 0
+    var currentDay = MutableLiveData(0)
 
-    //todo moet juist geinitialiseerd worden
+    //todo moet juist geinitialiseerd worden en aangepast worden
     var nextDayClickable = MutableLiveData(true)
     var previousDayClickable = MutableLiveData(true)
 
 
-    fun getCurrentStages() : LiveData<List<Stage>> =  Transformations.map(lineup) { value ->
-        value[currentDay].stages
+
+    //todo: !! is natuurlijk niet de beste methode
+    fun getCurrentStages() : LiveData<List<Stage>> =  Transformations.map(currentDay) { day ->
+        lineup.value!![day].stages
     }
 
 
-    fun getCurrentDayString(): LiveData<String> = Transformations.map(lineup) {
-            value -> value[currentDay].day
+    fun getCurrentDayString(): LiveData<String> = Transformations.map(currentDay) { d ->
+        lineup.value!![d].day
     }
 
     fun nextDayClicked() {
-        //todo logica hier die current day update & clickables update kan wss door map
-        if (currentDay > 0) {
-            currentDay--
+        if (currentDay.value!! > 0) {
+            currentDay.value = 1
         }
 
     }
 
     fun previousDayClicked(){
-        //todo logica hier, currentday kleiner dan lineup size
-        if (currentDay < 10){
-            currentDay++
+        if (currentDay.value!! < 2){
+            currentDay.value = 0
         }
     }
 
