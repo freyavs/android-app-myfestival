@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -51,8 +50,7 @@ class FoodFragment : Fragment() {
     }
 
     fun handleItemClick(foodStand: FoodStand) {
-        // Toast.makeText(this.context, "Clicked: ${foodStand.name}", Toast.LENGTH_LONG).show()
-        val action = FoodFragmentDirections.actionFoodFragmentToMenuFragment(foodStand.id)
+        val action = FoodFragmentDirections.actionFoodFragmentToMenuFragment(foodStand.id, foodStand.foodstandImg, foodStand.name)
         findNavController().navigate(action)
 
     }

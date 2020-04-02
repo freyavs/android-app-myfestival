@@ -40,7 +40,6 @@ class MenuAdapter(val menuList: List<Dish>) :
 
         val priceString = currentItem.price.toString()
         holder.textView3.text = priceString
-        Log.d("TAG", priceString)
     }
 
     override fun getItemCount(): Int {

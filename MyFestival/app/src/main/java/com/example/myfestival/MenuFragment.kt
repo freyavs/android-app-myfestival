@@ -31,6 +31,9 @@ class MenuFragment: Fragment() {
         }
 
         val args: MenuFragmentArgs by navArgs()
+        binding.foodstandNameMenuView.text = args.foodstandName
+        binding.foodstandImgMenuView.setImageResource(args.foodstandImg)
+
         val id: String = args.foodstandId
         val data = viewModel.getFoodstandMenu(id)
         initAdapter(binding, data)
