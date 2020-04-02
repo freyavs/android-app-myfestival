@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.google.firebase.database.FirebaseDatabase
 
 class MainActivity : AppCompatActivity(){
 
@@ -18,6 +19,9 @@ class MainActivity : AppCompatActivity(){
         val navController =  findNavController(R.id.nav_host_fragment)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
+
+        //zorgt voor offline gegevens 
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
     }
 
     override fun onSupportNavigateUp(): Boolean {

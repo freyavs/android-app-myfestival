@@ -10,8 +10,10 @@ import com.example.myfestival.R
 import com.example.myfestival.models.FoodStand
 import kotlinx.android.synthetic.main.foodstand_item.view.*
 
-class FoodStandAdapter(private val foodStandList: List<FoodStand>) :
+class FoodStandAdapter() :
     RecyclerView.Adapter<FoodStandAdapter.FoodStandViewHolder>() {
+
+    var foodStandList = emptyList<FoodStand>()
 
     class FoodStandViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.fastfood_image_view
