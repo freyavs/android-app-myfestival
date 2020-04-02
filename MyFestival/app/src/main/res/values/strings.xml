@@ -15,7 +15,7 @@
     <string name="newsfeed_picture">newsfeed_picture</string>
     <string name="diets">diets</string>
     <string name="dish">dish</string>
-    <string name="price">0</string>
+    <string name="price">price</string>
     <string name="foodstand">foodstand</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.example.myfestival.adapters
 
+import android.util.Log
 import com.example.myfestival.models.Dish
 import kotlinx.android.synthetic.main.menu_item.view.*
 import android.view.LayoutInflater
@@ -37,8 +38,9 @@ class MenuAdapter(val menuList: List<Dish>) :
         else if (currentItem.vegan) { dietString = "vegan" }
         holder.textView2.text = dietString
 
-        val priceString: String = currentItem.price.toString()
+        val priceString = currentItem.price.toString()
         holder.textView3.text = priceString
+        Log.d("TAG", priceString)
     }
 
     override fun getItemCount(): Int {
