@@ -37,7 +37,8 @@ class MenuAdapter(val menuList: List<Dish>) :
         else if (currentItem.vegan) { dietString = "vegan" }
         holder.textView2.text = dietString
 
-        holder.textView3.text = currentItem.price.toString()
+        val priceString: String = currentItem.price.toString()
+        holder.textView3.text = priceString
     }
 
     override fun getItemCount(): Int {

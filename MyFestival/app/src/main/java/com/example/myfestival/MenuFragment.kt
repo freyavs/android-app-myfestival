@@ -10,7 +10,6 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myfestival.adapters.FoodStandAdapter
 import com.example.myfestival.adapters.MenuAdapter
-import com.example.myfestival.databinding.FoodFragmentBinding
 import com.example.myfestival.databinding.MenuFragmentBinding
 import com.example.myfestival.models.Dish
 import com.example.myfestival.models.FoodStand
@@ -31,9 +30,9 @@ class MenuFragment: Fragment() {
             InjectorUtils.provideFestivalViewModelFactory()
         }
 
-        // val args: MenuFragmentArgs by navArgs()
-        // val id = args.foodstandId
-        val data = viewModel.getFoodstandMenu("pizza")
+        val args: MenuFragmentArgs by navArgs()
+        val id: String = args.foodstandId
+        val data = viewModel.getFoodstandMenu(id)
         initAdapter(binding, data)
 
         return binding.root
