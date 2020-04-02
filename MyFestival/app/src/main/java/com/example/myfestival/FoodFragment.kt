@@ -1,18 +1,20 @@
 package com.example.myfestival
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myfestival.adapters.FoodStandAdapter
 import com.example.myfestival.databinding.FoodFragmentBinding
 import com.example.myfestival.models.FoodStand
 import com.example.myfestival.utilities.InjectorUtils
 import com.example.myfestival.viewmodels.FestivalViewModel
+
 
 /**
  * A simple [Fragment] subclass.
@@ -49,7 +51,10 @@ class FoodFragment : Fragment() {
     }
 
     fun handleItemClick(foodStand: FoodStand) {
-        Toast.makeText(this.context, "Clicked: ${foodStand.name}", Toast.LENGTH_LONG).show()
+        // Toast.makeText(this.context, "Clicked: ${foodStand.name}", Toast.LENGTH_LONG).show()
+        val action = FoodFragmentDirections.actionFoodFragmentToMenuFragment(foodStand.id)
+        findNavController().navigate(action)
+
     }
 
 

@@ -14,7 +14,7 @@ class FoodStandAdapter(private val foodStandList: List<FoodStand>, val clickList
     RecyclerView.Adapter<FoodStandAdapter.FoodStandViewHolder>() {
 
     class FoodStandViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val imageView: ImageView = itemView.fastfood_image_view
+        val imageView: ImageView = itemView.foodstand_image_view
         val textView1: TextView = itemView.fastfood_name_text_view
     }
 

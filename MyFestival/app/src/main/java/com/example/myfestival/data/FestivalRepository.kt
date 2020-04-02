@@ -201,7 +201,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
         return list
     }
 
-    fun getFoodstandMenu(id: String): List<Dish>? {
+    fun getFoodstandMenu(id: String): List<Dish> {
         val burgerList = ArrayList<Dish>()
 
         burgerList.add(
@@ -473,14 +473,27 @@ class FestivalRepository(val database: FirebaseDatabase) {
             )
         )
 
-        val hashMap: HashMap<String, List<Dish>> = HashMap()
-        hashMap.put("pizza", pizzaList)
-        hashMap.put("burger", burgerList)
-        hashMap.put("kebab", kebabList)
-        hashMap.put("french_fries", frenchFriesList)
-        hashMap.put("hot_dog", hotDogList)
+        if (id.equals("pizza")) {
+            return pizzaList
+        }
 
-        return hashMap[id]
+        else if (id.equals("kebab")) {
+            return kebabList
+        }
+
+        else if (id.equals("burger")) {
+            return burgerList
+        }
+
+        else if (id.equals("french_fries")) {
+            return frenchFriesList
+        }
+
+        else {
+            return hotDogList
+        }
+
+
     }
 
 
