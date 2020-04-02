@@ -10,8 +10,9 @@ import com.example.myfestival.R
 import com.example.myfestival.models.NewsfeedItem
 import kotlinx.android.synthetic.main.newsfeed_item.view.*
 
-class NewsfeedAdapter(val posts: List<NewsfeedItem>) : RecyclerView.Adapter<NewsfeedAdapter.NewsItemViewHolder>(){
+class NewsfeedAdapter() : RecyclerView.Adapter<NewsfeedAdapter.NewsItemViewHolder>(){
 
+    var posts = emptyList<NewsfeedItem>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsItemViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.newsfeed_item, parent, false)
