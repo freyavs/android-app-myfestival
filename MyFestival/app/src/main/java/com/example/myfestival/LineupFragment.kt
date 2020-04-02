@@ -44,10 +44,10 @@ class LineupFragment : Fragment() {
         viewModel.getCurrentStages().observe(viewLifecycleOwner, Observer { stages -> adapter.notifyChange(stages)} )
 
         binding.previousDayHandler = View.OnClickListener {
-            viewModel.nextDayClicked()
+            viewModel.previousDayClicked()
         }
         binding.nextDayHandler = View.OnClickListener {
-            viewModel.previousDayClicked()
+            viewModel.nextDayClicked()
         }
 
         return binding.root

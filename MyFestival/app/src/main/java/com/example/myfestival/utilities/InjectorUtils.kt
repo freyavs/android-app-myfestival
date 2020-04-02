@@ -2,6 +2,7 @@ package com.example.myfestival.utilities
 
 import com.example.myfestival.data.FestivalRepository
 import com.example.myfestival.viewmodels.FestivalViewModelFactory
+import com.example.myfestival.viewmodels.LineupViewModelFactory
 import com.google.firebase.database.FirebaseDatabase
 
 object InjectorUtils {
@@ -16,5 +17,5 @@ object InjectorUtils {
         FestivalViewModelFactory(getFestivalRepository(db))
 
     fun provideLineupViewModelFactory() =
-        FestivalViewModelFactory(getFestivalRepository(db))
+        LineupViewModelFactory(getFestivalRepository(db))
 }

@@ -21,8 +21,6 @@ class LineupViewModel(private val festivalRepo : FestivalRepository) : ViewModel
     var previousDayClickable = MutableLiveData(true)
 
 
-
-    //todo: !! is natuurlijk niet de beste methode
     fun getCurrentStages() : LiveData<List<Stage>> =  Transformations.map(currentDay) { day ->
         val lineupDay = lineup.value?.get(day)
         lineupDay?.stages?:emptyList<Stage>()
@@ -31,18 +29,18 @@ class LineupViewModel(private val festivalRepo : FestivalRepository) : ViewModel
 
     fun getCurrentDayString(): LiveData<String> = Transformations.map(currentDay) { day ->
         val lineupDay = lineup.value?.get(day)
-        lineupDay?.day?:""
+        lineupDay?.day?:"today"
     }
 
     fun nextDayClicked() {
-        if (currentDay.value!! > 0) {
+        if (currentDay.value!! < 2 ) {
             currentDay.value = 1
         }
 
     }
 
     fun previousDayClicked(){
-        if (currentDay.value!! < 2){
+        if (currentDay.value!! > 0){
             currentDay.value = 0
         }
     }

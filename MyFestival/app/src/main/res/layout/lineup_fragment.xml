@@ -47,7 +47,7 @@
                         android:textSize="40sp"
                         android:gravity="center"
                         android:textStyle="bold"
-                        android:text ="@{viewModel.currentDayString}"/>
+                        android:text="@{viewModel.currentDayString}"/>
 
                     <Button
                         android:layout_weight="1"
