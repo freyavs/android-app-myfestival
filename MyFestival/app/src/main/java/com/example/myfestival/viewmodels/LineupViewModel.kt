@@ -24,12 +24,14 @@ class LineupViewModel(private val festivalRepo : FestivalRepository) : ViewModel
 
     //todo: !! is natuurlijk niet de beste methode
     fun getCurrentStages() : LiveData<List<Stage>> =  Transformations.map(currentDay) { day ->
-        lineup.value!![day].stages
+        val lineupDay = lineup.value?.get(day)
+        lineupDay?.stages?:emptyList<Stage>()
     }
 
 
-    fun getCurrentDayString(): LiveData<String> = Transformations.map(currentDay) { d ->
-        lineup.value!![d].day
+    fun getCurrentDayString(): LiveData<String> = Transformations.map(currentDay) { day ->
+        val lineupDay = lineup.value?.get(day)
+        lineupDay?.day?:""
     }
 
     fun nextDayClicked() {
