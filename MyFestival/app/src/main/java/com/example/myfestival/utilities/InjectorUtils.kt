@@ -14,4 +14,7 @@ object InjectorUtils {
 
     fun provideFestivalViewModelFactory() =
         FestivalViewModelFactory(getFestivalRepository(db))
+
+    fun provideLineupViewModelFactory() =
+        FestivalViewModelFactory(getFestivalRepository(db))
 }
