@@ -34,9 +34,9 @@ class NewsfeedFragment : Fragment() {
             InjectorUtils.provideFestivalViewModelFactory()
         }
 
-        val adapter =  NewsfeedAdapter()
+        var adapter =  NewsfeedAdapter()
 
-        viewModel.getNewsfeedItems().observe(viewLifecycleOwner, Observer { posts -> adapter.posts = posts })
+        viewModel.getNewsfeedItems().observe(viewLifecycleOwner, Observer { posts -> adapter.posts = posts})
 
         binding.stageRecycler.adapter = adapter
         binding.stageRecycler.layoutManager = LinearLayoutManager(this.context)
