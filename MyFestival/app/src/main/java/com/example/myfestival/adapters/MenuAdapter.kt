@@ -9,8 +9,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myfestival.R
 
-class MenuAdapter(val menuList: List<Dish>) :
+class MenuAdapter() :
         RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
+
+    var menuList = emptyList<Dish>()
 
     class MenuViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textView1 = itemView.menu_dish_name_text_view

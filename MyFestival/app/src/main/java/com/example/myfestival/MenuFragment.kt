@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myfestival.adapters.FoodStandAdapter
@@ -35,18 +36,16 @@ class MenuFragment: Fragment() {
         binding.foodstandImgMenuView.setImageResource(args.foodstandImg)
 
         val id: String = args.foodstandId
-        val data = viewModel.getFoodstandMenu(id)
-        initAdapter(binding, data)
+        val adapter = MenuAdapter()
+        viewModel.getFoodstandMenu(id).observe(viewLifecycleOwner, Observer { menu -> adapter.menuList = menu })
 
-        return binding.root
-    }
-
-    fun initAdapter(binding: MenuFragmentBinding, data: List<Dish>) {
         binding.menuRecyclerView.apply {
-            adapter = MenuAdapter(data)
+            this.adapter = adapter
             layoutManager = LinearLayoutManager(this.context)
             setHasFixedSize(true)
         }
+
+        return binding.root
     }
 
 

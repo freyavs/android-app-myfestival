@@ -187,7 +187,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
 
     }
 
-    fun getFoodstandMenu(id: String): List<Dish> {
+    fun getFoodstandMenu(id: String): MutableLiveData<ArrayList<Dish>> {
         val burgerList = ArrayList<Dish>()
 
         burgerList.add(
@@ -459,23 +459,23 @@ class FestivalRepository(val database: FirebaseDatabase) {
         )
 
         if (id.equals("pizza")) {
-            return pizzaList
+            return MutableLiveData(pizzaList)
         }
 
         else if (id.equals("kebab")) {
-            return kebabList
+            return MutableLiveData(kebabList)
         }
 
         else if (id.equals("burger")) {
-            return burgerList
+            return MutableLiveData(burgerList)
         }
 
         else if (id.equals("french_fries")) {
-            return frenchFriesList
+            return MutableLiveData(frenchFriesList)
         }
 
         else {
-            return hotDogList
+            return MutableLiveData(hotDogList)
         }
 
 
@@ -484,7 +484,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
 
 // -------------- (hardcoded) data voor newsfeed ------------------
 
-fun getNewsfeedItems(): List<NewsfeedItem> {
+fun getNewsfeedItems(): MutableLiveData<List<NewsfeedItem>> {
     val item1 = NewsfeedItem(
         R.mipmap.bakfietslogo,
         "Bakfiets",
@@ -507,7 +507,7 @@ fun getNewsfeedItems(): List<NewsfeedItem> {
         "Uw kinderen even beu? Laat ze achter bij onze volkspelen"
     )
 
-    return listOf(item1, item2, item3)
+    return MutableLiveData(listOf(item1, item2, item3))
 }
 
 

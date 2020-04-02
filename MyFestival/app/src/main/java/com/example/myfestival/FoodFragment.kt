@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myfestival.adapters.FoodStandAdapter
 import com.example.myfestival.databinding.FoodFragmentBinding
+import com.example.myfestival.models.FoodStand
 import com.example.myfestival.utilities.InjectorUtils
 import com.example.myfestival.viewmodels.FestivalViewModel
 
@@ -31,16 +32,11 @@ class FoodFragment : Fragment() {
         val viewModel by activityViewModels<FestivalViewModel> {
             InjectorUtils.provideFestivalViewModelFactory()
         }
-        val adapter = FoodStandAdapter()
+        val adapter = FoodStandAdapter() { foodStand: FoodStand -> handleItemClick(foodStand)}
         viewModel.getFoodstandList().observe(viewLifecycleOwner, Observer { foodstands -> adapter.foodStandList = foodstands })
 
         binding.foodstandRecyclerView.apply {
-          
-            // master: this.adapter = adapter
-          
-           //menu: was met (data)
-            adapter = FoodStandAdapter() { foodStand: FoodStand -> handleItemClick(foodStand)}
-
+            this.adapter = adapter
             layoutManager = LinearLayoutManager(this.context)
             setHasFixedSize(true)
         }
