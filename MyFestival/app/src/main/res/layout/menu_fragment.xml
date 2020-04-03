@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MenuFragment">
@@ -30,28 +30,32 @@
                 android:textColor="@android:color/black"
                 android:textStyle="bold"/>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="246dp"
                     android:text="@string/choices"
+                    android:paddingStart="8dp"
                     android:textSize="18sp" />
-
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/vouchers"
-                    android:textSize="18sp" />
+                    android:layout_alignParentEnd="true"
+                    android:paddingEnd="8dp"
+                    android:textAlignment="viewEnd"
+                    android:textSize="18sp"
+                    android:gravity="end"/>
+
+            </RelativeLayout>
 
 
-            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/menu_recycler_view"
