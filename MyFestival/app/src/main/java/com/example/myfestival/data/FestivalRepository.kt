@@ -160,7 +160,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
             FoodStand(
                 "pizza",
                 "Pizza Lovers",
-                R.drawable.ic_pizza                    )                )
+                R.drawable.ic_pizza                    )
         ,
             FoodStand(
                 "kebab",
