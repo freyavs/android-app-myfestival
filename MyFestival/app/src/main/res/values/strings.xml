@@ -17,7 +17,7 @@
     <string name="dish">dish</string>
     <string name="price">price</string>
     <string name="foodstand">foodstand</string>
-    <string name="choices">Choices:</string>
-    <string name="vouchers">Vouchers:</string>
+    <string name="choices">Keuzes:</string>
+    <string name="vouchers">Bonnetjes:</string>
 
 </resources>

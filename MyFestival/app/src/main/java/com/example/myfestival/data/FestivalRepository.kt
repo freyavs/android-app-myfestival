@@ -160,12 +160,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
             FoodStand(
                 "pizza",
                 "Pizza Lovers",
-                R.drawable.ic_pizza                    )
-        ,
-            FoodStand(
-                "123abc",
-                "Kebab 'n' Burgers",
-                R.drawable.ic_fastfood                    )
+                R.drawable.ic_pizza                    )                )
         ,
             FoodStand(
                 "kebab",
@@ -345,7 +340,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
 
         frenchFriesList.add(
             Dish(
-                "Small fries",
+                "Kleine friet",
                 1,
                 false,
                 false
@@ -353,7 +348,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
         )
         frenchFriesList.add(
             Dish(
-                "Medium friets",
+                "Medium friet",
                 2,
                 false,
                 false
@@ -361,7 +356,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
         )
         frenchFriesList.add(
             Dish(
-                "Large fries",
+                "Grote friet",
                 3,
                 false,
                 false
@@ -411,7 +406,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
         val kebabList = ArrayList<Dish>()
         kebabList.add(
             Dish(
-                "Small pita",
+                "Kleine pita",
                 2,
                 false,
                 false
@@ -419,7 +414,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
         )
         kebabList.add(
             Dish(
-                "Large pita",
+                "Grote pita",
                 3,
                 false,
                 false
@@ -427,7 +422,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
         )
         kebabList.add(
             Dish(
-                "Small pita chicken",
+                "Kleine pita kip",
                 2,
                 false,
                 false
@@ -435,7 +430,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
         )
         kebabList.add(
             Dish(
-                "Large pita chicken",
+                "Grote pita kip",
                 3,
                 false,
                 false
@@ -443,7 +438,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
         )
         kebabList.add(
             Dish(
-                "Small pita lamb",
+                "Kleine pita lamsvlees",
                 2,
                 false,
                 false
@@ -451,7 +446,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
         )
         kebabList.add(
             Dish(
-                "Large pita lamb",
+                "Grote pita lamsvlees",
                 3,
                 false,
                 false
