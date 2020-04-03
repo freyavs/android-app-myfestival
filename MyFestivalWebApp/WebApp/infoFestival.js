@@ -4,9 +4,17 @@ function toonInfo() {
     let refStages = database.ref(id + "/stages");
     let refFoodstands = database.ref(id + "/foodstand");
     let refMessages = database.ref(id + "/messages");
+    let refFestival = database.ref(id);
     refStages.on('value', gotStages, errData);
     refFoodstands.on('value', gotFoodstands, errData);
     refMessages.on('value', gotMessages, errData);
+    refFestival.on('value', gotMap,errData)
+}
+
+function gotMap(data) {
+    let img = document.getElementById('id_image_map');
+    let loc = data.val()['location'].replace('/', "%2F");
+    img.src = "https://firebasestorage.googleapis.com/v0/b/myfestival-cf939.appspot.com/o/"+loc+"?alt=media";
 }
 function gotStages(data) {
     let divStages = document.getElementById('id_stages');
@@ -15,7 +23,7 @@ function gotStages(data) {
     if (stages !== null) {
         let keys = Object.keys(stages);
         keys.forEach(key => {
-            let naam = stages[key].naam;
+            let naam = stages[key].name;
             innerHTML +=
                 "<p class=\"card-text\">Naam: " + naam + " <br>" +
                 "<a href=\'extraInfo.html?id_festival\=" + id + "/stages/" + key + "\' class='btn btn-primary'>Meer info</a>" +
@@ -32,7 +40,7 @@ function gotFoodstands(data) {
     if(foodstands !== null) {
         let keys = Object.keys(foodstands);
         keys.forEach(key => {
-            let naam = foodstands[key].naam;
+            let naam = foodstands[key].name;
             innerHTML +=
                 "<p class=\"card-text\">Naam: " + naam + " <br>" +
                 "<a href=\'extraInfo.html?id_festival\=" + id + "/foodstand/" + key + "\' class='btn btn-primary'>Meer info</a>" +
@@ -50,8 +58,8 @@ function gotMessages(data) {
     if(messages !== null) {
         let keys = Object.keys(messages);
         keys.forEach(key => {
-            let titel = messages[key].titel;
-            let bericht = messages[key].bericht;
+            let titel = messages[key].title;
+            let bericht = messages[key].message;
             innerHTML +=
                 "<p class=\"card-text\"><b>" + titel + ":</b> <br>" +
                 bericht +
@@ -72,7 +80,7 @@ function addStage() {
     if(naam !== ''){
         ref = database.ref(id+ "/stages");
         let stage = {
-            naam: naam
+            name: naam
         };
         ref.push(stage);
     }
@@ -82,7 +90,7 @@ function addFoodstand() {
     if(naam !== ''){
         ref = database.ref(id+ "/foodstand");
         let foodstand = {
-            naam: naam
+            name: naam
         };
         ref.push(foodstand);
     }
@@ -91,11 +99,26 @@ function addMessage() {
     let titel = document.getElementById("id_titel_message").value;
     let bericht = document.getElementById("id_bericht_message").value;
     if(titel !== '' && bericht !== ''){
-        ref = database.ref(id+"/messages")
+        ref = database.ref(id+"/messages");
         let message = {
-            titel: titel,
-            bericht: bericht
+            title: titel,
+            message: bericht
         };
         ref.push(message);
     }
+}
+
+function uploadMap() {
+    let map = document.getElementById('id_map').files.item(0);
+    let metadata = {
+        contentType: map.type,
+    };
+    var storageRef = firebase.storage().ref('maps/'+id);
+    storageRef.put(map, metadata).then(function (snapshot) {
+        ref = database.ref(id);
+        let updates= {};
+        updates['location'] = "maps/"+id;
+        ref.update(updates);
+        location.reload();
+    })
 }
