@@ -13,8 +13,7 @@ class LineupViewModel(private val festivalRepo : FestivalRepository) : ViewModel
     //dit is MutableLiveData<List<LineupDay>>
     var lineup = festivalRepo.getLineup()
 
-    //moet eig mutablelivedata zijn
-    var currentDay = MutableLiveData(0)
+    var currentDay : MutableLiveData<Int> = MutableLiveData(0)
 
     //todo moet juist geinitialiseerd worden en aangepast worden
     var nextDayClickable = MutableLiveData(true)

@@ -49,6 +49,7 @@ class LineupFragment : Fragment() {
         binding.nextDayHandler = View.OnClickListener {
             viewModel.nextDayClicked()
         }
+        binding.setLifecycleOwner(this)
 
         return binding.root
     }

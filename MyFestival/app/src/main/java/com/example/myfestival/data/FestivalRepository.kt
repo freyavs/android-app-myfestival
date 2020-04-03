@@ -108,9 +108,9 @@ class FestivalRepository(val database : FirebaseDatabase ) {
 
         val stages = listOf(Mainstage, Forestage)
 
-        val day1 = LineupDay("Thursday", stages)
+        val day1 = LineupDay("Donderdag", stages)
         val day2 = LineupDay(
-            "Friday",
+            "Vrijdag",
             listOf(Herbakkerstage)
         )
 
