@@ -9,8 +9,10 @@ import com.example.myfestival.StageFragment
 import com.example.myfestival.models.Stage
 
 
-class DayAdapter(private var currentStages: List<Stage>, manager: FragmentManager) : FragmentPagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+class DayAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
+
+    private var currentStages = emptyList<Stage>()
     /*
      * Inhoud van dayadapter gebaseerd op: https://stackoverflow.com/questions/10396321/remove-fragment-page-from-viewpager-in-android
      */
