@@ -4,6 +4,7 @@
     <string name="food"> Food </string>
     <string name="line_up"> Line up </string>
     <string name="map"> Map </string>
+    <string name="menu"> Menu </string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
@@ -12,5 +13,11 @@
     <string name="concert_notify">Notify</string>
     <string name="logo">logo</string>
     <string name="newsfeed_picture">newsfeed_picture</string>
+    <string name="diets">diets</string>
+    <string name="dish">dish</string>
+    <string name="price">price</string>
+    <string name="foodstand">foodstand</string>
+    <string name="choices">Keuzes:</string>
+    <string name="vouchers">Bonnetjes:</string>
 
 </resources>

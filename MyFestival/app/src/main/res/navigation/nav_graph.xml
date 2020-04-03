@@ -31,7 +31,11 @@
         android:id="@+id/foodFragment"
         android:name="com.example.myfestival.FoodFragment"
         android:label="@string/food"
-        tools:layout="@layout/food_fragment" />
+        tools:layout="@layout/food_fragment" >
+        <action
+            android:id="@+id/action_foodFragment_to_menuFragment"
+            app:destination="@id/menuFragment"/>
+    </fragment>
     <fragment
         android:id="@+id/lineupFragment"
         android:name="com.example.myfestival.LineupFragment"
@@ -42,4 +46,23 @@
         android:name="com.example.myfestival.MapFragment"
         android:label="@string/map"
         tools:layout="@layout/map_fragment" />
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.example.myfestival.MenuFragment"
+        android:label="@string/menu"
+        tools:layout="@layout/menu_fragment">
+        <argument
+            android:name="foodstand_id"
+            app:argType="string"
+            android:defaultValue="pizza" />
+        <argument
+            android:name="foodstand_img"
+            app:argType="integer" />
+        <argument
+            android:name="foodstand_name"
+            app:argType="string"
+            android:defaultValue="Foodstand" />
+    </fragment>
+
+
 </navigation>
