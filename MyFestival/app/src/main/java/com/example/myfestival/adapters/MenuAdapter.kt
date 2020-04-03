@@ -35,9 +35,9 @@ class MenuAdapter() :
         holder.textView1.text = currentItem.name
 
         var dietString = ""
-        if (currentItem.vegan && currentItem.vegetarian) { dietString = "vegetarian, vegan" }
-        else if (currentItem.vegetarian) { dietString = "vegetarian" }
-        else if (currentItem.vegan) { dietString = "vegan" }
+        if (currentItem.vegan && currentItem.vegetarian) { dietString = "vegetarisch, veganistisch" }
+        else if (currentItem.vegetarian) { dietString = "vegetarisch" }
+        else if (currentItem.vegan) { dietString = "veganistisch" }
         holder.textView2.text = dietString
 
         val priceString = currentItem.price.toString()
