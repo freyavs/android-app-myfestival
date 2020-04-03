@@ -9,7 +9,7 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
     var name: MutableLiveData<String> = MutableLiveData()
 
     fun getWelcomeString(): LiveData<String> = Transformations.map(festivalRepo.getFestivalName()) {
-            value -> "Welcome to $value"
+            value -> "Welkom bij het $value"
     }
 
     //TODO dit is gwn copy paste van de repository er moet hier nog iets anders gebeuren
