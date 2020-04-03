@@ -65,7 +65,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
 
 
     // -----------------------------  (hardcoded) data voor de lineup --------------------------------
-    fun getLineup(): Lineup {
+    fun getLineup() : MutableLiveData<List<LineupDay>> {
         val concertsMain = listOf(
             Concert(
                 "Json Derulo",
@@ -115,7 +115,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
             listOf(Herbakkerstage)
         )
 
-        return Lineup(listOf(day1, day2))
+        return MutableLiveData(listOf(day1, day2))
     }
 
     // ------------------- (hardcoded) data voor de foodstands -------------------------

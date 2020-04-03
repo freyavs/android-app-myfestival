@@ -2,16 +2,47 @@ package com.example.myfestival.viewmodels
 
 import androidx.lifecycle.*
 import com.example.myfestival.data.FestivalRepository
+import com.example.myfestival.models.Lineup
+import com.example.myfestival.models.LineupDay
+import com.example.myfestival.models.Stage
 
 
 class LineupViewModel(private val festivalRepo : FestivalRepository) : ViewModel() {
-    var name: MutableLiveData<String> = MutableLiveData()
 
-    fun getDayString(): LiveData<String> = Transformations.map(festivalRepo.getFestivalName()) {
-            value -> "$value"
+    //todo: lineup moet ook currentStages beinvloeden
+    //dit is MutableLiveData<List<LineupDay>>
+    var lineup = festivalRepo.getLineup()
+
+    var currentDay : MutableLiveData<Int> = MutableLiveData(0)
+
+    //todo moet juist geinitialiseerd worden en aangepast worden
+    var nextDayClickable = MutableLiveData(true)
+    var previousDayClickable = MutableLiveData(true)
+
+
+    fun getCurrentStages() : LiveData<List<Stage>> =  Transformations.map(currentDay) { day ->
+        val lineupDay = lineup.value?.get(day)
+        lineupDay?.stages?:emptyList<Stage>()
     }
 
-    fun getLineup() = festivalRepo.getLineup()
+
+    fun getCurrentDayString(): LiveData<String> = Transformations.map(currentDay) { day ->
+        val lineupDay = lineup.value?.get(day)
+        lineupDay?.day?:"today"
+    }
+
+    fun nextDayClicked() {
+        if (currentDay.value!! < 2 ) {
+            currentDay.value = 1
+        }
+
+    }
+
+    fun previousDayClicked(){
+        if (currentDay.value!! > 0){
+            currentDay.value = 0
+        }
+    }
 
 
 

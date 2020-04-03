@@ -3,6 +3,7 @@
     <data>
         <variable name="previousDayHandler" type="android.view.View.OnClickListener" />
         <variable name="nextDayHandler" type="android.view.View.OnClickListener" />
+        <variable name="viewModel" type="com.example.myfestival.viewmodels.LineupViewModel" />
     </data>
     <FrameLayout
         android:id="@+id/lineup_fragment"
@@ -45,7 +46,8 @@
                         android:layout_height="match_parent"
                         android:textSize="40sp"
                         android:gravity="center"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold"
+                        android:text="@{viewModel.currentDayString}"/>
 
                     <Button
                         android:layout_weight="1"
