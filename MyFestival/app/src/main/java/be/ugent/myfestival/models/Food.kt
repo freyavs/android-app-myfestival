@@ -1,5 +1,8 @@
 package be.ugent.myfestival.models
 
-data class FoodStand(val id: String, val name: String, val logo: Int)
+data class FoodStand(val id: String, val name: String, val logo: Int, val menu: List<Dish>)
 
-data class Dish(val name: String, val price: Int, val vegetarian: Boolean, val vegan: Boolean)
+data class Dish(val dish: String, val price: String, val veggie: Boolean, val vegan: Boolean){
+    //nodig voor firebase
+    constructor() : this("", "", false, false)
+}
