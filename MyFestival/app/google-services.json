@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:317592654462:android:2db3e43f7234f04e293e2f",
         "android_client_info": {
-          "package_name": "com.example.myfestival"
+          "package_name": "be.ugent.myfestival"
         }
       },
       "oauth_client": [

@@ -3,7 +3,7 @@
     <data>
         <variable name="previousDayHandler" type="android.view.View.OnClickListener" />
         <variable name="nextDayHandler" type="android.view.View.OnClickListener" />
-        <variable name="viewModel" type="com.example.myfestival.viewmodels.LineupViewModel" />
+        <variable name="viewModel" type="be.ugent.myfestival.viewmodels.LineupViewModel" />
     </data>
     <FrameLayout
         android:id="@+id/lineup_fragment"

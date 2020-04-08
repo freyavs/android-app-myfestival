@@ -11,7 +11,7 @@ android {
     dataBinding.enabled = true
 
     defaultConfig {
-        applicationId "com.example.myfestival"
+        applicationId "be.ugent.myfestival"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1

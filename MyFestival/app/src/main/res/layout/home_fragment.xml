@@ -9,7 +9,7 @@
         <variable name="foodHandler" type="android.view.View.OnClickListener" />
         <variable name="lineupHandler" type="android.view.View.OnClickListener" />
         <variable name="mapHandler" type="android.view.View.OnClickListener" />
-        <variable name="viewModel" type="com.example.myfestival.viewmodels.FestivalViewModel" />
+        <variable name="viewModel" type="be.ugent.myfestival.viewmodels.FestivalViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
