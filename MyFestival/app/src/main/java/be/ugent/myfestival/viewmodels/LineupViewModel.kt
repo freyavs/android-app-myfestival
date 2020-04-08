@@ -31,14 +31,14 @@ class LineupViewModel(private val festivalRepo : FestivalRepository) : ViewModel
 
     fun nextDayClicked() {
         if (currentDay.value!! < 2 ) {
-            currentDay.value = 1
+            currentDay.postValue(1)
         }
 
     }
 
     fun previousDayClicked(){
         if (currentDay.value!! > 0){
-            currentDay.value = 0
+            currentDay.postValue(0)
         }
     }
 

@@ -23,6 +23,10 @@ class MainActivity : AppCompatActivity(){
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp() || super.onSupportNavigateUp()

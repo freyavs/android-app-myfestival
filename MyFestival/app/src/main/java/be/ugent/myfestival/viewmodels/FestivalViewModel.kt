@@ -6,7 +6,6 @@ import be.ugent.myfestival.data.FestivalRepository
 
 
 class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewModel() {
-    var name: MutableLiveData<String> = MutableLiveData()
 
     fun getWelcomeString(): LiveData<String> = Transformations.map(festivalRepo.getFestivalName()) {
             value -> "Welkom bij het $value"
