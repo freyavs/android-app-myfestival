@@ -31,11 +31,11 @@ class MenuAdapter() :
     override fun onBindViewHolder(holder: MenuViewHolder, position: Int) {
         val currentItem = menuList[position]
 
-        holder.textView1.text = currentItem.name
+        holder.textView1.text = currentItem.dish
 
         var dietString = ""
-        if (currentItem.vegan && currentItem.vegetarian) { dietString = "vegetarisch, veganistisch" }
-        else if (currentItem.vegetarian) { dietString = "vegetarisch" }
+        if (currentItem.vegan && currentItem.veggie) { dietString = "vegetarisch, veganistisch" }
+        else if (currentItem.veggie) { dietString = "vegetarisch" }
         else if (currentItem.vegan) { dietString = "veganistisch" }
         holder.textView2.text = dietString
 

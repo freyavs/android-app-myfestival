@@ -35,7 +35,7 @@ class FoodStandAdapter(val clickListener: (FoodStand) -> Unit) :
     override fun onBindViewHolder(holder: FoodStandViewHolder, position: Int) {
         val currentItem = foodStandList[position]
 
-        holder.imageView.setImageResource(currentItem.foodstandImg)
+        holder.imageView.setImageResource(currentItem.logo)
         holder.textView1.text = currentItem.name
         holder.itemView.setOnClickListener{clickListener(currentItem)}
     }

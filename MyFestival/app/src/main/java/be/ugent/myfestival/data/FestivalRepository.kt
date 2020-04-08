@@ -2,7 +2,6 @@ package be.ugent.myfestival.data
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import be.ugent.myfestival.models.*
 import be.ugent.myfestival.R
 import be.ugent.myfestival.models.*
 import com.google.firebase.database.DataSnapshot
@@ -11,11 +10,16 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import be.ugent.myfestival.models.*
 
 
 class FestivalRepository(val database: FirebaseDatabase) {
     var name: MutableLiveData<String> = MutableLiveData()
+
+    var newsfeed: MutableLiveData<List<NewsfeedItem>> = MutableLiveData()
+
+    var foodstands: MutableLiveData<List<FoodStand>> = MutableLiveData()
+
+    var test: MutableLiveData<String> = MutableLiveData()
 
     val TAG = "FIREBASEtag"
 
@@ -44,19 +48,14 @@ class FestivalRepository(val database: FirebaseDatabase) {
     // ------------- data voor het home menu -------------------------------------
     fun getFestivalName(): MutableLiveData<String> {
         if (name.value == null) {
-            //TODO: debug info weg
-            addConnectionListener()
-            Log.d(TAG, "Adding listener to name")
             FirebaseDatabase.getInstance()
                 .getReference(festivalID).child("name")
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         if (dataSnapshot.exists()) {
                             name.postValue(dataSnapshot.value.toString())
-                            Log.d(TAG, "getName:onDataChange -> name exists")
                         }
                     }
-
                     override fun onCancelled(databaseError: DatabaseError) {
                         Log.d(TAG, "getName:onCancelled", databaseError.toException())
                     }
@@ -64,6 +63,42 @@ class FestivalRepository(val database: FirebaseDatabase) {
         }
         return name
     }
+
+    // ----------------------------- data voor de foodstands -------------------------------
+    fun getFoodstandList() : MutableLiveData<List<FoodStand>> {
+        if (foodstands.value == null) {
+            addConnectionListener()
+            FirebaseDatabase.getInstance()
+                .getReference(festivalID).child("foodstand").orderByKey()
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            var foodList = mutableListOf<FoodStand>()
+                            for (ds in dataSnapshot.children) {
+                                //TODO: logo
+                                var dishList = mutableListOf<Dish>()
+                                ds.child("menu").children.mapNotNullTo(dishList) {
+                                    it.getValue(Dish::class.java)
+                                }
+                                foodList.add (FoodStand(
+                                    ds.key!!,
+                                    ds.child("name").value!!.toString(),
+                                    R.drawable.ic_fastfood,
+                                    dishList
+                                ))
+                            }
+                            foodstands.postValue(foodList)
+                        }
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        Log.d(TAG, "getFoodstandList:onCancelled", databaseError.toException())
+                    }
+                })
+        }
+        return foodstands
+    }
+
 
 
     // -----------------------------  (hardcoded) data voor de lineup --------------------------------
@@ -118,374 +153,6 @@ class FestivalRepository(val database: FirebaseDatabase) {
         )
 
         return MutableLiveData(listOf(day1, day2))
-    }
-
-    // ------------------- (hardcoded) data voor de foodstands -------------------------
-    fun getFoodstandList(): MutableLiveData<List<FoodStand>> {
-        return MutableLiveData(listOf(
-            FoodStand(
-                "hot_dog",
-                "Hotter Dogs",
-                R.drawable.ic_fastfood
-            )
-        ,
-            FoodStand(
-                "burger",
-                "Burger Boy's",
-                R.drawable.ic_fastfood
-            )
-        ,
-            FoodStand(
-                "pizza",
-                "Pizza Town",
-                R.drawable.ic_pizza
-            )
-        ,
-            FoodStand(
-                "burger",
-                "Donny's Burgers",
-                R.drawable.ic_fastfood
-            )
-        ,
-            FoodStand(
-                "pizza",
-                "Pizza For You",
-                R.drawable.ic_pizza
-            )
-        ,
-            FoodStand(
-                "french_fries",
-                "Frietjes bij Pol",
-                R.drawable.ic_fastfood
-            )
-        ,
-            FoodStand(
-                "french_fries",
-                "French Fries",
-                R.drawable.ic_fastfood
-            )
-        ,
-            FoodStand(
-                "pizza",
-                "Pizza Lovers",
-                R.drawable.ic_pizza
-            )
-        ,
-            FoodStand(
-                "kebab",
-                "Kebab Shop",
-                R.drawable.ic_fastfood
-            )
-        ,
-            FoodStand(
-                "french_fries",
-                "Friet Shop",
-
-                R.drawable.ic_fastfood
-            )
-        ,
-            FoodStand(
-                "burger",
-                "Burger Shop",
-
-                R.drawable.ic_fastfood
-            )
-        ))
-
-    }
-
-    fun getFoodstandMenu(id: String): MutableLiveData<ArrayList<Dish>> {
-        val burgerList = ArrayList<Dish>()
-
-        burgerList.add(
-            Dish(
-                "Classic Burger",
-                2,
-                false,
-                false
-            )
-        )
-        burgerList.add(
-            Dish(
-                "Cheeseburger",
-                2,
-                false,
-                false
-            )
-        )
-        burgerList.add(
-            Dish(
-                "Veggie Burger",
-                2,
-                true,
-                false
-            )
-        )
-        burgerList.add(
-            Dish(
-                "Kingsize Burger",
-                4,
-                false,
-                false
-            )
-        )
-        burgerList.add(
-            Dish(
-                "Kingsize Cheeseburger",
-                4,
-                false,
-                false
-            )
-        )
-        burgerList.add(
-            Dish(
-                "Bacon Burger",
-                3,
-                false,
-                false
-            )
-        )
-
-        val hotDogList = ArrayList<Dish>()
-
-        hotDogList.add(
-            Dish(
-                "Hot dog",
-                1,
-                false,
-                false
-            )
-        )
-        hotDogList.add(
-            Dish(
-                "Double hot dog",
-                2,
-                false,
-                false
-            )
-        )
-
-        val pizzaList = ArrayList<Dish>()
-
-        pizzaList.add(
-            Dish(
-                "Pizza margherita slice",
-                1,
-                true,
-                false
-            )
-        )
-        pizzaList.add(
-            Dish(
-                "Pizza margherita 30cm",
-                6,
-                true,
-                false
-            )
-        )
-        pizzaList.add(
-            Dish(
-                "Pizza hawaii slice",
-                2,
-                false,
-                false
-            )
-        )
-        pizzaList.add(
-            Dish(
-                "Pizza hawaii 30cm",
-                8,
-                false,
-                false
-            )
-        )
-        pizzaList.add(
-            Dish(
-                "Pizza prosciutto slice",
-                2,
-                false,
-                false
-            )
-        )
-        pizzaList.add(
-            Dish(
-                "Pizza prosciutto 30cm",
-                8,
-                false,
-                false
-            )
-        )
-        pizzaList.add(
-            Dish(
-                "Veggie pizza slice",
-                1,
-                true,
-                false
-            )
-        )
-        pizzaList.add(
-            Dish(
-                "Veggie pizzza 30cm",
-                6,
-                true,
-                false
-            )
-        )
-        pizzaList.add(
-            Dish(
-                "Vegan pizza slice",
-                1,
-                true,
-                true
-            )
-        )
-        pizzaList.add(
-            Dish(
-                "Vegan pizza 30cm",
-                6,
-                true,
-                true
-            )
-        )
-
-        val frenchFriesList = ArrayList<Dish>()
-
-        frenchFriesList.add(
-            Dish(
-                "Kleine friet",
-                1,
-                false,
-                false
-            )
-        )
-        frenchFriesList.add(
-            Dish(
-                "Medium friet",
-                2,
-                false,
-                false
-            )
-        )
-        frenchFriesList.add(
-            Dish(
-                "Grote friet",
-                3,
-                false,
-                false
-            )
-        )
-        frenchFriesList.add(
-            Dish(
-                "Bicky Burger",
-                2,
-                false,
-                false
-            )
-        )
-        frenchFriesList.add(
-            Dish(
-                "Bicky Cheese",
-                2,
-                false,
-                false
-            )
-        )
-        frenchFriesList.add(
-            Dish(
-                "Bitterballen",
-                1,
-                false,
-                false
-            )
-        )
-        frenchFriesList.add(
-            Dish(
-                "2x frikandel",
-                1,
-                false,
-                false
-            )
-        )
-        frenchFriesList.add(
-            Dish(
-                "Mexicano",
-                2,
-                false,
-                false
-            )
-        )
-
-        val kebabList = ArrayList<Dish>()
-        kebabList.add(
-            Dish(
-                "Kleine pita",
-                2,
-                false,
-                false
-            )
-        )
-        kebabList.add(
-            Dish(
-                "Grote pita",
-                3,
-                false,
-                false
-            )
-        )
-        kebabList.add(
-            Dish(
-                "Kleine pita kip",
-                2,
-                false,
-                false
-            )
-        )
-        kebabList.add(
-            Dish(
-                "Grote pita kip",
-                3,
-                false,
-                false
-            )
-        )
-        kebabList.add(
-            Dish(
-                "Kleine pita lamsvlees",
-                2,
-                false,
-                false
-            )
-        )
-        kebabList.add(
-            Dish(
-                "Grote pita lamsvlees",
-                3,
-                false,
-                false
-            )
-        )
-
-        if (id.equals("pizza")) {
-            return MutableLiveData(pizzaList)
-        }
-
-        else if (id.equals("kebab")) {
-            return MutableLiveData(kebabList)
-        }
-
-        else if (id.equals("burger")) {
-            return MutableLiveData(burgerList)
-        }
-
-        else if (id.equals("french_fries")) {
-            return MutableLiveData(frenchFriesList)
-        }
-
-        else {
-            return MutableLiveData(hotDogList)
-        }
-
-
     }
 
 

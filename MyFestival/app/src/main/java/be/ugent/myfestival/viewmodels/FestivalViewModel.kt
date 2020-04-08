@@ -1,25 +1,32 @@
 package be.ugent.myfestival.viewmodels
 
 
+import android.util.Log
 import androidx.lifecycle.*
 import be.ugent.myfestival.data.FestivalRepository
+import be.ugent.myfestival.models.Dish
 
 
 class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewModel() {
 
     fun getWelcomeString(): LiveData<String> = Transformations.map(festivalRepo.getFestivalName()) {
-            value -> "Welkom bij het $value"
+            value -> "Welkom bij $value"
     }
 
-    //TODO dit is gwn copy paste van de repository er moet hier nog iets anders gebeuren
-    //TODO moet sws ook met festivalID
     fun getLineup() = festivalRepo.getLineup()
 
     fun getFoodstandList() = festivalRepo.getFoodstandList()
 
+    fun getFoodstandMenu(id: String) : LiveData<List<Dish>> =  Transformations.map(festivalRepo.getFoodstandList()) {
+            foodstands -> foodstands.filter{ it.id == id }[0].menu
+    }
+
+    fun getTestString(): LiveData<String> = Transformations.map(festivalRepo.test) {
+            value -> "Pls werk: halla"
+    }
+
     fun getNewsfeedItems() = festivalRepo.getNewsfeedItems()
 
-    fun getFoodstandMenu(id: String) = festivalRepo.getFoodstandMenu(id)
 
 
 }
