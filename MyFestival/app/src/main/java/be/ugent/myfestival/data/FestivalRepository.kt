@@ -52,7 +52,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         if (dataSnapshot.exists()) {
-                            name.value = dataSnapshot.value.toString()
+                            name.postValue(dataSnapshot.value.toString())
                             Log.d(TAG, "getName:onDataChange -> name exists")
                         }
                     }
