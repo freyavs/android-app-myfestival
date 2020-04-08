@@ -48,7 +48,7 @@ class FoodFragment : Fragment() {
     }
 
     fun handleItemClick(foodStand: FoodStand) {
-        val action = FoodFragmentDirections.actionFoodFragmentToMenuFragment(foodStand.id, foodStand.foodstandImg, foodStand.name)
+        val action = FoodFragmentDirections.actionFoodFragmentToMenuFragment(foodStand.id, foodStand.logo, foodStand.name)
         findNavController().navigate(action)
 
     }

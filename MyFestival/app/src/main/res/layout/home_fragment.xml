@@ -28,6 +28,15 @@
             android:textSize="35sp"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:text="@{viewModel.testString}"
+            android:textSize="35sp"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <GridLayout
             android:id="@+id/GridLayout1"
             android:layout_width="wrap_content"

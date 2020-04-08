@@ -17,6 +17,11 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
 
     fun getFoodstandList() = festivalRepo.getFoodstandList()
 
+    fun getTestString(): LiveData<String> = Transformations.map(festivalRepo.test) {
+            value -> "Pls werk: $value"
+    }
+
+
     fun getNewsfeedItems() = festivalRepo.getNewsfeedItems()
 
     fun getFoodstandMenu(id: String) = festivalRepo.getFoodstandMenu(id)

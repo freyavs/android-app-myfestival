@@ -2,7 +2,6 @@ package be.ugent.myfestival.data
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import be.ugent.myfestival.models.*
 import be.ugent.myfestival.R
 import be.ugent.myfestival.models.*
 import com.google.firebase.database.DataSnapshot
@@ -11,11 +10,16 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import be.ugent.myfestival.models.*
 
 
 class FestivalRepository(val database: FirebaseDatabase) {
     var name: MutableLiveData<String> = MutableLiveData()
+
+    var newsfeed: MutableLiveData<List<NewsfeedItem>> = MutableLiveData()
+
+    var foodstands: MutableLiveData<List<FoodStand>> = MutableLiveData()
+
+    var test: MutableLiveData<String> = MutableLiveData()
 
     val TAG = "FIREBASEtag"
 
@@ -44,19 +48,14 @@ class FestivalRepository(val database: FirebaseDatabase) {
     // ------------- data voor het home menu -------------------------------------
     fun getFestivalName(): MutableLiveData<String> {
         if (name.value == null) {
-            //TODO: debug info weg
-            addConnectionListener()
-            Log.d(TAG, "Adding listener to name")
             FirebaseDatabase.getInstance()
                 .getReference(festivalID).child("name")
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         if (dataSnapshot.exists()) {
                             name.postValue(dataSnapshot.value.toString())
-                            Log.d(TAG, "getName:onDataChange -> name exists")
                         }
                     }
-
                     override fun onCancelled(databaseError: DatabaseError) {
                         Log.d(TAG, "getName:onCancelled", databaseError.toException())
                     }
@@ -64,6 +63,32 @@ class FestivalRepository(val database: FirebaseDatabase) {
         }
         return name
     }
+
+    fun getFoodstandList2() : MutableLiveData<List<FoodStand>> {
+        if (foodstands.value == null) {
+            addConnectionListener()
+            FirebaseDatabase.getInstance()
+                .getReference(festivalID).child("foodstand").orderByKey()
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            test.postValue("foodstand")
+                            for (childDataSnapshot in dataSnapshot.children) {
+                                Log.v(TAG,"key:"+ childDataSnapshot.getKey()); //displays the key for the node
+                                Log.v(TAG,"name:"+ childDataSnapshot.child("name").getValue());
+                                Log.v(TAG,"menu:"+ childDataSnapshot.child("menu").getValue());
+                                Log.v(TAG,"logo:"+ childDataSnapshot.child("logo").getValue());
+                            }
+                        }
+                    }
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        Log.d(TAG, "getName:onCancelled", databaseError.toException())
+                    }
+                })
+        }
+        return foodstands
+    }
+
 
 
     // -----------------------------  (hardcoded) data voor de lineup --------------------------------
