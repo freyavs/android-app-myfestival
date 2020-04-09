@@ -119,7 +119,8 @@ function addMessage() {
             let message = {
                 title: titel,
                 message: bericht,
-                image: "messages/" + date
+                image: "messages/" + date,
+                date: new Date(),
             };
             ref.push(message);
         })
