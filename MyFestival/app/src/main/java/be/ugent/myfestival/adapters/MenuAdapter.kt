@@ -39,7 +39,7 @@ class MenuAdapter() :
         else if (currentItem.vegan) { dietString = "veganistisch" }
         holder.textView2.text = dietString
 
-        val priceString = currentItem.price.toString()
+        val priceString = currentItem.price
         holder.textView3.text = priceString
     }
 
