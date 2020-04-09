@@ -5,10 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import be.ugent.myfestival.R
 import be.ugent.myfestival.models.*
 import be.ugent.myfestival.utilities.InjectorUtils
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -17,7 +14,7 @@ import java.io.File
 
 class FestivalRepository(val database: FirebaseDatabase) {
     var name: MutableLiveData<String> = MutableLiveData()
-    var newsfeed: MutableLiveData<List<NewsfeedItem>> = MutableLiveData()
+    var newsfeed: MutableLiveData<MutableList<NewsfeedItem>> = MutableLiveData()
     var foodstands: MutableLiveData<List<FoodStand>> = MutableLiveData()
     var test: MutableLiveData<String> = MutableLiveData()
 
@@ -110,6 +107,62 @@ class FestivalRepository(val database: FirebaseDatabase) {
         return foodstands
     }
 
+    // ---------------------- data voor de newsfeed -------------------------------
+
+    // werk hier met childEventListener aangezien er vaak zal toegevoegd etc worden (ivm met andere data die bijna niet zal veranderen)
+
+    fun getNewsfeedItems(): MutableLiveData<MutableList<NewsfeedItem>> {
+        if (newsfeed.value == null) {
+            //todo: sort on timestamp!
+            newsfeed.value = mutableListOf()
+            FirebaseDatabase.getInstance()
+                .getReference(festivalID).child("messages")
+                .addChildEventListener(object : ChildEventListener {
+                    override fun onChildAdded(ds: DataSnapshot, previousChildName: String?) {
+                        var list = newsfeed.value!! //veilig want hierboven maken we al lijst aan voor newsfeed
+
+                        Log.d(TAG, "imageref: ${storageRef.child(ds.child("image").value.toString())}")
+                        val reference = storageRef.child(ds.child("image").value.toString())
+
+                        list.add(NewsfeedItem(
+                            "16:40",
+                            reference,
+                            ds.child("message").value.toString(),
+                            ds.child("title").value.toString()
+                        ))
+                        newsfeed.postValue(list)
+                    }
+
+                    override fun onChildChanged(dataSnapshot: DataSnapshot, previousChildName: String?) {
+                        Log.d(TAG, "onChildChanged: ${dataSnapshot.key}")
+                        // A comment has changed, use the key to determine if we are displaying this
+                        // comment and if so displayed the changed comment.
+                        val newComment = dataSnapshot.getValue()
+                        val commentKey = dataSnapshot.key
+                    }
+
+                    override fun onChildRemoved(dataSnapshot: DataSnapshot) {
+                        Log.d(TAG, "onChildRemoved:" + dataSnapshot.key!!)
+                        // A comment has changed, use the key to determine if we are displaying this
+                        // comment and if so remove it.
+                    }
+
+                    override fun onChildMoved(dataSnapshot: DataSnapshot, previousChildName: String?) {
+                        Log.d(TAG, "onChildMoved:" + dataSnapshot.key!!)
+
+                        // A comment has changed position, use the key to determine if we are
+                        // displaying this comment and if so move it.
+                        val movedComment = dataSnapshot.getValue()
+                        val commentKey = dataSnapshot.key
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        Log.w(TAG, "getNewsfeedItems:onCancelled", databaseError.toException())
+                    }
+            })
+        }
+        return newsfeed
+    }
 
 
     // -----------------------------  (hardcoded) data voor de lineup --------------------------------
@@ -169,6 +222,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
 
 // -------------- (hardcoded) data voor newsfeed ------------------
 
+    /*
 fun getNewsfeedItems(): MutableLiveData<List<NewsfeedItem>> {
     val item1 = NewsfeedItem(
         R.mipmap.bakfietslogo,
@@ -194,6 +248,8 @@ fun getNewsfeedItems(): MutableLiveData<List<NewsfeedItem>> {
 
     return MutableLiveData(listOf(item1, item2, item3))
 }
+*/
+
 
 
 companion object {

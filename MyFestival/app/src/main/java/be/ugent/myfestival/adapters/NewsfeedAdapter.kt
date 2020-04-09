@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import be.ugent.myfestival.R
 import be.ugent.myfestival.models.NewsfeedItem
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.newsfeed_item.view.*
 
 class NewsfeedAdapter() : RecyclerView.Adapter<NewsfeedAdapter.NewsItemViewHolder>(){
@@ -25,18 +26,21 @@ class NewsfeedAdapter() : RecyclerView.Adapter<NewsfeedAdapter.NewsItemViewHolde
     override fun onBindViewHolder(holder: NewsItemViewHolder, position: Int) {
         val post = posts[position]
 
-        holder.organiser.text = post.organiser
-        //holder.time.text = post.time
-        holder.time.text = "${(10..23).shuffled().first()}:${(10..60).shuffled().first()}"
+        holder.title.text = post.title
+        holder.time.text = post.time
         holder.message.text = post.message
-        holder.logo.setImageResource(post.logo)
-        holder.image.setImageResource(post.image)
+
+        if (post.image != null) {
+            Glide.with(holder.image.context)
+                .load(post.image)
+                .into(holder.image)
+        }
     }
 
     override fun getItemCount() = posts.size
 
     class NewsItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val organiser: TextView = itemView.organiser
+        val title: TextView = itemView.organiser
         val time: TextView = itemView.time
         val message: TextView = itemView.message
         val image: ImageView = itemView.image
