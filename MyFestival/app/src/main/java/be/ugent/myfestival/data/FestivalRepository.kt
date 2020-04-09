@@ -5,9 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import be.ugent.myfestival.R
 import be.ugent.myfestival.models.*
 import be.ugent.myfestival.utilities.InjectorUtils
+import com.google.android.gms.auth.api.signin.internal.Storage
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import java.io.File
 
@@ -122,7 +124,13 @@ class FestivalRepository(val database: FirebaseDatabase) {
                         var list = newsfeed.value!! //veilig want hierboven maken we al lijst aan voor newsfeed
 
                         Log.d(TAG, "imageref: ${storageRef.child(ds.child("image").value.toString())}")
-                        val reference = storageRef.child(ds.child("image").value.toString())
+
+
+                        val image = ds.child("image").value
+                        var reference : StorageReference? = null
+                        if (image != null) {
+                            reference = storageRef.child(image.toString())
+                        }
 
                         list.add(NewsfeedItem(
                             "16:40",

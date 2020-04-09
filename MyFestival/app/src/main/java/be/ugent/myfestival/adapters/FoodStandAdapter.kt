@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import be.ugent.myfestival.R
 import be.ugent.myfestival.models.FoodStand
+import be.ugent.myfestival.utilities.GlideApp
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.foodstand_item.view.*
 
@@ -37,7 +38,7 @@ class FoodStandAdapter(val clickListener: (FoodStand) -> Unit) :
 
         //holder.imageView.setImageResource(currentItem.logo)
 
-        Glide.with(holder.imageView.context)
+    GlideApp.with(holder.imageView.context)
             .load(currentItem.logo)
             .into(holder.imageView)
 

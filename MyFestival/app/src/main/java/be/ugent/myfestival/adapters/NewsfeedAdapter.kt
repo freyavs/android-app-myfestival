@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import be.ugent.myfestival.R
 import be.ugent.myfestival.models.NewsfeedItem
+import be.ugent.myfestival.utilities.GlideApp
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.newsfeed_item.view.*
 
@@ -31,7 +32,7 @@ class NewsfeedAdapter() : RecyclerView.Adapter<NewsfeedAdapter.NewsItemViewHolde
         holder.message.text = post.message
 
         if (post.image != null) {
-            Glide.with(holder.image.context)
+            GlideApp.with(holder.image.context)
                 .load(post.image)
                 .into(holder.image)
         }
