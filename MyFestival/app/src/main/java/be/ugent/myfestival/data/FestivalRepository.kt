@@ -10,18 +10,19 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import java.io.File
 
 
 class FestivalRepository(val database: FirebaseDatabase) {
     var name: MutableLiveData<String> = MutableLiveData()
-
     var newsfeed: MutableLiveData<List<NewsfeedItem>> = MutableLiveData()
-
     var foodstands: MutableLiveData<List<FoodStand>> = MutableLiveData()
-
     var test: MutableLiveData<String> = MutableLiveData()
 
     val TAG = "FIREBASEtag"
+
+    val storageRef = Firebase.storage.reference
 
     //TODO: deadline 2 - festivalID kunnen kiezen
     val festivalID = "-M3b9hJNsFaCXAi8Gegq"
@@ -64,7 +65,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
         return name
     }
 
-    // ----------------------------- data voor de foodstands -------------------------------
+    // ---------------- data voor de foodstands -------------------------------
     fun getFoodstandList() : MutableLiveData<List<FoodStand>> {
         if (foodstands.value == null) {
             addConnectionListener()
@@ -73,9 +74,20 @@ class FestivalRepository(val database: FirebaseDatabase) {
                 .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         if (dataSnapshot.exists()) {
+                            var i = 0
                             var foodList = mutableListOf<FoodStand>()
                             for (ds in dataSnapshot.children) {
-                                //TODO: logo
+                                i+=1
+                                Log.d(TAG, "logo: " + ds.child("image").value)
+
+                                val logoRef = storageRef.child(ds.child("image").value.toString())
+                                val localFile = File.createTempFile("foodstand", ".png")
+                                logoRef.getFile(localFile).addOnSuccessListener {
+                                    Log.d(TAG, "tempfile created at " + localFile.absolutePath)
+                                }.addOnFailureListener {
+                                    Log.d(TAG, "tempfile failed")
+                                }
+
                                 var dishList = mutableListOf<Dish>()
                                 ds.child("menu").children.mapNotNullTo(dishList) {
                                     it.getValue(Dish::class.java)
