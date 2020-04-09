@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import be.ugent.myfestival.R
 import be.ugent.myfestival.models.*
+import be.ugent.myfestival.utilities.InjectorUtils
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -20,7 +21,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
     var foodstands: MutableLiveData<List<FoodStand>> = MutableLiveData()
     var test: MutableLiveData<String> = MutableLiveData()
 
-    val TAG = "FIREBASEtag"
+    val TAG = "FestivalRepository"
 
     val storageRef = Firebase.storage.reference
 
@@ -74,30 +75,28 @@ class FestivalRepository(val database: FirebaseDatabase) {
                 .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         if (dataSnapshot.exists()) {
-                            var i = 0
                             var foodList = mutableListOf<FoodStand>()
                             for (ds in dataSnapshot.children) {
-                                i+=1
-                                Log.d(TAG, "logo: " + ds.child("image").value)
-
+                                //todo: cache legen zodat geen dubbele foto's worden opgeslaan ( getCacheDir )
                                 val logoRef = storageRef.child(ds.child("image").value.toString())
                                 val localFile = File.createTempFile("foodstand", ".png")
-                                logoRef.getFile(localFile).addOnSuccessListener {
-                                    Log.d(TAG, "tempfile created at " + localFile.absolutePath)
-                                }.addOnFailureListener {
-                                    Log.d(TAG, "tempfile failed")
-                                }
 
+                                //haal al het eten van een bepaalde foodstand af
                                 var dishList = mutableListOf<Dish>()
                                 ds.child("menu").children.mapNotNullTo(dishList) {
                                     it.getValue(Dish::class.java)
                                 }
-                                foodList.add (FoodStand(
-                                    ds.key!!,
-                                    ds.child("name").value!!.toString(),
-                                    R.drawable.ic_fastfood,
-                                    dishList
-                                ))
+                                logoRef.getFile(localFile).addOnSuccessListener {
+                                    //pas als image ingeladen is, maak foodstand aan
+                                    foodList.add (FoodStand(
+                                        ds.key!!,
+                                        ds.child("name").value!!.toString(),
+                                        localFile.absolutePath,
+                                        dishList
+                                    ))
+                                }.addOnFailureListener {
+                                    Log.d(TAG, "Tempfile failed: check if foodstand submitted a logo!")
+                                }
                             }
                             foodstands.postValue(foodList)
                         }

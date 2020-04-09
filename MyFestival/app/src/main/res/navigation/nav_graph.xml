@@ -57,7 +57,7 @@
             android:defaultValue="pizza" />
         <argument
             android:name="foodstand_img"
-            app:argType="integer" />
+            app:argType="string" />
         <argument
             android:name="foodstand_name"
             app:argType="string"

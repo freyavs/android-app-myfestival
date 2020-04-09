@@ -75,6 +75,12 @@ dependencies {
     implementation "com.google.firebase:firebase-analytics:17.3.0"
     implementation "com.google.firebase:firebase-database-ktx:19.2.1"
     implementation 'com.google.firebase:firebase-storage-ktx:19.1.1'
+
+    //Glide
+    implementation 'com.github.bumptech.glide:annotations:4.7.1'
+    kapt 'com.github.bumptech.glide:compiler:4.7.1'
+    implementation "com.github.bumptech.glide:okhttp3-integration:4.6.1"
+    implementation 'com.github.bumptech.glide:annotations:4.7.1'
 }
 
 
