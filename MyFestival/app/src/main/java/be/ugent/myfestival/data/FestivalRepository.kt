@@ -123,9 +123,6 @@ class FestivalRepository(val database: FirebaseDatabase) {
                     override fun onChildAdded(ds: DataSnapshot, previousChildName: String?) {
                         var list = newsfeed.value!! //veilig want hierboven maken we al lijst aan voor newsfeed
 
-                        Log.d(TAG, "imageref: ${storageRef.child(ds.child("image").value.toString())}")
-
-
                         val image = ds.child("image").value
                         var reference : StorageReference? = null
                         if (image != null) {

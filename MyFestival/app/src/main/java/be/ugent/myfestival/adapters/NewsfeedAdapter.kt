@@ -45,6 +45,8 @@ class NewsfeedAdapter() : RecyclerView.Adapter<NewsfeedAdapter.NewsItemViewHolde
         val time: TextView = itemView.time
         val message: TextView = itemView.message
         val image: ImageView = itemView.image
+
+        //TODO: logo van het festival uit viewmodel halen en binden op xml
         val logo: ImageView = itemView.image
     }
 }
