@@ -87,24 +87,42 @@ function addStage() {
 }
 function addFoodstand() {
     let naam = document.getElementById("id_naam_foodstand").value;
+    let image = document.getElementById('id_foto_foodstand').files.item(0);
+    let metadata = {
+        contentType: image.type,
+    };
+    let date = new Date().toISOString();
     if(naam !== ''){
-        ref = database.ref(id+ "/foodstand");
-        let foodstand = {
-            name: naam
-        };
-        ref.push(foodstand);
+        var storageRef = firebase.storage().ref('foodstands/' + date);
+        storageRef.put(image, metadata).then(function (snapshot) {
+            ref = database.ref(id + "/foodstand");
+            let foodstand = {
+                name: naam,
+                image: "foodstands/" + date
+            };
+            ref.push(foodstand);
+        })
     }
 }
 function addMessage() {
     let titel = document.getElementById("id_titel_message").value;
     let bericht = document.getElementById("id_bericht_message").value;
-    if(titel !== '' && bericht !== ''){
-        ref = database.ref(id+"/messages");
-        let message = {
-            title: titel,
-            message: bericht
-        };
-        ref.push(message);
+    let image = document.getElementById('id_foto_message').files.item(0);
+    let metadata = {
+        contentType: image.type,
+    };
+    let date = new Date().toISOString();
+    if (titel !== '' && bericht !== '') {
+        var storageRef = firebase.storage().ref('messages/'+date);
+        storageRef.put(image, metadata).then(function (snapshot) {
+            ref = database.ref(id + "/messages");
+            let message = {
+                title: titel,
+                message: bericht,
+                image: "messages/" + date
+            };
+            ref.push(message);
+        })
     }
 }
 
