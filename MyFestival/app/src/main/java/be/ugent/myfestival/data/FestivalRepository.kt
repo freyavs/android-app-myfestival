@@ -16,6 +16,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
     var newsfeed: MutableLiveData<MutableList<NewsfeedItem>> = MutableLiveData()
     var foodstands: MutableLiveData<List<FoodStand>> = MutableLiveData()
     var lineupstages: MutableLiveData<List<Stage>> = MutableLiveData()
+    var logo: MutableLiveData<String> = MutableLiveData()
     var test: MutableLiveData<String> = MutableLiveData()
 
     val TAG = "FestivalRepository"
@@ -44,7 +45,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
         })
     }
 
-    // ------------- data voor het home menu -------------------------------------
+    // ------------- data voor het festival algemeen (home menu, ..)  -------------------------------------
     fun getFestivalName(): MutableLiveData<String> {
         if (name.value == null) {
             FirebaseDatabase.getInstance()
@@ -62,6 +63,34 @@ class FestivalRepository(val database: FirebaseDatabase) {
         }
         return name
     }
+
+    fun getFestivalLogo(): MutableLiveData<String> {
+        if (logo.value == null) {
+            FirebaseDatabase.getInstance()
+                .getReference(festivalID).child("logo")
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(ds: DataSnapshot) {
+                        if (ds.exists()) {
+                            //todo: eerst vorige tempfile verwijderen ofzo (logo wordt wss toch nooit aangepast eig)
+                            val logoRef = storageRef.child(ds.value.toString())
+                            Log.d(TAG, "logo: " + ds.value.toString())
+                            val localFile = File.createTempFile("festival_logo", ".png")
+                            logoRef.getFile(localFile).addOnSuccessListener {
+                                logo.postValue(localFile.absolutePath)
+                                Log.d(TAG, "Tempfile created for logo of festival.")
+                            }.addOnFailureListener {
+                                Log.d(TAG, "Tempfile failed: check if festival submitted a logo!")
+                            }
+                        }
+                    }
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        Log.d(TAG, "getFestivalLogo:onCancelled", databaseError.toException())
+                    }
+                })
+        }
+        return logo
+    }
+
 
     // ---------------- data voor de foodstands -------------------------------
     fun getFoodstandList() : MutableLiveData<List<FoodStand>> {
@@ -193,7 +222,6 @@ class FestivalRepository(val database: FirebaseDatabase) {
                                     ds.child("name").value.toString(),
                                     concerts
                                 ))
-                                Log.d(TAG, "stage name: " + ds.child("name").value.toString() )
                             }
                             lineupstages.postValue(stages)
                         }

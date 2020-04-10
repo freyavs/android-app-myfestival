@@ -32,7 +32,7 @@ class NewsfeedFragment : Fragment() {
             InjectorUtils.provideFestivalViewModelFactory()
         }
 
-        var adapter = NewsfeedAdapter()
+        var adapter = NewsfeedAdapter(viewModel)
 
         viewModel.getNewsfeedItems().observe(viewLifecycleOwner, Observer { posts -> adapter.posts = posts})
 
