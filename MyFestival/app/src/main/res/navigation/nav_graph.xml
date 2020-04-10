@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_homeFragment_to_mapFragment"
             app:destination="@id/mapFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_festivalChooserFragment"
+            app:destination="@id/festivalChooserFragment" />
     </fragment>
     <fragment
         android:id="@+id/newsfeedFragment"
@@ -62,6 +65,14 @@
             android:name="foodstand_name"
             app:argType="string"
             android:defaultValue="Foodstand" />
+    </fragment>
+    <fragment
+        android:id="@+id/festivalChooserFragment"
+        android:name="be.ugent.myfestival.FestivalChooserFragment"
+        android:label="FestivalChooserFragment" >
+        <action
+            android:id="@+id/action_festivalChooserFragment_to_homeFragment2"
+            app:destination="@id/homeFragment" />
     </fragment>
 
 

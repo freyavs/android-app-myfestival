@@ -11,22 +11,24 @@ import kotlinx.android.synthetic.main.festival_chooser_item.view.*
 
 class FestivalChooserAdapter(val clickListener: (FestivalChooser) -> Unit) :
     RecyclerView.Adapter<FestivalChooserAdapter.FestivalChooserViewHolder>(){
+
     var festivalList = emptyList<FestivalChooser>()
+
     class FestivalChooserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val textView1: TextView = itemView.festival_name
+        val textView: TextView = itemView.festival_name
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FestivalChooserViewHolder {
         val itemView = LayoutInflater
             .from(parent.context)
-            .inflate(R.layout.foodstand_item,parent,false)
+            .inflate(R.layout.festival_chooser_item,parent,false)
         return FestivalChooserViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: FestivalChooserViewHolder, position: Int) {
         val currentItem = festivalList[position]
 
-        holder.textView1.text = currentItem.name
+        holder.textView.text = currentItem.name
         holder.itemView.setOnClickListener{clickListener(currentItem)}
     }
 

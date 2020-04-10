@@ -7,6 +7,6 @@ import be.ugent.myfestival.data.FestivalRepository
 class FestivalChooserViewModelFactory(private val repository: FestivalRepository) : ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return FestivalViewModel(repository) as T
+        return FestivalChooserViewModel(repository) as T
     }
 }

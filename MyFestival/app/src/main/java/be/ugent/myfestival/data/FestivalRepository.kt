@@ -18,6 +18,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
     var newsfeed: MutableLiveData<List<NewsfeedItem>> = MutableLiveData()
 
     var foodstands: MutableLiveData<List<FoodStand>> = MutableLiveData()
+    var festivalList: MutableLiveData<List<FestivalChooser>> = MutableLiveData()
 
     var test: MutableLiveData<String> = MutableLiveData()
 
@@ -184,6 +185,35 @@ fun getNewsfeedItems(): MutableLiveData<List<NewsfeedItem>> {
     return MutableLiveData(listOf(item1, item2, item3))
 }
 
+    // -------------- (hardcoded) data voor festival chooser ------------------
+    fun getFestivals(): MutableLiveData<List<FestivalChooser>>{
+        if(festivalList.value == null){
+            addConnectionListener()
+            FirebaseDatabase.getInstance()
+                .getReference()
+                .addValueEventListener(object : ValueEventListener{
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        if(dataSnapshot.exists()){
+                            val festivalChoosers = mutableListOf<FestivalChooser>()
+                            for(ds in dataSnapshot.children){
+                                festivalChoosers.add(
+                                    FestivalChooser(
+                                        ds.key!!,
+                                        ds.child("name").value!!.toString()
+                                    )
+                                )
+                            }
+                            festivalList.postValue(festivalChoosers)
+                        }
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        Log.d(TAG, "foutje", databaseError.toException())
+                    }
+                })
+        }
+        return festivalList
+    }
 
 companion object {
     @Volatile
