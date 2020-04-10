@@ -28,7 +28,6 @@ class HomeFragment : Fragment() {
         viewModel.setId(context?.getSharedPreferences("FestivalPreference", Context.MODE_PRIVATE))
 
         //kijken of er een ID is, zo niet gaat het naar het festival kies scherm
-        Log.v("IDsetter", "--------------")
         Log.v("IDsetter", viewModel.hasFestival().toString())
         if(!viewModel.hasFestival()){
             val action = HomeFragmentDirections.actionHomeFragmentToFestivalChooserFragment()

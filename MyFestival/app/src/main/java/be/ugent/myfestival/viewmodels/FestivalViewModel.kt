@@ -19,8 +19,6 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
     }
 
     fun hasFestival(): Boolean{
-
-        Log.v("IDsetter", festivalRepo.festivalID)
         return festivalRepo.festivalID != "Null"
     }
 
