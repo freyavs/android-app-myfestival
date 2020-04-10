@@ -2,22 +2,20 @@ package be.ugent.myfestival.data
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import be.ugent.myfestival.R
 import be.ugent.myfestival.models.*
-import be.ugent.myfestival.utilities.InjectorUtils
-import com.google.android.gms.auth.api.signin.internal.Storage
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import java.io.File
-
+import java.time.LocalDateTime
 
 class FestivalRepository(val database: FirebaseDatabase) {
     var name: MutableLiveData<String> = MutableLiveData()
     var newsfeed: MutableLiveData<MutableList<NewsfeedItem>> = MutableLiveData()
     var foodstands: MutableLiveData<List<FoodStand>> = MutableLiveData()
+    var lineupstages: MutableLiveData<List<Stage>> = MutableLiveData()
     var test: MutableLiveData<String> = MutableLiveData()
 
     val TAG = "FestivalRepository"
@@ -76,7 +74,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
                         if (dataSnapshot.exists()) {
                             var foodList = mutableListOf<FoodStand>()
                             for (ds in dataSnapshot.children) {
-                                //todo: cache legen zodat geen dubbele foto's worden opgeslaan ( getCacheDir )
+                                //todo: cache legen zodat geen dubbele foto's worden opgeslaan of mss zelfs gewoon geen foto's opslaan ( getCacheDir )
                                 val logoRef = storageRef.child(ds.child("image").value.toString())
                                 val localFile = File.createTempFile("foodstand", ".png")
 
@@ -115,7 +113,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
 
     fun getNewsfeedItems(): MutableLiveData<MutableList<NewsfeedItem>> {
         if (newsfeed.value == null) {
-            //todo: sort on timestamp!
+            //todo: sort on timestamp & timestamp aflezen uit databank ofc
             newsfeed.value = mutableListOf()
             FirebaseDatabase.getInstance()
                 .getReference(festivalID).child("messages")
@@ -137,6 +135,8 @@ class FestivalRepository(val database: FirebaseDatabase) {
                         ))
                         newsfeed.postValue(list)
                     }
+
+                    //todo: rest van volgende functies invullen
 
                     override fun onChildChanged(dataSnapshot: DataSnapshot, previousChildName: String?) {
                         Log.d(TAG, "onChildChanged: ${dataSnapshot.key}")
@@ -169,93 +169,43 @@ class FestivalRepository(val database: FirebaseDatabase) {
         return newsfeed
     }
 
+    // -------------------------- data voor de lineup ------------------------
 
-    // -----------------------------  (hardcoded) data voor de lineup --------------------------------
-    fun getLineup() : MutableLiveData<List<LineupDay>> {
-        val concertsMain = listOf(
-            Concert(
-                "Json Derulo",
-                "18:30",
-                "20:00"
-            ),
-            Concert(
-                "Zwangere Guy",
-                "20:30",
-                "22:00"
-            )
-        )
-        val concertsForest = listOf(
-            Concert(
-                "Frank Ocean",
-                "18:30",
-                "20:00"
-            ),
-            Concert(
-                "George Bucks",
-                "20:30",
-                "22:00"
-            )
-        )
-        val concertsHerbakker = listOf(
-            Concert(
-                "Eddy de Ketelaeare",
-                "18:30",
-                "22:00"
-            )
-        )
+    fun getLineup() : MutableLiveData<List<Stage>> {
+        if (lineupstages.value == null) {
+            addConnectionListener()
+            FirebaseDatabase.getInstance()
+                .getReference(festivalID).child("stages")
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            val stages = mutableListOf<Stage>()
+                            for (ds in dataSnapshot.children) {
+                                val concerts = mutableListOf<Concert>()
+                                for (dss in ds.child("concerts").children) {
+                                   concerts.add(Concert(
+                                        dss.child("artist").value.toString(),
+                                        LocalDateTime.parse(dss.child("startdate").value.toString()),
+                                        LocalDateTime.parse(dss.child("enddate").value.toString())
+                                    ))
+                                }
+                                stages.add(Stage(
+                                    ds.child("name").value.toString(),
+                                    concerts
+                                ))
+                                Log.d(TAG, "stage name: " + ds.child("name").value.toString() )
+                            }
+                            lineupstages.postValue(stages)
+                        }
+                    }
 
-        val Mainstage =
-            Stage("Mainstage", concertsMain)
-        val Forestage =
-            Stage("Foreststage", concertsForest)
-        val Herbakkerstage = Stage(
-            "Herbakkerstage",
-            concertsHerbakker
-        )
-
-        val stages = listOf(Mainstage, Forestage)
-
-        val day1 = LineupDay("Donderdag", stages)
-        val day2 = LineupDay(
-            "Vrijdag",
-            listOf(Herbakkerstage)
-        )
-
-        return MutableLiveData(listOf(day1, day2))
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        Log.d(TAG, "getLineup:onCancelled", databaseError.toException())
+                    }
+                })
+        }
+        return lineupstages
     }
-
-
-// -------------- (hardcoded) data voor newsfeed ------------------
-
-    /*
-fun getNewsfeedItems(): MutableLiveData<List<NewsfeedItem>> {
-    val item1 = NewsfeedItem(
-        R.mipmap.bakfietslogo,
-        "Bakfiets",
-        "16:40",
-        R.mipmap.uberdope,
-        "Vanavond aan de dope met Uberdope"
-    )
-    val item2 = NewsfeedItem(
-        R.mipmap.bakfietslogo,
-        "Bakfiets",
-        "16:40",
-        R.mipmap.martinipost,
-        "Even weg van uw kinderen? Kom genieten aan onze martinistand"
-    )
-    val item3 = NewsfeedItem(
-        R.mipmap.bakfietslogo,
-        "Bakfiets",
-        "16:40",
-        R.mipmap.randanimatie,
-        "Uw kinderen even beu? Laat ze achter bij onze volkspelen"
-    )
-
-    return MutableLiveData(listOf(item1, item2, item3))
-}
-*/
-
-
 
 companion object {
     @Volatile
