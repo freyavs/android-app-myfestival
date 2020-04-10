@@ -19,18 +19,20 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //kijken of er een ID is, zo niet gaat het naar het festival kies scherm
-        val preference = context?.getSharedPreferences("FestivalPreference", Context.MODE_PRIVATE)
-        val id = preference?.getString("ID","")
-        if(id == "Null"){
-            val action = HomeFragmentDirections.actionHomeFragmentToFestivalChooserFragment()
-            findNavController().navigate(action)
-        }
         val binding = HomeFragmentBinding.inflate(inflater,container,false)
         binding.lifecycleOwner = this
 
         val viewModel by activityViewModels<FestivalViewModel> {
             InjectorUtils.provideFestivalViewModelFactory()
+        }
+        viewModel.setId(context?.getSharedPreferences("FestivalPreference", Context.MODE_PRIVATE))
+
+        //kijken of er een ID is, zo niet gaat het naar het festival kies scherm
+        Log.v("IDsetter", "--------------")
+        Log.v("IDsetter", viewModel.hasFestival().toString())
+        if(!viewModel.hasFestival()){
+            val action = HomeFragmentDirections.actionHomeFragmentToFestivalChooserFragment()
+            findNavController().navigate(action)
         }
 
         binding.viewModel = viewModel
