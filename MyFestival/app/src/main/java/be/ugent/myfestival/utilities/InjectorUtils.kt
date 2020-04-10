@@ -1,5 +1,6 @@
 package be.ugent.myfestival.utilities
 
+import be.ugent.myfestival.viewmodels.FestivalChooserViewModelFactory
 import android.R
 import android.net.Uri
 import be.ugent.myfestival.BuildConfig
@@ -26,6 +27,13 @@ object InjectorUtils {
 
     fun provideLineupViewModelFactory() =
         LineupViewModelFactory(
+            getFestivalRepository(
+                db
+            )
+        )
+
+    fun provideFestivalChooserViewModelFactory() =
+        FestivalChooserViewModelFactory(
             getFestivalRepository(
                 db
             )
