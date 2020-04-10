@@ -26,7 +26,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
     val storageRef = Firebase.storage.reference
 
     //TODO: deadline 2 - festivalID kunnen kiezen
-    val festivalID = "-M3b9hJNsFaCXAi8Gegq"
+    var festivalID = "Null"
 
     //voor debug redenen:
     val connectedRef = Firebase.database.getReference(".info/connected")
