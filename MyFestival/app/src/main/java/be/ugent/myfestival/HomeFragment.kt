@@ -19,10 +19,13 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        /*
-        het ID uit de preffence halen
+        //kijken of er een ID is, zo niet gaat het naar het festival kies scherm
         val preference = context?.getSharedPreferences("FestivalPreference", Context.MODE_PRIVATE)
-        Log.v("MyActivity", preference?.getString("ID",""))*/
+        val id = preference?.getString("ID","")
+        if(id == "Null"){
+            val action = HomeFragmentDirections.actionHomeFragmentToFestivalChooserFragment()
+            findNavController().navigate(action)
+        }
         val binding = HomeFragmentBinding.inflate(inflater,container,false)
         binding.lifecycleOwner = this
 

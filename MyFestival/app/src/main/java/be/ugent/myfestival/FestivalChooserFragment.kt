@@ -42,6 +42,11 @@ class FestivalChooserFragment : Fragment() {
             setHasFixedSize(true)
         }
 
+        val preference = context?.getSharedPreferences("FestivalPreference", Context.MODE_PRIVATE)
+        val editor = preference?.edit()
+        editor?.putString("ID","Null")
+        editor?.apply()
+
         return binding.root
     }
 
