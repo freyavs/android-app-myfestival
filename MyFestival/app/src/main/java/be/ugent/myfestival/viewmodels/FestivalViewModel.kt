@@ -33,7 +33,7 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
     }
 
     fun getTestString(): LiveData<String> = Transformations.map(festivalRepo.test) {
-            value -> "Pls werk: halla"
+            _ -> "Pls werk: halla"
     }
 
     fun getNewsfeedItems() = festivalRepo.getNewsfeedItems()
