@@ -120,7 +120,7 @@ function addMessage() {
                 title: titel,
                 message: bericht,
                 image: "messages/" + date,
-                date: new Date(),
+                date: date
             };
             ref.push(message);
         })
@@ -137,6 +137,21 @@ function uploadMap() {
         ref = database.ref(id);
         let updates= {};
         updates['location'] = "maps/"+id;
+        ref.update(updates);
+        location.reload();
+    })
+}
+
+function uploadLogo() {
+    let map = document.getElementById('id_logo').files.item(0);
+    let metadata = {
+        contentType: map.type,
+    };
+    var storageRef = firebase.storage().ref('logo/'+id);
+    storageRef.put(map, metadata).then(function (snapshot) {
+        ref = database.ref(id);
+        let updates= {};
+        updates['logo'] = "logo/"+id;
         ref.update(updates);
         location.reload();
     })
