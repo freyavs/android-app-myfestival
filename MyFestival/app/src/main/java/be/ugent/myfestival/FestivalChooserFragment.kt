@@ -1,10 +1,12 @@
 package be.ugent.myfestival
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -30,7 +32,7 @@ class FestivalChooserFragment : Fragment() {
         }
         val adapter =
             FestivalChooserAdapter() { festivalChooser: FestivalChooser ->
-                handleItemClick()
+                handleItemClick(festivalChooser)
             }
         viewModel.getFestivals().observe(viewLifecycleOwner, Observer { festivals -> adapter.festivalList = festivals })
 
@@ -43,7 +45,12 @@ class FestivalChooserFragment : Fragment() {
         return binding.root
     }
 
-    private fun handleItemClick() {
+    private fun handleItemClick(festivalChooser: FestivalChooser) {
+
+        val preference = context?.getSharedPreferences("FestivalPreference", Context.MODE_PRIVATE)
+        val editor = preference?.edit()
+        editor?.putString("ID",festivalChooser.id)
+        editor?.apply()
         val action = FestivalChooserFragmentDirections.actionFestivalChooserFragmentToHomeFragment2()
         findNavController().navigate(action)
     }

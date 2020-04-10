@@ -1,6 +1,8 @@
 package be.ugent.myfestival
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +19,10 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        /*
+        het ID uit de preffence halen
+        val preference = context?.getSharedPreferences("FestivalPreference", Context.MODE_PRIVATE)
+        Log.v("MyActivity", preference?.getString("ID",""))*/
         val binding = HomeFragmentBinding.inflate(inflater,container,false)
         binding.lifecycleOwner = this
 
