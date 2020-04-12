@@ -2,6 +2,7 @@ package be.ugent.myfestival
 
 import android.R
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,12 +10,12 @@ import android.widget.Button
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import be.ugent.myfestival.adapters.DayAdapter
 import be.ugent.myfestival.databinding.LineupFragmentBinding
 import be.ugent.myfestival.utilities.InjectorUtils
 import be.ugent.myfestival.viewmodels.LineupViewModel
 import kotlinx.android.synthetic.main.lineup_fragment.*
+import kotlinx.android.synthetic.main.lineup_fragment.view.*
 
 
 /**
@@ -39,10 +40,6 @@ class LineupFragment : Fragment() {
 
         binding.viewModel = viewModel
 
-        val button = Button(this.context)
-        button.setText("A Button")
-        buttonsLayout.addView(button)
-
         /*
         adapter =
             DayAdapter(this.childFragmentManager)
@@ -61,5 +58,14 @@ class LineupFragment : Fragment() {
 
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val button = Button(this.context)
+        button.setText("A Button")
+        val layout : LinearLayout = buttons_layout
+        Log.d("HELPP", layout.toString())
+        Log.d("HELPP", button.text.toString())
+        layout.addView(button)
     }
 }
