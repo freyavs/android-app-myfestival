@@ -10,9 +10,11 @@ import android.widget.Button
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import be.ugent.myfestival.adapters.DayAdapter
 import be.ugent.myfestival.databinding.LineupFragmentBinding
 import be.ugent.myfestival.utilities.InjectorUtils
+import be.ugent.myfestival.viewmodels.FestivalViewModel
 import be.ugent.myfestival.viewmodels.LineupViewModel
 import kotlinx.android.synthetic.main.lineup_fragment.*
 import kotlinx.android.synthetic.main.lineup_fragment.view.*
@@ -24,6 +26,7 @@ import kotlinx.android.synthetic.main.lineup_fragment.view.*
 class LineupFragment : Fragment() {
 
     lateinit var adapter: DayAdapter
+    lateinit var viewModel : FestivalViewModel
 
 
     override fun onCreateView(
@@ -40,32 +43,24 @@ class LineupFragment : Fragment() {
 
         binding.viewModel = viewModel
 
-        /*
+        for (day in viewModel.getAllDaysSorted().value!!){
+            val button = Button(this.context)
+            button.setText(day.toString())
+            val layout : LinearLayout = binding.root.buttons_layout
+            button.setOnClickListener { viewModel.clickedDay(day) }
+            layout.addView(button)
+        }
+
         adapter =
             DayAdapter(this.childFragmentManager)
         binding.stageViewer.adapter = adapter
 
         viewModel.getCurrentStages().observe(viewLifecycleOwner, Observer { stages -> adapter.notifyChange(stages)} )
 
-        binding.previousDayHandler = View.OnClickListener {
-            viewModel.previousDayClicked()
-        }
-        binding.nextDayHandler = View.OnClickListener {
-            viewModel.nextDayClicked()
-        }
-        */
         binding.setLifecycleOwner(this)
 
 
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val button = Button(this.context)
-        button.setText("A Button")
-        val layout : LinearLayout = buttons_layout
-        Log.d("HELPP", layout.toString())
-        Log.d("HELPP", button.text.toString())
-        layout.addView(button)
-    }
 }

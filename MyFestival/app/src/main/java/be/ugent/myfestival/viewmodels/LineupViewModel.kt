@@ -1,5 +1,6 @@
 package be.ugent.myfestival.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.*
 import be.ugent.myfestival.data.FestivalRepository
 import be.ugent.myfestival.models.Stage
@@ -11,22 +12,17 @@ import java.util.*
 
 class LineupViewModel(private val festivalRepo : FestivalRepository) : ViewModel() {
 
-    //todo: lineup moet ook currentStages beinvloeden
     var lineup = festivalRepo.getLineup()
 
-    //todo: currentDay eig weg als we met tabs werken en gwn opvragen via getStages("day")
-    var currentDay : MutableLiveData<Int> = MutableLiveData(0)
+    val TAG = "myFestivalTag"
 
-    //TODO: dit mss gebruiken voor swipen tussen stages of gwn wegdoen?
-    var nextDayClickable = MutableLiveData(true)
-    var previousDayClickable = MutableLiveData(true)
+    //TODO: als 'vandaag' tussen beschikbare dagen zit, zorg dan dat het start op vandaag, anders op de 1ste dag
+    var currentDay: MutableLiveData<Date> = MutableLiveData()
 
-
-    //TODO: gebruik dit voor tabs in te vullen van de lineup (geeft gesorteerde lijst van dagen dus bv "23/04, 24/04, 25/04")
     fun getAllDaysSorted() : LiveData<List<Date>> = Transformations.map(lineup) {stages ->
+        Log.d(TAG, "getting sorted days")
         val concerts = stages.flatMap{ it.concerts }
         concerts.map{ Date.from(it.start.atZone(ZoneId.systemDefault()).toInstant()) }.distinct().sorted()
-
        // zo zet je de dates om naar strings van de dagen: uniqueDates.map{SimpleDateFormat("EEEE").format(it)}
     }
 
@@ -34,38 +30,24 @@ class LineupViewModel(private val festivalRepo : FestivalRepository) : ViewModel
     fun getToday(): String = SimpleDateFormat("EEEE").format(LocalDate.now())
 
     fun getStages(day: Date): LiveData<List<Stage>> = Transformations.map(lineup) { stages ->
-        //todo filter voor elke stage lijst van concerts op basis van datum
-        listOf<Stage>()
+        val list = mutableListOf<Stage>()
+        for (stage in stages){
+            var concerts = stage.concerts.filter{Date.from(it.start.atZone(ZoneId.systemDefault()).toInstant()) == day}
+            concerts = concerts.sortedBy { concert -> concert.start }
+            list.add(Stage(stage.name, concerts))
+        }
+        list
     }
 
+    fun clickedDay(day: Date) {
+        currentDay.postValue(day)
+    }
 
-    //TODO: deze functies hieronder refactoren of eig gewoon wegdoen en functies hierboven gebruiken
-
+    //todo: moet nog beter dan met getalldayssorted...
     fun getCurrentStages() : LiveData<List<Stage>> =  Transformations.map(currentDay) { day ->
-        val lineupDay = lineup.value?.get(day)
-        emptyList<Stage>()
+        Log.d(TAG, "GET CURRENTS STAGES: " + day.toString())
+        getStages(day).value!!
     }
-
-
-    fun getCurrentDayString(): LiveData<String> = Transformations.map(currentDay) { day ->
-        val lineupDay = lineup.value?.get(day)
-        "today"
-    }
-
-
-    fun nextDayClicked() {
-        if (currentDay.value!! < 2 ) {
-            currentDay.postValue(1)
-        }
-
-    }
-
-    fun previousDayClicked(){
-        if (currentDay.value!! > 0){
-            currentDay.postValue(0)
-        }
-    }
-
 
 
 }

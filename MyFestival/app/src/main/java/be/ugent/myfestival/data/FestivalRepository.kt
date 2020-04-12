@@ -19,7 +19,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
     var logo: MutableLiveData<String> = MutableLiveData()
     var map: MutableLiveData<String> = MutableLiveData()
 
-    val TAG = "FestivalRepository"
+    val TAG = "myFestivalTag"
 
     val storageRef = Firebase.storage.reference
 
@@ -235,6 +235,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
                 .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         if (dataSnapshot.exists()) {
+                            Log.d(TAG, "catching lineup")
                             val stages = mutableListOf<Stage>()
                             for (ds in dataSnapshot.children) {
                                 val concerts = mutableListOf<Concert>()
