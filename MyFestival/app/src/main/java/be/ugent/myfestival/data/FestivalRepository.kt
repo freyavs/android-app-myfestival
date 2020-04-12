@@ -17,7 +17,6 @@ class FestivalRepository(val database: FirebaseDatabase) {
     var foodstands: MutableLiveData<List<FoodStand>> = MutableLiveData()
     var lineupstages: MutableLiveData<List<Stage>> = MutableLiveData()
     var logo: MutableLiveData<String> = MutableLiveData()
-    var test: MutableLiveData<String> = MutableLiveData()
 
     val TAG = "FestivalRepository"
 

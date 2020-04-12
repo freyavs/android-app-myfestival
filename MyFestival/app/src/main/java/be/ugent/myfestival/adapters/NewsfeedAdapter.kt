@@ -38,6 +38,7 @@ class NewsfeedAdapter(val viewModel : FestivalViewModel) : RecyclerView.Adapter<
                 .into(holder.image)
         }
 
+        //todo: logo inladen met glide
       /*  GlideApp.with(holder.logo.context)
             .load(viewModel.getLogo().value)
             .into(holder.logo)

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import be.ugent.myfestival.databinding.HomeFragmentBinding
+import be.ugent.myfestival.utilities.GlideApp
 import be.ugent.myfestival.utilities.InjectorUtils
 import be.ugent.myfestival.viewmodels.FestivalViewModel
 
