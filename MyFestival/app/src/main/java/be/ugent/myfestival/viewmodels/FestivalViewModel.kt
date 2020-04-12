@@ -21,6 +21,8 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
 
     fun getLogo() = festivalRepo.getFestivalLogo()
 
+    fun getMap() = festivalRepo.getFestivalMap()
+
     fun getFoodstandList() = festivalRepo.getFoodstandList()
 
     fun getFoodstandMenu(id: String): LiveData<List<Dish>> =

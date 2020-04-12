@@ -17,6 +17,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
     var foodstands: MutableLiveData<List<FoodStand>> = MutableLiveData()
     var lineupstages: MutableLiveData<List<Stage>> = MutableLiveData()
     var logo: MutableLiveData<String> = MutableLiveData()
+    var map: MutableLiveData<String> = MutableLiveData()
 
     val TAG = "FestivalRepository"
 
@@ -88,6 +89,33 @@ class FestivalRepository(val database: FirebaseDatabase) {
                 })
         }
         return logo
+    }
+
+    fun getFestivalMap(): MutableLiveData<String> {
+        if (map.value == null) {
+            FirebaseDatabase.getInstance()
+                .getReference(festivalID).child("location")
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(ds: DataSnapshot) {
+                        if (ds.exists()) {
+                            //todo: eerst vorige tempfile verwijderen ofzo (wordt ook wss niet aangepast..)
+                            val logoRef = storageRef.child(ds.value.toString())
+                            Log.d(TAG, "location: " + ds.value.toString())
+                            val localFile = File.createTempFile("festival_map", ".png")
+                            logoRef.getFile(localFile).addOnSuccessListener {
+                                map.postValue(localFile.absolutePath)
+                                Log.d(TAG, "Tempfile created for map of festival.")
+                            }.addOnFailureListener {
+                                Log.d(TAG, "Tempfile failed: check if festival submitted a map!")
+                            }
+                        }
+                    }
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        Log.d(TAG, "getFestivalLogo:onCancelled", databaseError.toException())
+                    }
+                })
+        }
+        return map
     }
 
 
