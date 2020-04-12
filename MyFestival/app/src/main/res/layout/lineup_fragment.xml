@@ -25,41 +25,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    android:weightSum="5">
-
-                    <Button
-                        android:layout_weight="1"
-                        android:id="@+id/previous_day_button"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:text="@string/previous_day_button_text"
-                        android:textSize="40sp"
-                        android:textStyle="bold"
-                        android:onClick="@{previousDayHandler::onClick}"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
-                        />
-
-                    <TextView
-                        android:id="@+id/day"
-                        android:layout_weight="3"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:textSize="40sp"
-                        android:gravity="center"
-                        android:textStyle="bold"
-                        android:text="@{viewModel.currentDayString}"/>
-
-                    <Button
-                        android:layout_weight="1"
-                        android:id="@+id/next_day_button"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:text="@string/next_day_button_text"
-                        android:textSize="40sp"
-                        android:textStyle="bold"
-                        android:onClick="@{nextDayHandler::onClick}"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
-                        />
+                    android:weightSum="5"
+                    android:id="@+id/buttonsLayout">
                 </LinearLayout>
 
             </RelativeLayout>
