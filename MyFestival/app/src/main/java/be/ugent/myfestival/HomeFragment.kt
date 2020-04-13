@@ -26,6 +26,9 @@ class HomeFragment : Fragment() {
         }
 
         binding.viewModel = viewModel
+
+        //TODO: haal alle data op bij festival kiezen
+        viewModel.getLineup()
         
         binding.newsfeedHandler = View.OnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToNewsfeedFragment()
