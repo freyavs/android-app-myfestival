@@ -1,6 +1,8 @@
 package be.ugent.myfestival
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -23,6 +25,14 @@ class HomeFragment : Fragment() {
 
         val viewModel by activityViewModels<FestivalViewModel> {
             InjectorUtils.provideFestivalViewModelFactory()
+        }
+        viewModel.setId(context?.getSharedPreferences("FestivalPreference", Context.MODE_PRIVATE))
+
+        //kijken of er een ID is, zo niet gaat het naar het festival kies scherm
+        Log.v("IDsetter", viewModel.hasFestival().toString())
+        if(!viewModel.hasFestival()){
+            val action = HomeFragmentDirections.actionHomeFragmentToFestivalChooserFragment()
+            findNavController().navigate(action)
         }
 
         binding.viewModel = viewModel
@@ -49,7 +59,10 @@ class HomeFragment : Fragment() {
             val action = HomeFragmentDirections.actionHomeFragmentToMapFragment()
             findNavController().navigate(action)
         }
-
+        binding.festivalChooserHandler = View.OnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToFestivalChooserFragment()
+            findNavController().navigate(action)
+        }
         return binding.root
     }
 

@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="652028e1-9c7b-45df-8c59-b3746887c8f1" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1ZGQlBKxJpcn0Drz2lFTwO19TWq" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\project1920-groep-7\MyFestivalWebApp\root" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JavaScript Debug.index.html (1)">
+    <configuration name="index.html (1)" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/MyFestivalWebApp/WebApp/index.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/MyFestivalWebApp/root/public/index.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="index.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/WebApp/index.js" working-dir="$PROJECT_DIR$/WebApp">
+      <method v="2" />
+    </configuration>
+    <configuration name="devstart" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/WebApp/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="devstart" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="serverstart" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/WebApp/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="serverstart" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.index.html (1)" />
+        <item itemvalue="npm.serverstart" />
+        <item itemvalue="npm.devstart" />
+        <item itemvalue="JavaScript Debug.index.html" />
+        <item itemvalue="JavaScript Debug.index.html (1)" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="652028e1-9c7b-45df-8c59-b3746887c8f1" name="Default Changelist" comment="" />
+      <created>1584463099101</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1584463099101</updated>
+      <workItem from="1584463101506" duration="4495000" />
+      <workItem from="1584467869373" duration="3360000" />
+      <workItem from="1584475202921" duration="775000" />
+      <workItem from="1584476089628" duration="8487000" />
+      <workItem from="1584542853706" duration="1014000" />
+      <workItem from="1584569642591" duration="2383000" />
+      <workItem from="1584629811282" duration="1197000" />
+      <workItem from="1584719139848" duration="10558000" />
+      <workItem from="1585063104574" duration="5499000" />
+      <workItem from="1585068684142" duration="500000" />
+      <workItem from="1585424749529" duration="9510000" />
+      <workItem from="1585495878668" duration="3411000" />
+      <workItem from="1585841495762" duration="6731000" />
+      <workItem from="1585900319201" duration="686000" />
+      <workItem from="1585902339094" duration="604000" />
+      <workItem from="1586277217207" duration="14000" />
+      <workItem from="1586352145710" duration="1423000" />
+      <workItem from="1586354034198" duration="1746000" />
+      <workItem from="1586430311845" duration="298000" />
+      <workItem from="1586430658901" duration="168000" />
+    </task>
+    <task id="LOCAL-00001" summary="Festival kan je aanmaken">
+      <created>1584731303423</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1584731303423</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Stages, foodstands &amp; messages kan ik toevoegen">
+      <created>1585068739254</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1585068739254</updated>
+    </task>
+    <task id="LOCAL-00003" summary="error als er nog niks inzit">
+      <created>1585069091386</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1585069091386</updated>
+    </task>
+    <task id="LOCAL-00004" summary="alles toevoegen lukt">
+      <created>1585433978516</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1585433978516</updated>
+    </task>
+    <task id="LOCAL-00005" summary="velden zijn int engels">
+      <created>1585500865383</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1585500865383</updated>
+    </task>
+    <task id="LOCAL-00006" summary="kaart afbeelding toevoegen">
+      <created>1585849105088</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1585849105088</updated>
+    </task>
+    <task id="LOCAL-00007" summary="foto shizzle">
+      <created>1586430743980</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1586430743980</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Festival kan je aanmaken" />
+    <MESSAGE value="Stages, foodstands &amp; messages kan ik toevoegen" />
+    <MESSAGE value="error als er nog niks inzit" />
+    <MESSAGE value="alles toevoegen lukt" />
+    <MESSAGE value="velden zijn int engels" />
+    <MESSAGE value="kaart afbeelding toevoegen" />
+    <MESSAGE value="foto shizzle" />
+    <option name="LAST_COMMIT_MESSAGE" value="foto shizzle" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="472" y="223" key="#com.intellij.ide.fileTemplates.ui.ConfigureTemplatesDialog" timestamp="1584728891528">
+      <screen x="62" y="0" width="1538" height="900" />
+    </state>
+    <state x="472" y="223" key="#com.intellij.ide.fileTemplates.ui.ConfigureTemplatesDialog/1662.-591.1858.1080/62.0.1538.900@62.0.1538.900" timestamp="1584728891528" />
+    <state x="469" y="36" key="CommitChangelistDialog2" timestamp="1586430742382">
+      <screen x="62" y="0" width="1538" height="900" />
+    </state>
+    <state x="469" y="36" key="CommitChangelistDialog2/1662.-591.1858.1080/62.0.1538.900@62.0.1538.900" timestamp="1586430742382" />
+    <state x="611" y="208" key="FileChooserDialogImpl" timestamp="1584545144341">
+      <screen x="62" y="0" width="1538" height="900" />
+    </state>
+    <state x="611" y="208" key="FileChooserDialogImpl/1662.-591.1858.1080/62.0.1538.900@62.0.1538.900" timestamp="1584545144341" />
+    <state width="1517" height="282" key="GridCell.Tab.0.bottom" timestamp="1585557827129">
+      <screen x="62" y="0" width="1538" height="900" />
+    </state>
+    <state width="1517" height="282" key="GridCell.Tab.0.bottom/1662.-591.1858.1080/62.0.1538.900@62.0.1538.900" timestamp="1585557827129" />
+    <state width="1517" height="282" key="GridCell.Tab.0.center" timestamp="1585557827128">
+      <screen x="62" y="0" width="1538" height="900" />
+    </state>
+    <state width="1517" height="282" key="GridCell.Tab.0.center/1662.-591.1858.1080/62.0.1538.900@62.0.1538.900" timestamp="1585557827128" />
+    <state width="1517" height="282" key="GridCell.Tab.0.left" timestamp="1585557827120">
+      <screen x="62" y="0" width="1538" height="900" />
+    </state>
+    <state width="1517" height="282" key="GridCell.Tab.0.left/1662.-591.1858.1080/62.0.1538.900@62.0.1538.900" timestamp="1585557827120" />
+    <state width="1517" height="282" key="GridCell.Tab.0.right" timestamp="1585557827128">
+      <screen x="62" y="0" width="1538" height="900" />
+    </state>
+    <state width="1517" height="282" key="GridCell.Tab.0.right/1662.-591.1858.1080/62.0.1538.900@62.0.1538.900" timestamp="1585557827128" />
+    <state width="1517" height="282" key="GridCell.Tab.1.bottom" timestamp="1585557827129">
+      <screen x="62" y="0" width="1538" height="900" />
+    </state>
+    <state width="1517" height="282" key="GridCell.Tab.1.bottom/1662.-591.1858.1080/62.0.1538.900@62.0.1538.900" timestamp="1585557827129" />
+    <state width="1517" height="282" key="GridCell.Tab.1.center" timestamp="1585557827129">
+      <screen x="62" y="0" width="1538" height="900" />
+    </state>
+    <state width="1517" height="282" key="GridCell.Tab.1.center/1662.-591.1858.1080/62.0.1538.900@62.0.1538.900" timestamp="1585557827129" />
+    <state width="1517" height="282" key="GridCell.Tab.1.left" timestamp="1585557827129">
+      <screen x="62" y="0" width="1538" height="900" />
+    </state>
+    <state width="1517" height="282" key="GridCell.Tab.1.left/1662.-591.1858.1080/62.0.1538.900@62.0.1538.900" timestamp="1585557827129" />
+    <state width="1517" height="282" key="GridCell.Tab.1.right" timestamp="1585557827129">
+      <screen x="62" y="0" width="1538" height="900" />
+    </state>
+    <state width="1517" height="282" key="GridCell.Tab.1.right/1662.-591.1858.1080/62.0.1538.900@62.0.1538.900" timestamp="1585557827129" />
+    <state width="1517" height="282" key="GridCell.Tab.2.bottom" timestamp="1585557827130">
+      <screen x="62" y="0" width="1538" height="900" />
+    </state>
+    <state width="1517" height="282" key="GridCell.Tab.2.bottom/1662.-591.1858.1080/62.0.1538.900@62.0.1538.900" timestamp="1585557827130" />
+    <state width="1517" height="282" key="GridCell.Tab.2.center" timestamp="1585557827129">
+      <screen x="62" y="0" width="1538" height="900" />
+    </state>
+    <state width="1517" height="282" key="GridCell.Tab.2.center/1662.-591.1858.1080/62.0.1538.900@62.0.1538.900" timestamp="1585557827129" />
+    <state width="1517" height="282" key="GridCell.Tab.2.left" timestamp="1585557827129">
+      <screen x="62" y="0" width="1538" height="900" />
+    </state>
+    <state width="1517" height="282" key="GridCell.Tab.2.left/1662.-591.1858.1080/62.0.1538.900@62.0.1538.900" timestamp="1585557827129" />
+    <state width="1517" height="282" key="GridCell.Tab.2.right" timestamp="1585557827129">
+      <screen x="62" y="0" width="1538" height="900" />
+    </state>
+    <state width="1517" height="282" key="GridCell.Tab.2.right/1662.-591.1858.1080/62.0.1538.900@62.0.1538.900" timestamp="1585557827129" />
+    <state x="543" y="167" key="MultipleFileMergeDialog" timestamp="1585068634515">
+      <screen x="62" y="0" width="1538" height="900" />
+    </state>
+    <state x="543" y="167" key="MultipleFileMergeDialog/1662.-591.1858.1080/62.0.1538.900@62.0.1538.900" timestamp="1585068634515" />
+    <state x="423" y="174" key="Vcs.Push.Dialog.v2" timestamp="1585500867427">
+      <screen x="62" y="0" width="1538" height="900" />
+    </state>
+    <state x="423" y="174" key="Vcs.Push.Dialog.v2/1662.-591.1858.1080/62.0.1538.900@62.0.1538.900" timestamp="1585500867427" />
+    <state x="544" y="166" key="git4idea.branch.GitSmartOperationDialog" timestamp="1585068620047">
+      <screen x="62" y="0" width="1538" height="900" />
+    </state>
+    <state x="544" y="166" key="git4idea.branch.GitSmartOperationDialog/1662.-591.1858.1080/62.0.1538.900@62.0.1538.900" timestamp="1585068620047" />
+    <state x="572" y="86" key="refactoring.ChangeSignatureDialog" timestamp="1585499637555">
+      <screen x="62" y="0" width="1538" height="900" />
+    </state>
+    <state x="572" y="86" key="refactoring.ChangeSignatureDialog/1662.-591.1858.1080/62.0.1538.900@62.0.1538.900" timestamp="1585499637555" />
+    <state x="494" y="190" width="672" height="678" key="search.everywhere.popup" timestamp="1585846470629">
+      <screen x="62" y="0" width="1538" height="900" />
+    </state>
+    <state x="494" y="190" width="672" height="678" key="search.everywhere.popup/1662.-591.1858.1080/62.0.1538.900@62.0.1538.900" timestamp="1585846470629" />
+  </component>
+</project>

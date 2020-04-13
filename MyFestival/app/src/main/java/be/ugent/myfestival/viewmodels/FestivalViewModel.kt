@@ -1,6 +1,7 @@
 package be.ugent.myfestival.viewmodels
 
 
+import android.content.SharedPreferences
 import android.util.Log
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
@@ -16,6 +17,14 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
         Transformations.map(festivalRepo.getFestivalName()) { value ->
             "Welkom bij $value"
         }
+
+    fun setId(sharedPreferences: SharedPreferences?){
+        festivalRepo.festivalID = sharedPreferences?.getString("ID","").toString()
+    }
+
+    fun hasFestival(): Boolean{
+        return festivalRepo.festivalID != "Null"
+    }
 
     fun getLineup() = festivalRepo.getLineup()
 

@@ -9,6 +9,7 @@
         <variable name="foodHandler" type="android.view.View.OnClickListener" />
         <variable name="lineupHandler" type="android.view.View.OnClickListener" />
         <variable name="mapHandler" type="android.view.View.OnClickListener" />
+        <variable name="FestivalChooserHandler" type="android.view.View.OnClickListener" />
         <variable name="viewModel" type="be.ugent.myfestival.viewmodels.FestivalViewModel" />
     </data>
 
@@ -92,7 +93,7 @@
             app:rippleColor="@color/backgroundColor"
             app:shapeAppearance="@style/ShapeAppearance.MyFestival.Button.Home" />
 
-        <com.google.android.material.button.MaterialButton
+            <com.google.android.material.button.MaterialButton
             android:id="@+id/map_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -108,5 +109,20 @@
             app:shapeAppearance="@style/ShapeAppearance.MyFestival.Button.Home" />
 
         </GridLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/lineup_btn2"
+            android:layout_width="165dp"
+            android:layout_height="wrap_content"
+            android:onClick="@{FestivalChooserHandler::onClick}"
+            android:padding="10dp"
+            android:textColor="?attr/colorPrimary"
+            app:backgroundTint="?attr/colorOnPrimary"
+            app:icon="@drawable/lineup_50dp"
+            app:iconTint="@color/colorAccent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:rippleColor="@color/backgroundColor"
+            app:shapeAppearance="@style/ShapeAppearance.MyFestival.Button.Home" />
     </LinearLayout>
 </layout>
