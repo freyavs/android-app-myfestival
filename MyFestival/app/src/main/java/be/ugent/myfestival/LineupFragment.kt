@@ -18,6 +18,8 @@ import be.ugent.myfestival.viewmodels.FestivalViewModel
 import be.ugent.myfestival.viewmodels.LineupViewModel
 import kotlinx.android.synthetic.main.lineup_fragment.*
 import kotlinx.android.synthetic.main.lineup_fragment.view.*
+import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 
 
 /**
@@ -43,13 +45,17 @@ class LineupFragment : Fragment() {
 
         binding.viewModel = viewModel
 
-        for (day in viewModel.getAllDaysSorted().value!!){
-            val button = Button(this.context)
-            button.setText(day.toString())
-            val layout : LinearLayout = binding.root.buttons_layout
-            button.setOnClickListener { viewModel.clickedDay(day) }
-            layout.addView(button)
-        }
+
+        //todo: kan dit niet beter offf?
+        viewModel.getAllDaysSorted().observe(viewLifecycleOwner, Observer { days ->
+            for (day in days){
+                val button = Button(this.context)
+                button.text = (day.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
+                val layout : LinearLayout = binding.root.buttons_layout
+                button.setOnClickListener { viewModel.clickedDay(day) }
+                layout.addView(button)
+            }
+        })
 
         adapter =
             DayAdapter(this.childFragmentManager)
