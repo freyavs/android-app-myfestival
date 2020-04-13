@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import be.ugent.myfestival.databinding.HomeFragmentBinding
+import be.ugent.myfestival.utilities.GlideApp
 import be.ugent.myfestival.utilities.InjectorUtils
 import be.ugent.myfestival.viewmodels.FestivalViewModel
 
@@ -35,6 +36,9 @@ class HomeFragment : Fragment() {
         }
 
         binding.viewModel = viewModel
+
+        //TODO: haal alle data op bij festival kiezen
+        viewModel.getLineup()
         
         binding.newsfeedHandler = View.OnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToNewsfeedFragment()

@@ -32,6 +32,8 @@ class MenuFragment: Fragment() {
 
         val args: MenuFragmentArgs by navArgs()
         binding.foodstandNameMenuView.text = args.foodstandName
+
+        //todo: met binding adapter
         GlideApp.with(binding.foodstandImgMenuView.context)
             .load(args.foodstandImg)
             .into(binding.foodstandImgMenuView);

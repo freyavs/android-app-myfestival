@@ -20,21 +20,20 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:gravity="center"
-            android:text="@{viewModel.welcomeString}"
-            android:textSize="35sp"
-            app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:id="@+id/logo_view"
+            android:padding="4dp"
+            app:imageUrl="@{viewModel.logo}"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:gravity="center"
-            android:text="@{viewModel.testString}"
+            android:text="@{viewModel.welcomeString}"
             android:textSize="35sp"
             app:layout_constraintTop_toTopOf="parent" />
 

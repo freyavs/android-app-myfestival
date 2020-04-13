@@ -24,8 +24,8 @@ class StageAdapter(private val concertList: List<Concert>) : RecyclerView.Adapte
         val concert = concertList[position]
 
         holder.textView1.text = concert.artist
-        holder.textView2.text = concert.start
-        holder.textView3.text = concert.stop
+        holder.textView2.text = concert.start.toString()
+        holder.textView3.text = concert.stop.toString()
         holder.spacer.layoutParams.height = (1..500).shuffled().first()
     }
 

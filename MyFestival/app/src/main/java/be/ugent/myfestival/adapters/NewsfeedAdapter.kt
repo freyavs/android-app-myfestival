@@ -5,14 +5,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.RecyclerView
 import be.ugent.myfestival.R
 import be.ugent.myfestival.models.NewsfeedItem
 import be.ugent.myfestival.utilities.GlideApp
-import com.bumptech.glide.Glide
+import be.ugent.myfestival.utilities.InjectorUtils
+import be.ugent.myfestival.viewmodels.FestivalViewModel
 import kotlinx.android.synthetic.main.newsfeed_item.view.*
 
-class NewsfeedAdapter() : RecyclerView.Adapter<NewsfeedAdapter.NewsItemViewHolder>(){
+class NewsfeedAdapter(val viewModel : FestivalViewModel) : RecyclerView.Adapter<NewsfeedAdapter.NewsItemViewHolder>(){
 
     var posts = emptyList<NewsfeedItem>()
 
@@ -30,12 +32,17 @@ class NewsfeedAdapter() : RecyclerView.Adapter<NewsfeedAdapter.NewsItemViewHolde
         holder.title.text = post.title
         holder.time.text = post.time
         holder.message.text = post.message
-
         if (post.image != null) {
             GlideApp.with(holder.image.context)
                 .load(post.image)
                 .into(holder.image)
         }
+
+        //todo: logo inladen met glide
+      /*  GlideApp.with(holder.logo.context)
+            .load(viewModel.getLogo().value)
+            .into(holder.logo)
+        */
     }
 
     override fun getItemCount() = posts.size
@@ -45,8 +52,6 @@ class NewsfeedAdapter() : RecyclerView.Adapter<NewsfeedAdapter.NewsItemViewHolde
         val time: TextView = itemView.time
         val message: TextView = itemView.message
         val image: ImageView = itemView.image
-
-        //TODO: logo van het festival uit viewmodel halen en binden op xml
         val logo: ImageView = itemView.image
     }
 }

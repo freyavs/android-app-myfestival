@@ -5,6 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import be.ugent.myfestival.databinding.HomeFragmentBinding
+import be.ugent.myfestival.databinding.MapFragmentBinding
+import be.ugent.myfestival.utilities.InjectorUtils
+import be.ugent.myfestival.viewmodels.FestivalViewModel
 
 /**
  * A simple [Fragment] subclass.
@@ -15,8 +20,16 @@ class MapFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.map_fragment, container, false)
+        val binding = MapFragmentBinding.inflate(inflater,container,false)
+        binding.lifecycleOwner = this
+
+        val viewModel by activityViewModels<FestivalViewModel> {
+            InjectorUtils.provideFestivalViewModelFactory()
+        }
+
+        binding.viewModel = viewModel
+
+        return binding.root
     }
 
 }
