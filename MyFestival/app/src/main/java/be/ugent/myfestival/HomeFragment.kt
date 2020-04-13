@@ -37,8 +37,11 @@ class HomeFragment : Fragment() {
 
         binding.viewModel = viewModel
 
-        //TODO: haal alle data op bij festival kiezen
+        //TODO: haal alle data op bij festival kiezen (geef direct bij kiezen logo en naam door uit festival chooser zodat er geen delay is)
+        // TODO: om adapters te testen haal je dit beter weg
         viewModel.getLineup()
+       // viewModel.getFoodstandList()
+       // viewModel.getNewsfeedItems()
         
         binding.newsfeedHandler = View.OnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToNewsfeedFragment()
