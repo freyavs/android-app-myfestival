@@ -112,13 +112,14 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/lineup_btn2"
-            android:layout_width="165dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="@{FestivalChooserHandler::onClick}"
             android:padding="10dp"
             android:textColor="?attr/colorPrimary"
+            android:text="FESTIVAL SELECTION"
+            android:textSize="10dp"
             app:backgroundTint="?attr/colorOnPrimary"
-            app:icon="@drawable/lineup_50dp"
             app:iconTint="@color/colorAccent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
