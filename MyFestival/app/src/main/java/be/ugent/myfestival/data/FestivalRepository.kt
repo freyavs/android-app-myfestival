@@ -257,7 +257,7 @@ fun getNewsfeedItems(): MutableLiveData<List<NewsfeedItem>> {
 */
 
 
-    // -------------- (hardcoded) data voor festival chooser ------------------
+    // -------------- data voor festival chooser ------------------
     fun getFestivals(): MutableLiveData<List<FestivalChooser>>{
         if(festivalList.value == null){
             addConnectionListener()
@@ -268,12 +268,20 @@ fun getNewsfeedItems(): MutableLiveData<List<NewsfeedItem>> {
                         if(dataSnapshot.exists()){
                             val festivalChoosers = mutableListOf<FestivalChooser>()
                             for(ds in dataSnapshot.children){
-                                festivalChoosers.add(
-                                    FestivalChooser(
-                                        ds.key!!,
-                                        ds.child("name").value!!.toString()
+                                //todo: cache legen zodat geen dubbele foto's worden opgeslaan ( getCacheDir )
+                                val logoRef = storageRef.child(ds.child("logo").value.toString())
+                                val localFile = File.createTempFile("foodstand", ".png")
+                                logoRef.getFile(localFile).addOnSuccessListener {
+                                    festivalChoosers.add(
+                                        FestivalChooser(
+                                            ds.key!!,
+                                            ds.child("name").value!!.toString(),
+                                            localFile.absolutePath
+                                        )
                                     )
-                                )
+                                }.addOnCanceledListener {
+                                    Log.d(TAG, "Tempfile failed")
+                                }
                             }
                             festivalList.postValue(festivalChoosers)
                         }
