@@ -20,6 +20,7 @@ class LineupViewModel(private val festivalRepo : FestivalRepository) : ViewModel
 
     var currentDay: MutableLiveData<LocalDate> = MutableLiveData(LocalDate.now())
 
+
     fun getAllDaysSorted() : LiveData<List<LocalDate>> = Transformations.map(lineup) {stages ->
         val concerts = stages.flatMap{ it.concerts }
         concerts.map{it.start.toLocalDate()}.distinct().sorted()
@@ -34,6 +35,8 @@ class LineupViewModel(private val festivalRepo : FestivalRepository) : ViewModel
         }
         list
     }
+
+    fun getToday() = LocalDate.now()
 
     fun clickedDay(day: LocalDate) {
         if (currentDay.value!! !== day) {

@@ -2,6 +2,7 @@ package be.ugent.myfestival
 
 import android.graphics.drawable.StateListDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import be.ugent.myfestival.utilities.InjectorUtils
 import be.ugent.myfestival.viewmodels.FestivalViewModel
 import be.ugent.myfestival.viewmodels.LineupViewModel
 import kotlinx.android.synthetic.main.lineup_fragment.view.*
+import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 
@@ -43,8 +45,16 @@ class LineupFragment : Fragment() {
         binding.viewModel = viewModel
 
 
-        //todo: kan dit niet beter offf?
+        //todo: dit kan sws beter (er moet ook elke keer als er opnieuw naar lineup gekeken wordt op "vandaag" gestart worden, hoe?)
         viewModel.getAllDaysSorted().observe(viewLifecycleOwner, Observer { days ->
+            val startDay : LocalDate
+            if (days.contains(viewModel.getToday())){
+                Log.d("myFestivalTag", "today is in list of days.." )
+                startDay = viewModel.getToday()
+            }
+            else {
+                startDay = days[0]
+            }
             for (day in days){
                 val button = RadioButton(this.context)
                 button.setBackgroundResource(R.drawable.radio_background)
@@ -54,6 +64,10 @@ class LineupFragment : Fragment() {
                 val layout : LinearLayout = binding.root.toggle_group
                 button.setOnClickListener { viewModel.clickedDay(day) }
                 layout.addView(button)
+                if (day === startDay){
+                    Log.d("myFestivalTag", "select day" )
+                    button.performClick()
+                }
             }
         })
 
