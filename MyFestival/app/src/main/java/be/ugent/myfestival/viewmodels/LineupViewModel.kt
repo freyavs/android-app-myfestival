@@ -12,19 +12,15 @@ import java.time.LocalDate
 import java.time.ZoneId
 import java.util.*
 
-
 class LineupViewModel(private val festivalRepo : FestivalRepository) : ViewModel() {
 
     var lineup = festivalRepo.getLineup()
 
     val TAG = "myFestivalTag"
 
-
-    //TODO: als 'vandaag' tussen beschikbare dagen zit, zorg dan dat het start op vandaag, anders op de 1ste dag
-    var currentDay: MutableLiveData<LocalDate> = MutableLiveData()
+    var currentDay: MutableLiveData<LocalDate> = MutableLiveData(LocalDate.now())
 
     fun getAllDaysSorted() : LiveData<List<LocalDate>> = Transformations.map(lineup) {stages ->
-        Log.d(TAG, "getting sorted days")
         val concerts = stages.flatMap{ it.concerts }
         concerts.map{it.start.toLocalDate()}.distinct().sorted()
     }
@@ -40,13 +36,16 @@ class LineupViewModel(private val festivalRepo : FestivalRepository) : ViewModel
     }
 
     fun clickedDay(day: LocalDate) {
-        currentDay.postValue(day)
+        if (currentDay.value!! !== day) {
+            currentDay.postValue(day)
+        }
     }
 
-    fun getCurrentStages() : LiveData<List<Stage>> =  Transformations.map(currentDay) { day ->
-        Log.d(TAG, "GET CURRENTS STAGES: " + day.toString())
-        getStages(day).value!!
+    fun getCurrentStages() : LiveData<List<Stage>> =  Transformations.switchMap(currentDay) { day ->
+        Log.d(TAG, "Get current stages: " + day.toString())
+        Transformations.map(getStages(day)) {
+            stages -> stages
+        }
     }
-
 
 }

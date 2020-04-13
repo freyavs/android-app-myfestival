@@ -1,13 +1,12 @@
 package be.ugent.myfestival
 
-import android.R
+import android.graphics.drawable.StateListDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.RadioButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -16,9 +15,7 @@ import be.ugent.myfestival.databinding.LineupFragmentBinding
 import be.ugent.myfestival.utilities.InjectorUtils
 import be.ugent.myfestival.viewmodels.FestivalViewModel
 import be.ugent.myfestival.viewmodels.LineupViewModel
-import kotlinx.android.synthetic.main.lineup_fragment.*
 import kotlinx.android.synthetic.main.lineup_fragment.view.*
-import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
 
 
@@ -49,9 +46,12 @@ class LineupFragment : Fragment() {
         //todo: kan dit niet beter offf?
         viewModel.getAllDaysSorted().observe(viewLifecycleOwner, Observer { days ->
             for (day in days){
-                val button = Button(this.context)
+                val button = RadioButton(this.context)
+                button.setBackgroundResource(R.drawable.radio_background)
+                button.buttonDrawable = StateListDrawable()
+                button.textSize = 25F
                 button.text = (day.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
-                val layout : LinearLayout = binding.root.buttons_layout
+                val layout : LinearLayout = binding.root.toggle_group
                 button.setOnClickListener { viewModel.clickedDay(day) }
                 layout.addView(button)
             }
