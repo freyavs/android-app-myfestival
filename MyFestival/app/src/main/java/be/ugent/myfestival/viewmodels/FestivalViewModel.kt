@@ -19,7 +19,7 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
         }
 
     fun setId(sharedPreferences: SharedPreferences?){
-        festivalRepo.festivalID = sharedPreferences?.getString("ID","").toString()
+        festivalRepo.festivalID = sharedPreferences?.getString("ID","Null").toString()
     }
 
     fun hasFestival(): Boolean{
