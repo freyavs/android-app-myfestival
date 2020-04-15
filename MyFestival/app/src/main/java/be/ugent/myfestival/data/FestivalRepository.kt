@@ -136,7 +136,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
             addConnectionListener()
             FirebaseDatabase.getInstance()
                 .getReference(festivalID).child("foodstand").orderByKey()
-                .addValueEventListener(object : ValueEventListener {
+                .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         if (dataSnapshot.exists()) {
                             var foodList = mutableListOf<FoodStand>()
@@ -247,11 +247,11 @@ class FestivalRepository(val database: FirebaseDatabase) {
     // -------------------------- data voor de lineup ------------------------
 
     fun getLineup() : MutableLiveData<List<Stage>> {
-        if (lineupstages.value == null) {
+        if (lineupstages.value.isNullOrEmpty()) {
             addConnectionListener()
             FirebaseDatabase.getInstance()
                 .getReference(festivalID).child("stages")
-                .addValueEventListener(object : ValueEventListener {
+                .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         if (dataSnapshot.exists()) {
                             Log.d(TAG, "catching lineup")
@@ -288,7 +288,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
             addConnectionListener()
             FirebaseDatabase.getInstance()
                 .getReference()
-                .addValueEventListener(object : ValueEventListener{
+                .addListenerForSingleValueEvent(object : ValueEventListener{
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         if(dataSnapshot.exists()){
                             val festivalChoosers = mutableListOf<FestivalChooser>()
