@@ -1,6 +1,7 @@
 package be.ugent.myfestival.data
 
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import be.ugent.myfestival.models.*
 import com.google.firebase.database.*
@@ -31,6 +32,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
     val storageRef = Firebase.storage.reference
 
     var festivalID = "Null"
+
 
     //voor debug redenen:
     val connectedRef = Firebase.database.getReference(".info/connected")
@@ -69,6 +71,8 @@ class FestivalRepository(val database: FirebaseDatabase) {
         }
         return name
     }
+
+
 
     fun getFestivalLogo(): MutableLiveData<String> {
         if (logo.value == null) {
@@ -175,7 +179,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
 
     fun getNewsfeedItems(): MutableLiveData<MutableList<NewsfeedItem>> {
         //TODO: default newsfeed post in web app laten aanmaken
-        if (newsfeed.value == null) {
+        if (newsfeed.value.isNullOrEmpty()) {
             newsfeed.value = mutableListOf()
             FirebaseDatabase.getInstance()
                 .getReference(festivalID).child("messages")

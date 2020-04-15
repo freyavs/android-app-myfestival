@@ -29,8 +29,8 @@ class HomeFragment : Fragment() {
         viewModel.setId(context?.getSharedPreferences("FestivalPreference", Context.MODE_PRIVATE))
 
         //kijken of er een ID is, zo niet gaat het naar het festival kies scherm
-        Log.v("IDsetter", viewModel.hasFestival().toString())
         if(!viewModel.hasFestival()){
+            viewModel.reset()
             val action = HomeFragmentDirections.actionHomeFragmentToFestivalChooserFragment()
             findNavController().navigate(action)
         }
@@ -40,8 +40,8 @@ class HomeFragment : Fragment() {
         //TODO: haal alle data op bij festival kiezen (geef direct bij kiezen logo en naam door uit festival chooser zodat er geen delay is)
         // TODO: om adapters te testen haal je dit beter weg
         viewModel.getLineup()
-       // viewModel.getFoodstandList()
-       // viewModel.getNewsfeedItems()
+        viewModel.getFoodstandList()
+        viewModel.getNewsfeedItems()
         
         binding.newsfeedHandler = View.OnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToNewsfeedFragment()
