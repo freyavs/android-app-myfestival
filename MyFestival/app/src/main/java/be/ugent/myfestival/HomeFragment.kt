@@ -30,6 +30,7 @@ class HomeFragment : Fragment() {
 
         //kijken of er een ID is, zo niet gaat het naar het festival kies scherm
         if(!viewModel.hasFestival()){
+            viewModel.reset()
             val action = HomeFragmentDirections.actionHomeFragmentToFestivalChooserFragment()
             findNavController().navigate(action)
         }

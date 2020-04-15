@@ -1,6 +1,7 @@
 package be.ugent.myfestival.data
 
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import be.ugent.myfestival.models.*
 import com.google.firebase.database.*
@@ -27,8 +28,8 @@ class FestivalRepository(val database: FirebaseDatabase) {
 
     val storageRef = Firebase.storage.reference
 
-    //TODO: deadline 2 - festivalID kunnen kiezen
     var festivalID = "Null"
+
 
     //voor debug redenen:
     val connectedRef = Firebase.database.getReference(".info/connected")
@@ -67,6 +68,8 @@ class FestivalRepository(val database: FirebaseDatabase) {
         }
         return name
     }
+
+
 
     fun getFestivalLogo(): MutableLiveData<String> {
         if (logo.value == null) {
@@ -172,7 +175,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
     // werk hier met childEventListener aangezien er vaak zal toegevoegd etc worden (ivm met andere data die bijna niet zal veranderen)
 
     fun getNewsfeedItems(): MutableLiveData<MutableList<NewsfeedItem>> {
-        if (newsfeed.value == null) {
+        if (newsfeed.value.isNullOrEmpty()) {
             //todo: sort on timestamp & timestamp aflezen uit databank ofc
             newsfeed.value = mutableListOf()
             FirebaseDatabase.getInstance()

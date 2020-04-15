@@ -20,6 +20,7 @@
     <string name="choices">Keuzes:</string>
     <string name="vouchers">Bonnetjes:</string>
 
+    <string name="loading">Aan het Laden...</string>
 
     <string name="festival">Festival</string>
 </resources>
