@@ -45,9 +45,10 @@ class LineupFragment : Fragment() {
         binding.viewModel = viewModel
 
 
-        //todo: dit kan sws beter (er moet ook elke keer als er opnieuw naar lineup gekeken wordt op "vandaag" gestart worden, hoe?)
+        //todo: dit kan sws beter (en layout zeker)
         viewModel.getAllDaysSorted().observe(viewLifecycleOwner, Observer { days ->
             val startDay : LocalDate
+            //zorgt dat er op vandaag gestart wordt tenzij vandaag niet tussen de lineup days zit
             if (days.contains(viewModel.getToday())){
                 Log.d("myFestivalTag", "today is in list of days.." )
                 startDay = viewModel.getToday()
