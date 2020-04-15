@@ -42,6 +42,7 @@ class HomeFragment : Fragment() {
         viewModel.getLineup()
         viewModel.getFoodstandList()
         viewModel.getNewsfeedItems()
+        viewModel.getMap()
         
         binding.newsfeedHandler = View.OnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToNewsfeedFragment()
