@@ -10,7 +10,10 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import java.io.File
+import java.time.Instant
 import java.time.LocalDateTime
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 
 class FestivalRepository(val database: FirebaseDatabase) {
     var name: MutableLiveData<String> = MutableLiveData()
@@ -175,8 +178,8 @@ class FestivalRepository(val database: FirebaseDatabase) {
     // werk hier met childEventListener aangezien er vaak zal toegevoegd etc worden (ivm met andere data die bijna niet zal veranderen)
 
     fun getNewsfeedItems(): MutableLiveData<MutableList<NewsfeedItem>> {
+        //TODO: default newsfeed post in web app laten aanmaken
         if (newsfeed.value.isNullOrEmpty()) {
-            //todo: sort on timestamp & timestamp aflezen uit databank ofc
             newsfeed.value = mutableListOf()
             FirebaseDatabase.getInstance()
                 .getReference(festivalID).child("messages")
@@ -190,12 +193,20 @@ class FestivalRepository(val database: FirebaseDatabase) {
                             reference = storageRef.child(image.toString())
                         }
 
+                        val date = Instant.parse( ds.child("date").value.toString())
+                            .atOffset( ZoneOffset.UTC )
+                            .format(
+                                DateTimeFormatter.ofPattern( "uuuu-MM-dd'T'HH:mm:ss" )
+                            )
+
                         list.add(NewsfeedItem(
-                            "16:40",
+                            LocalDateTime.parse(date),
                             reference,
                             ds.child("message").value.toString(),
                             ds.child("title").value.toString()
                         ))
+
+                        list.sortByDescending{it.time}
                         newsfeed.postValue(list)
                     }
 

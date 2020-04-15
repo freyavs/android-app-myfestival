@@ -13,6 +13,8 @@ import be.ugent.myfestival.utilities.GlideApp
 import be.ugent.myfestival.utilities.InjectorUtils
 import be.ugent.myfestival.viewmodels.FestivalViewModel
 import kotlinx.android.synthetic.main.newsfeed_item.view.*
+import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 
 class NewsfeedAdapter(val viewModel : FestivalViewModel) : RecyclerView.Adapter<NewsfeedAdapter.NewsItemViewHolder>(){
 
@@ -30,25 +32,19 @@ class NewsfeedAdapter(val viewModel : FestivalViewModel) : RecyclerView.Adapter<
         val post = posts[position]
 
         holder.title.text = post.title
-        holder.time.text = post.time
+        holder.time.text =  DateTimeFormatter.ofPattern("dd/MM HH:mm").format(post.time)
         holder.message.text = post.message
         if (post.image != null) {
             GlideApp.with(holder.image.context)
                 .load(post.image)
                 .into(holder.image)
         }
-
-        //todo: logo inladen met glide
-      /*  GlideApp.with(holder.logo.context)
-            .load(viewModel.getLogo().value)
-            .into(holder.logo)
-        */
     }
 
     override fun getItemCount() = posts.size
 
     class NewsItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val title: TextView = itemView.organiser
+        val title: TextView = itemView.title
         val time: TextView = itemView.time
         val message: TextView = itemView.message
         val image: ImageView = itemView.image
