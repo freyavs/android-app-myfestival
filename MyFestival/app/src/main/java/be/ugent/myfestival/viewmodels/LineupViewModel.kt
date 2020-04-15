@@ -14,19 +14,17 @@ import java.util.*
 
 class LineupViewModel(private val festivalRepo : FestivalRepository) : ViewModel() {
 
-    var lineup = festivalRepo.getLineup()
-
     val TAG = "myFestivalTag"
 
     var currentDay: MutableLiveData<LocalDate> = MutableLiveData(LocalDate.now())
 
 
-    fun getAllDaysSorted() : LiveData<List<LocalDate>> = Transformations.map(lineup) {stages ->
+    fun getAllDaysSorted() : LiveData<List<LocalDate>> = Transformations.map(festivalRepo.getLineup()) {stages ->
         val concerts = stages.flatMap{ it.concerts }
         concerts.map{it.start.toLocalDate()}.distinct().sorted()
     }
 
-    fun getStages(day: LocalDate): LiveData<List<Stage>> = Transformations.map(lineup) { stages ->
+    fun getStages(day: LocalDate): LiveData<List<Stage>> = Transformations.map(festivalRepo.getLineup()) { stages ->
         val list = mutableListOf<Stage>()
         for (stage in stages){
             var concerts = stage.concerts.filter{it.start.toLocalDate() == day}

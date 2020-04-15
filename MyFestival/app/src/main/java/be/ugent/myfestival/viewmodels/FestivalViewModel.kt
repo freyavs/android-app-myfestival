@@ -21,8 +21,15 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
         }
 
     fun setId(sharedPreferences: SharedPreferences?){
-        reset()
-        festivalRepo.festivalID = sharedPreferences?.getString("ID","Null").toString()
+        val newID = sharedPreferences?.getString("ID","Null").toString()
+        if (newID != festivalRepo.festivalID) {
+            reset()
+            festivalRepo.festivalID = sharedPreferences?.getString("ID", "Null").toString()
+            getLineup()
+            getFoodstandList()
+            getNewsfeedItems()
+            getMap()
+        }
     }
 
     fun hasFestival(): Boolean{
