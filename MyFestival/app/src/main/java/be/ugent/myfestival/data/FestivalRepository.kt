@@ -31,6 +31,7 @@ class FestivalRepository(val database: FirebaseDatabase) {
 
     val storageRef = Firebase.storage.reference
 
+    //TODO: alle listeners verwijderen bij veranderen van festival!!!
     var festivalID = "Null"
 
 
