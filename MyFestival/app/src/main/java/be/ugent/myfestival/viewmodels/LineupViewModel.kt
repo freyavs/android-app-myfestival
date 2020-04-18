@@ -19,6 +19,8 @@ class LineupViewModel(private val festivalRepo : FestivalRepository) : ViewModel
     var currentDay: MutableLiveData<LocalDate> = MutableLiveData(LocalDate.now())
 
 
+    //TODO: nog aanduiden dat swipen mogelijk is of niet adhv livedata en "<" en ">" mss (en dit ook zeker testen in de unit tests)
+
     fun getAllDaysSorted() : LiveData<List<LocalDate>> = Transformations.map(festivalRepo.getLineup()) {stages ->
         val concerts = stages.flatMap{ it.concerts }
         concerts.map{it.start.toLocalDate()}.distinct().sorted()

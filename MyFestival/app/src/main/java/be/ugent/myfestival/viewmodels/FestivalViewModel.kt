@@ -24,22 +24,16 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
         }
 
     fun setId(sharedPreferences: SharedPreferences?){
-        val newID = sharedPreferences?.getString("ID","Null").toString()
-        if (newID != festivalRepo.festivalID) {
+        val newID = sharedPreferences?.getString("ID","").toString()
+        if (newID != festivalRepo.getId()) {
+            festivalRepo.setId(sharedPreferences?.getString("ID", "").toString())
             festivalRepo.reset()
-            festivalRepo.festivalID = sharedPreferences?.getString("ID", "Null").toString()
-            getLineup()
-            getFoodstandList()
-            getNewsfeedItems()
-            getMap()
         }
     }
 
     fun hasFestival(): Boolean{
-        return festivalRepo.festivalID != "Null"
+        return festivalRepo.getId() != ""
     }
-
-    fun getLineup() = festivalRepo.getLineup()
 
     fun getLogo() = festivalRepo.getFestivalLogo()
 
@@ -55,7 +49,7 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
     fun getNewsfeedItems() = festivalRepo.getNewsfeedItems()
 
 
-    //TODO: Loading moet beter / mooier met afbeelding ofzo
+    //TODO: Loading moet beter / mooier met afbeelding ofzo en buttons mogen ook niet op scherm verschijnen (gwn loading icon/afb die over heel het scherm is)
 
     fun getLoading() : LiveData<Int> = Transformations.map(festivalRepo.lineupstages){ value ->
         Log.v("welcome_string", value.isEmpty().toString())
