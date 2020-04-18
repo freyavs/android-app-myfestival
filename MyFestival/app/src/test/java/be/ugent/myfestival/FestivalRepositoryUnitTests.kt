@@ -1,7 +1,12 @@
 package be.ugent.myfestival
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
 import be.ugent.myfestival.data.FestivalRepository
+import be.ugent.myfestival.models.FestivalChooser
+import be.ugent.myfestival.models.FoodStand
+import be.ugent.myfestival.models.NewsfeedItem
+import be.ugent.myfestival.models.Stage
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.StorageReference
@@ -10,7 +15,10 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-//TODO ?
+
+//aantal unit tests: 4
+
+//TODO: mss nog ?
 
 class FestivalRepositoryUnitTests {
     @get:Rule
@@ -36,18 +44,71 @@ class FestivalRepositoryUnitTests {
         childReference = mock()
 
         whenever(database.getReference(any())).thenReturn(reference)
+        whenever(database.getReference()).thenReturn(reference)
         whenever(reference.child(any())).thenReturn(childReference)
+        whenever(childReference.orderByKey()).thenReturn(childReference)
 
         repository = FestivalRepository(database,storage)
 
         repository.setId(testId)
     }
 
+    fun fillRepository(repo: FestivalRepository){
+        repo.name.value =  "fest"
+        repo.newsfeed.value = mutableListOf(mock())
+        repo.foodstands.value  = mutableListOf(mock())
+        repo.lineupstages.value = mutableListOf(mock())
+        repo.logo.value = "url"
+        repo.map.value = "url"
+        repo.festivalList.value = mutableListOf(mock())
+    }
+
     @Test
-    fun getFestivalNameCallsDatabaseListeners_whenNameIsNotSet() {
+    fun gettersCallDatabase_whenFieldsAreNotSet() {
         repository.getFestivalName()
-        verify(database).getReference(testId)
-        verify(reference).child("name")
+        repository.getFestivalLogo()
+        repository.getFestivalMap()
+        repository.getFestivals()
+        repository.getFoodstandList()
+        repository.getLineup()
+        repository.getNewsfeedItems()
+
+        verify(database, times(6)).getReference(testId)
+        verify(database).getReference()
+    }
+
+    @Test
+    fun gettersDontCallDatabase_whenFieldsAreSet() {
+        fillRepository(repository)
+        repository.getFestivalName()
+        repository.getFestivalLogo()
+        repository.getFestivalMap()
+        repository.getFestivals()
+        repository.getFoodstandList()
+        repository.getLineup()
+        repository.getNewsfeedItems()
+
+        verify(database, never()).getReference(testId)
+    }
+
+    @Test
+    fun resetSetsAllValuesNull() {
+        fillRepository(repository)
+        repository.reset()
+        Assert.assertNull(repository.name.value)
+        Assert.assertNull(repository.logo.value)
+        Assert.assertNull(repository.map.value)
+        Assert.assertNull(repository.lineupstages.value)
+        Assert.assertNull(repository.foodstands.value)
+        Assert.assertTrue(repository.newsfeed.value.isNullOrEmpty())
+    }
+
+    @Test
+    fun getFestivalNameCallsDatabase_AfterResetOfValues() {
+        repository.reset()
+
+        //moet 4x opgeroepen worden voor foodstands, linup, logo en kaart
+        verify(database, times(4)).getReference(testId)
     }
 
 

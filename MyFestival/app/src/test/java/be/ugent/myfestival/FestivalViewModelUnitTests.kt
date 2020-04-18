@@ -43,7 +43,19 @@ class FestivalViewModelUnitTests {
         preferences = mock()
         viewModel = FestivalViewModel(repository)
 
-        //TODO: dingen testen met observers?
+        //TODO: dingen testen met observers? zie code H7 of dit uit H8:
+        /*@Test
+        fun getWishListReturnsReturnsData() {
+            val wishes = listOf(Wishlist("Victoria", listOf("RW Book")))
+            whenever(mockRepository.getWishlists())
+                .thenReturn(MutableLiveData<List<Wishlist>>().apply { postValue(wishes) })
+
+            val mockObserver = mock<Observer<List<Wishlist>>>()
+            viewModel.getWishlists().observeForever(mockObserver)
+
+            verify(mockObserver).onChanged(wishes)
+        }*/
+
         //lineupObserver = mock()
         //viewModel.getLineup().observeForever(mapObserver)
 

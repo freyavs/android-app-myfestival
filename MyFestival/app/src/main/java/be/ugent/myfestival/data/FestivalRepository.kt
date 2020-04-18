@@ -21,7 +21,6 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
     var foodstands: MutableLiveData<List<FoodStand>> = MutableLiveData()
 
     var festivalList: MutableLiveData<List<FestivalChooser>> = MutableLiveData()
-    var test: MutableLiveData<String> = MutableLiveData()
 
     var lineupstages: MutableLiveData<List<Stage>> = MutableLiveData()
     var logo: MutableLiveData<String> = MutableLiveData()
@@ -63,6 +62,10 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
         logo = MutableLiveData()
         map = MutableLiveData()
 
+        getFoodstandList()
+        getNewsfeedItems()
+        getFestivalMap()
+        getLineup()
     }
 
     fun getId(): String {

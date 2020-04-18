@@ -26,20 +26,14 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
     fun setId(sharedPreferences: SharedPreferences?){
         val newID = sharedPreferences?.getString("ID","").toString()
         if (newID != festivalRepo.getId()) {
-            festivalRepo.reset()
             festivalRepo.setId(sharedPreferences?.getString("ID", "").toString())
-            getLineup()
-            getFoodstandList()
-            getNewsfeedItems()
-            getMap()
+            festivalRepo.reset()
         }
     }
 
     fun hasFestival(): Boolean{
         return festivalRepo.getId() != ""
     }
-
-    fun getLineup() = festivalRepo.getLineup()
 
     fun getLogo() = festivalRepo.getFestivalLogo()
 
@@ -55,7 +49,7 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
     fun getNewsfeedItems() = festivalRepo.getNewsfeedItems()
 
 
-    //TODO: Loading moet beter / mooier met afbeelding ofzo en buttons mogen ook niet op scherm verschijnen (gwn loading afbeelding die over heel het scherm is)
+    //TODO: Loading moet beter / mooier met afbeelding ofzo en buttons mogen ook niet op scherm verschijnen (gwn loading icon/afb die over heel het scherm is)
 
     fun getLoading() : LiveData<Int> = Transformations.map(festivalRepo.lineupstages){ value ->
         Log.v("welcome_string", value.isEmpty().toString())
