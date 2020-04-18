@@ -1,9 +1,5 @@
 package be.ugent.myfestival.utilities
 
-import be.ugent.myfestival.viewmodels.FestivalChooserViewModelFactory
-import android.R
-import android.net.Uri
-import be.ugent.myfestival.BuildConfig
 import be.ugent.myfestival.data.FestivalRepository
 import be.ugent.myfestival.viewmodels.FestivalViewModelFactory
 import be.ugent.myfestival.viewmodels.LineupViewModelFactory
@@ -12,30 +8,18 @@ import com.google.firebase.database.FirebaseDatabase
 
 object InjectorUtils {
 
-    //todo: db moet je eigenlijk niet meegeven
-    private val db = FirebaseDatabase.getInstance()
-
-    private fun getFestivalRepository(database: FirebaseDatabase) =
-        FestivalRepository.getInstance(database)
+    private fun getFestivalRepository() =
+        FestivalRepository.getInstance()
 
     fun provideFestivalViewModelFactory() =
         FestivalViewModelFactory(
-            getFestivalRepository(
-                db
-            )
+            getFestivalRepository()
         )
 
     fun provideLineupViewModelFactory() =
         LineupViewModelFactory(
-            getFestivalRepository(
-                db
-            )
+            getFestivalRepository()
         )
 
-    fun provideFestivalChooserViewModelFactory() =
-        FestivalChooserViewModelFactory(
-            getFestivalRepository(
-                db
-            )
-        )
+
 }

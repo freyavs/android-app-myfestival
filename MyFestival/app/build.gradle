@@ -54,13 +54,6 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
 
-    // Room
-    /*
-    implementation 'androidx.room:room-runtime:2.2.4'
-    kapt 'androidx.room:room-compiler:2.2.4'
-    implementation 'androidx.room:room-ktx:2.2.4'
-     */
-
     // Navigation
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0-alpha04'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.0-alpha04'
@@ -79,15 +72,22 @@ dependencies {
     //Glide
     implementation 'com.firebaseui:firebase-ui-storage:3.2.2'
     implementation 'com.github.bumptech.glide:annotations:4.10.0'
-    //kapt 'com.github.bumptech.glide:compiler:4.9.0'
-    //implementation "com.github.bumptech.glide:okhttp3-integration:4.6.1"
-    //implementation 'com.github.bumptech.glide:glide:4.10.0'
-
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     kapt 'com.github.bumptech.glide:compiler:4.11.0'
     implementation ('com.github.bumptech.glide:okhttp3-integration:4.11.0'){
         exclude group: 'glide-parent'
     }
-    }
+
+    // Testing Dependencies
+    testImplementation 'junit:junit:4.12'
+   // testImplementation "androidx.arch.core:core-testing:$lifecycle_version"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
+    androidTestImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
+    androidTestImplementation 'com.linkedin.dexmaker:dexmaker-mockito-inline:2.21.0'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'android.arch.core:core-testing:1.1.1'
+}
 
 
