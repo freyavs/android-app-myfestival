@@ -15,6 +15,9 @@ import be.ugent.myfestival.utilities.GlideApp
 
 
 class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewModel() {
+
+    fun getFestivals() = festivalRepo.getFestivals();
+
     fun getWelcomeString(): LiveData<String> =
         Transformations.map(festivalRepo.getFestivalName()) { value ->
             "Welkom bij $value"
@@ -23,7 +26,7 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
     fun setId(sharedPreferences: SharedPreferences?){
         val newID = sharedPreferences?.getString("ID","Null").toString()
         if (newID != festivalRepo.festivalID) {
-            reset()
+            festivalRepo.reset()
             festivalRepo.festivalID = sharedPreferences?.getString("ID", "Null").toString()
             getLineup()
             getFoodstandList()
@@ -51,6 +54,9 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
 
     fun getNewsfeedItems() = festivalRepo.getNewsfeedItems()
 
+
+    //TODO: Loading moet beter / mooier met afbeelding ofzo
+
     fun getLoading() : LiveData<Int> = Transformations.map(festivalRepo.lineupstages){ value ->
         Log.v("welcome_string", value.isEmpty().toString())
         Log.v("welcome_string", value.toString())
@@ -69,16 +75,6 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
         }
     }
 
-
-    fun reset() {
-        festivalRepo.name = MutableLiveData()
-        festivalRepo.newsfeed = MutableLiveData()
-        festivalRepo.foodstands = MutableLiveData()
-        festivalRepo.lineupstages = MutableLiveData()
-        festivalRepo.logo = MutableLiveData()
-        festivalRepo.map = MutableLiveData()
-
-    }
 
     companion object {
         //databinding met glide

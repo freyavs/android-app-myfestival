@@ -15,7 +15,7 @@ import be.ugent.myfestival.adapters.FestivalChooserAdapter
 import be.ugent.myfestival.databinding.FestivalChooserFragmentBinding
 import be.ugent.myfestival.models.FestivalChooser
 import be.ugent.myfestival.utilities.InjectorUtils
-import be.ugent.myfestival.viewmodels.FestivalChooserViewModel
+import be.ugent.myfestival.viewmodels.FestivalViewModel
 
 
 class FestivalChooserFragment : Fragment() {
@@ -27,8 +27,8 @@ class FestivalChooserFragment : Fragment() {
         val binding: FestivalChooserFragmentBinding = FestivalChooserFragmentBinding.inflate(inflater, container, false)
         context?: return binding.root
 
-        val viewModel by activityViewModels<FestivalChooserViewModel>{
-            InjectorUtils.provideFestivalChooserViewModelFactory()
+        val viewModel by activityViewModels<FestivalViewModel>{
+            InjectorUtils.provideFestivalViewModelFactory()
         }
         val adapter =
             FestivalChooserAdapter() { festivalChooser: FestivalChooser ->

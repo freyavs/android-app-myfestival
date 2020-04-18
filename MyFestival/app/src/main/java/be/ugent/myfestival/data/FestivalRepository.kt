@@ -15,7 +15,7 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
-class FestivalRepository(val database: FirebaseDatabase) {
+class FestivalRepository() {
     var name: MutableLiveData<String> = MutableLiveData()
     var newsfeed: MutableLiveData<MutableList<NewsfeedItem>> = MutableLiveData()
     var foodstands: MutableLiveData<List<FoodStand>> = MutableLiveData()
@@ -54,7 +54,19 @@ class FestivalRepository(val database: FirebaseDatabase) {
         })
     }
 
-    // ------------- data voor het festival algemeen (home menu, ..)  -------------------------------------
+    // -------------------------- als id wordt gezet --------------------------
+
+    fun reset() {
+        name = MutableLiveData()
+        newsfeed = MutableLiveData()
+        foodstands = MutableLiveData()
+        lineupstages = MutableLiveData()
+        logo = MutableLiveData()
+        map = MutableLiveData()
+
+    }
+
+    // ------------- data voor het festival algemeen (home menu, ..)  ----------------
     fun getFestivalName(): MutableLiveData<String> {
         if (name.value == null) {
             FirebaseDatabase.getInstance()
@@ -324,11 +336,11 @@ companion object {
     @Volatile
     private var instance: FestivalRepository? = null
 
-    fun getInstance(database: FirebaseDatabase) = instance
+    fun getInstance() = instance
         ?: synchronized(this) {
             instance
-                ?: FestivalRepository(database)
+                ?: FestivalRepository()
                     .also { instance = it }
         }
-}
+    }
 }
