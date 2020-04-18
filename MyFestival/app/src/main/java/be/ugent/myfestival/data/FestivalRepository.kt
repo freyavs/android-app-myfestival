@@ -15,7 +15,7 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
-class FestivalRepository() {
+class FestivalRepository(val database: FirebaseDatabase, val storageRef: StorageReference) {
     var name: MutableLiveData<String> = MutableLiveData()
     var newsfeed: MutableLiveData<MutableList<NewsfeedItem>> = MutableLiveData()
     var foodstands: MutableLiveData<List<FoodStand>> = MutableLiveData()
@@ -29,13 +29,12 @@ class FestivalRepository() {
 
     val TAG = "myFestivalTag"
 
-    val storageRef = Firebase.storage.reference
 
     //TODO: alle listeners verwijderen bij veranderen van festival!!!
-    var festivalID = "Null"
+    var festivalID = ""
 
 
-    //voor debug redenen:
+    /*voor debug redenen:
     val connectedRef = Firebase.database.getReference(".info/connected")
     fun addConnectionListener() {
         connectedRef.addValueEventListener(object : ValueEventListener {
@@ -52,7 +51,7 @@ class FestivalRepository() {
                 Log.w(TAG, "Listener was cancelled")
             }
         })
-    }
+    }*/
 
     // -------------------------- als id wordt gezet --------------------------
 
@@ -66,10 +65,18 @@ class FestivalRepository() {
 
     }
 
+    fun getId(): String {
+        return festivalID
+    }
+
+    fun setId(id : String) {
+        festivalID = id
+    }
+
     // ------------- data voor het festival algemeen (home menu, ..)  ----------------
     fun getFestivalName(): MutableLiveData<String> {
         if (name.value == null) {
-            FirebaseDatabase.getInstance()
+            database
                 .getReference(festivalID).child("name")
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -89,7 +96,7 @@ class FestivalRepository() {
 
     fun getFestivalLogo(): MutableLiveData<String> {
         if (logo.value == null) {
-            FirebaseDatabase.getInstance()
+            database
                 .getReference(festivalID).child("logo")
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(ds: DataSnapshot) {
@@ -116,7 +123,7 @@ class FestivalRepository() {
 
     fun getFestivalMap(): MutableLiveData<String> {
         if (map.value == null) {
-            FirebaseDatabase.getInstance()
+            database
                 .getReference(festivalID).child("location")
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(ds: DataSnapshot) {
@@ -145,8 +152,7 @@ class FestivalRepository() {
     // ---------------- data voor de foodstands -------------------------------
     fun getFoodstandList() : MutableLiveData<List<FoodStand>> {
         if (foodstands.value == null) {
-            addConnectionListener()
-            FirebaseDatabase.getInstance()
+            database
                 .getReference(festivalID).child("foodstand").orderByKey()
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -194,7 +200,7 @@ class FestivalRepository() {
         //TODO: default newsfeed post in web app laten aanmaken
         if (newsfeed.value.isNullOrEmpty()) {
             newsfeed.value = mutableListOf()
-            FirebaseDatabase.getInstance()
+            database
                 .getReference(festivalID).child("messages")
                 .addChildEventListener(object : ChildEventListener {
                     override fun onChildAdded(ds: DataSnapshot, previousChildName: String?) {
@@ -260,8 +266,7 @@ class FestivalRepository() {
 
     fun getLineup() : MutableLiveData<List<Stage>> {
         if (lineupstages.value.isNullOrEmpty()) {
-            addConnectionListener()
-            FirebaseDatabase.getInstance()
+            database
                 .getReference(festivalID).child("stages")
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -297,8 +302,7 @@ class FestivalRepository() {
     // -------------- data voor festival chooser ------------------
     fun getFestivals(): MutableLiveData<List<FestivalChooser>>{
         if(festivalList.value == null){
-            addConnectionListener()
-            FirebaseDatabase.getInstance()
+            database
                 .getReference()
                 .addListenerForSingleValueEvent(object : ValueEventListener{
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -336,10 +340,10 @@ companion object {
     @Volatile
     private var instance: FestivalRepository? = null
 
-    fun getInstance() = instance
+    fun getInstance(database: FirebaseDatabase, storageRef: StorageReference) = instance
         ?: synchronized(this) {
             instance
-                ?: FestivalRepository()
+                ?: FestivalRepository(database, storageRef)
                     .also { instance = it }
         }
     }
