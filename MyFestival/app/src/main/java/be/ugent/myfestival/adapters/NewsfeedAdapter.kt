@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import be.ugent.myfestival.R
 import be.ugent.myfestival.models.NewsfeedItem
@@ -16,7 +18,8 @@ import kotlinx.android.synthetic.main.newsfeed_item.view.*
 import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
 
-class NewsfeedAdapter(val viewModel : FestivalViewModel) : RecyclerView.Adapter<NewsfeedAdapter.NewsItemViewHolder>(){
+//class NewsfeedAdapter(val viewModel : FestivalViewModel) : RecyclerView.Adapter<NewsfeedAdapter.NewsItemViewHolder>(){
+class NewsfeedAdapter(val viewModel : FestivalViewModel) : ListAdapter<NewsfeedItem, RecyclerView.ViewHolder>(NewsItemDiffCallback()){
 
     var posts = emptyList<NewsfeedItem>()
 
@@ -28,10 +31,10 @@ class NewsfeedAdapter(val viewModel : FestivalViewModel) : RecyclerView.Adapter<
         )
     }
 
-    override fun onBindViewHolder(holder: NewsItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val post = posts[position]
 
-        holder.title.text = post.title
+        (holder as NewsItemViewHolder).title.text = post.title
         holder.time.text =  DateTimeFormatter.ofPattern("dd/MM HH:mm").format(post.time)
         holder.message.text = post.message
         if (post.image != null) {
@@ -49,5 +52,16 @@ class NewsfeedAdapter(val viewModel : FestivalViewModel) : RecyclerView.Adapter<
         val message: TextView = itemView.message
         val image: ImageView = itemView.image
         val logo: ImageView = itemView.image
+    }
+}
+
+private class NewsItemDiffCallback : DiffUtil.ItemCallback<NewsfeedItem>() {
+
+    override fun areItemsTheSame(oldItem: NewsfeedItem, newItem: NewsfeedItem): Boolean {
+        return oldItem.title == newItem.title && oldItem.time == newItem.time
+    }
+
+    override fun areContentsTheSame(oldItem: NewsfeedItem, newItem: NewsfeedItem): Boolean {
+        return oldItem.title == newItem.title && oldItem.time == newItem.time
     }
 }
