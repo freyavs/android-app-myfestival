@@ -31,7 +31,7 @@ class LineupViewModel(private val festivalRepo : FestivalRepository) : ViewModel
         for (stage in stages){
             var concerts = stage.concerts.filter{it.start.toLocalDate() == day}
             concerts = concerts.sortedBy { concert -> concert.start }
-            list.add(Stage(stage.name, concerts))
+            list.add(Stage(stage.id, stage.name, concerts))
         }
         list
     }
