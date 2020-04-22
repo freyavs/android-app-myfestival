@@ -197,12 +197,14 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:rippleColor="@color/backgroundColor"
                 app:shapeAppearance="@style/ShapeAppearance.MyFestival.Button.Home" />
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="notification"
-                android:onClick="@notificationHandler::onClick"/>
+
         </LinearLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="notification"
+            android:onClick="@notificationHandler::onClick"/>
     </LinearLayout>
+
     </RelativeLayout>
 </layout>
