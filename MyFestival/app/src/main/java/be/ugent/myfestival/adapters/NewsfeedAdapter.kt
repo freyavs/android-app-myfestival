@@ -18,7 +18,6 @@ import kotlinx.android.synthetic.main.newsfeed_item.view.*
 import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
 
-//class NewsfeedAdapter(val viewModel : FestivalViewModel) : RecyclerView.Adapter<NewsfeedAdapter.NewsItemViewHolder>(){
 class NewsfeedAdapter(val viewModel : FestivalViewModel) : ListAdapter<NewsfeedItem, RecyclerView.ViewHolder>(NewsItemDiffCallback()){
 
     var posts = emptyList<NewsfeedItem>()

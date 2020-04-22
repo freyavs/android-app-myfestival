@@ -36,7 +36,8 @@ class FoodFragment : Fragment() {
             FoodStandAdapter() { foodStand: FoodStand ->
                 handleItemClick(foodStand)
             }
-        viewModel.getFoodstandList().observe(viewLifecycleOwner, Observer { foodstands -> adapter.foodStandList = foodstands })
+
+        viewModel.getFoodstandList().observe(viewLifecycleOwner, Observer { foodstands -> adapter.submitList(foodstands)})
 
         binding.foodstandRecyclerView.apply {
             this.adapter = adapter
