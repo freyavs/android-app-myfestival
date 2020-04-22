@@ -38,6 +38,7 @@ class FoodStandAdapter(val clickListener: (FoodStand) -> Unit) :
         holder.itemView.setOnClickListener{clickListener(currentItem)}
     }
 
+
     class FoodStandViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.foodstand_image_view
         val textView1: TextView = itemView.fastfood_name_text_view

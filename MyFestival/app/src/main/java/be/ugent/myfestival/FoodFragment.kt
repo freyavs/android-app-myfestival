@@ -1,6 +1,7 @@
 package be.ugent.myfestival
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,14 +37,18 @@ class FoodFragment : Fragment() {
             FoodStandAdapter() { foodStand: FoodStand ->
                 handleItemClick(foodStand)
             }
+        val TAG = "myFestivalTag"
 
-        viewModel.getFoodstandList().observe(viewLifecycleOwner, Observer { foodstands -> adapter.submitList(foodstands)})
+        Log.d(TAG, "update")
 
         binding.foodstandRecyclerView.apply {
             this.adapter = adapter
             layoutManager = LinearLayoutManager(this.context)
-            setHasFixedSize(true)
         }
+
+        viewModel.getFoodstandList().observe(viewLifecycleOwner, Observer { list ->
+            adapter.submitList(list?.toMutableList())
+        })
 
         return binding.root
     }
