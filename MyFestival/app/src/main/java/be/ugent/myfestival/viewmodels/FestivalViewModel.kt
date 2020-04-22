@@ -10,6 +10,7 @@ import androidx.databinding.BindingAdapter
 import androidx.lifecycle.*
 import be.ugent.myfestival.data.FestivalRepository
 import be.ugent.myfestival.models.Dish
+import be.ugent.myfestival.models.FoodStand
 import be.ugent.myfestival.models.NewsfeedItem
 import be.ugent.myfestival.utilities.GlideApp
 
@@ -39,7 +40,12 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
 
     fun getMap() = festivalRepo.getFestivalMap()
 
-    fun getFoodstandList() = festivalRepo.getFoodstandList()
+    fun getFoodstandList(): MutableLiveData<List<FoodStand>> {
+        val TAG = "myFestivalTag"
+        Log.w(TAG, "getfoodstands")
+        return festivalRepo.getFoodstandList()
+    }
+    val foodstands = festivalRepo.getFoodstandList()
 
     fun getFoodstandMenu(id: String): LiveData<List<Dish>> =
         Transformations.map(festivalRepo.getFoodstandList()) { foodstands ->
