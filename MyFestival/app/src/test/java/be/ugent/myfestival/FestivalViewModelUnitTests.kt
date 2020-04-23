@@ -20,6 +20,7 @@ import org.mockito.Mock
 //TODO: test loading dingen maar pas als het is aangepast mss? (zie festivalviewmodel)
 //TODO: test foodstand dingen?
 //TODO: test of na reset juiste data wordt ingeladen (alle getters dus)
+//denk na welke tests hier moeten en welke in integration test (androidStudio) -> mss eens vragen eig
 
 class FestivalViewModelUnitTests {
     @get:Rule
