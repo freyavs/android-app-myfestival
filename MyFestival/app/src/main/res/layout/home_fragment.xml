@@ -203,7 +203,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="notification"
-            android:onClick="@notificationHandler::onClick"/>
+            android:onClick="@{notificationHandler::onClick}"/>
     </LinearLayout>
 
     </RelativeLayout>
