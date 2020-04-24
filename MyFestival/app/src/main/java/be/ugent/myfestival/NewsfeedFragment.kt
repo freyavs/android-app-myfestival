@@ -34,7 +34,10 @@ class NewsfeedFragment : Fragment() {
 
         var adapter = NewsfeedAdapter(viewModel)
 
-        viewModel.getNewsfeedItems().observe(viewLifecycleOwner, Observer { posts -> adapter.posts = posts})
+        viewModel.getNewsfeedItems().observe(viewLifecycleOwner, Observer {
+            posts -> adapter.posts = posts
+            adapter.notifyDataSetChanged()
+        })
 
         binding.stageRecycler.adapter = adapter
         binding.stageRecycler.layoutManager = LinearLayoutManager(this.context)

@@ -21,6 +21,6 @@
     <string name="vouchers">Bonnetjes:</string>
 
     <string name="loading">Aan het Laden...</string>
-
+    <string name="searchString">Naam festival</string>
     <string name="festival">Festival</string>
 </resources>

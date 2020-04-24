@@ -2,11 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="652028e1-9c7b-45df-8c59-b3746887c8f1" name="Default Changelist" comment="">
+<<<<<<< HEAD
       <change afterPath="$PROJECT_DIR$/../MyFestival/app/src/main/java/be/ugent/myfestival/MessagingService.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MyFestival/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../MyFestival/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MyFestival/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyFestival/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebApp/infoFestival.js" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/infoFestival.js" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+>>>>>>> master
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,8 +128,13 @@
       <workItem from="1586354034198" duration="1746000" />
       <workItem from="1586430311845" duration="298000" />
       <workItem from="1586430658901" duration="168000" />
+<<<<<<< HEAD
       <workItem from="1587653962640" duration="1972000" />
       <workItem from="1587658691420" duration="873000" />
+=======
+      <workItem from="1586980735630" duration="7000" />
+      <workItem from="1587123423463" duration="95000" />
+>>>>>>> master
     </task>
     <task id="LOCAL-00001" summary="Festival kan je aanmaken">
       <created>1584731303423</created>
