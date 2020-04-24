@@ -48,7 +48,7 @@ class FestivalChooserFragment : Fragment() {
 
         val preference = context?.getSharedPreferences("FestivalPreference", Context.MODE_PRIVATE)
         val editor = preference?.edit()
-        editor?.putString("ID","Null")
+        editor?.putString("ID","")
         editor?.apply()
 
         return binding.root
