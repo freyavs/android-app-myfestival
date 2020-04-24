@@ -169,7 +169,9 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                                 //haal al het eten van een bepaalde foodstand af
                                 var dishList = mutableListOf<Dish>()
                                 ds.child("menu").children.mapNotNullTo(dishList) {
-                                    it.getValue(Dish::class.java)
+                                    val dish = it.getValue(Dish::class.java)
+                                    dish!!.id = it.key.toString()
+                                    dish
                                 }
                                 logoRef.getFile(localFile).addOnSuccessListener {
                                     //pas als image ingeladen is, maak foodstand aan
@@ -180,7 +182,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                                         dishList
                                     ))
                                 }.addOnFailureListener {
-                                    Log.d(TAG, "Tempfile failed: check if foodstand submitted a logo!")
+                                    Log.d(TAG, "Tempfile failed, couldn't create foodstand: check if foodstand submitted a logo!")
                                 }
                             }
                             foodstands.postValue(foodList)
@@ -222,6 +224,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                             )
 
                         list.add(NewsfeedItem(
+                            ds.key.toString(),
                             LocalDateTime.parse(date),
                             reference,
                             ds.child("message").value.toString(),
@@ -249,12 +252,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                     }
 
                     override fun onChildMoved(dataSnapshot: DataSnapshot, previousChildName: String?) {
-                        Log.d(TAG, "onChildMoved:" + dataSnapshot.key!!)
-
-                        // A comment has changed position, use the key to determine if we are
-                        // displaying this comment and if so move it.
-                        val movedComment = dataSnapshot.getValue()
-                        val commentKey = dataSnapshot.key
+                        //dit moet niets doen want newsfeedposts zullen niet verplaatst kunnen worden
                     }
 
                     override fun onCancelled(databaseError: DatabaseError) {
@@ -280,12 +278,14 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                                 val concerts = mutableListOf<Concert>()
                                 for (dss in ds.child("concerts").children) {
                                    concerts.add(Concert(
+                                        dss.key.toString(),
                                         dss.child("artist").value.toString(),
                                         LocalDateTime.parse(dss.child("startdate").value.toString()),
                                         LocalDateTime.parse(dss.child("enddate").value.toString())
                                     ))
                                 }
                                 stages.add(Stage(
+                                    ds.key.toString(),
                                     ds.child("name").value.toString(),
                                     concerts
                                 ))
@@ -332,7 +332,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                     }
 
                     override fun onCancelled(databaseError: DatabaseError) {
-                        Log.d(TAG, "foutje", databaseError.toException())
+                        Log.d(TAG, "getFestivals:onCancelled", databaseError.toException())
                     }
                 })
         }
