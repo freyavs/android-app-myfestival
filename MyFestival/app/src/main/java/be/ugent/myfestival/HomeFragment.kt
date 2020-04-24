@@ -34,6 +34,8 @@ class HomeFragment : Fragment() {
             findNavController().navigate(action)
         }
 
+
+
         binding.viewModel = viewModel
         
         binding.newsfeedHandler = View.OnClickListener {

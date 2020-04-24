@@ -42,7 +42,10 @@ class MenuFragment: Fragment() {
 
         val id: String = args.foodstandId
         val adapter = MenuAdapter()
-        viewModel.getFoodstandMenu(id).observe(viewLifecycleOwner, Observer { menu -> adapter.menuList = menu })
+        viewModel.getFoodstandMenu(id).observe(viewLifecycleOwner, Observer {
+            menu -> adapter.menuList = menu
+            adapter.notifyDataSetChanged()
+        })
 
         binding.menuRecyclerView.apply {
             this.adapter = adapter

@@ -1,6 +1,7 @@
 package be.ugent.myfestival
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import be.ugent.myfestival.databinding.FoodFragmentBinding
 import be.ugent.myfestival.models.FoodStand
 import be.ugent.myfestival.utilities.InjectorUtils
 import be.ugent.myfestival.viewmodels.FestivalViewModel
+import androidx.lifecycle.observe
 
 
 /**
@@ -32,17 +34,24 @@ class FoodFragment : Fragment() {
         val viewModel by activityViewModels<FestivalViewModel> {
             InjectorUtils.provideFestivalViewModelFactory()
         }
-        val adapter =
-            FoodStandAdapter() { foodStand: FoodStand ->
-                handleItemClick(foodStand)
-            }
-        viewModel.getFoodstandList().observe(viewLifecycleOwner, Observer { foodstands -> adapter.foodStandList = foodstands })
 
-        binding.foodstandRecyclerView.apply {
-            this.adapter = adapter
-            layoutManager = LinearLayoutManager(this.context)
-            setHasFixedSize(true)
-        }
+        val adapter = FoodStandAdapter { foodStand: FoodStand ->
+                                               handleItemClick(foodStand) }
+
+        //viewModel.foodstands.observe(viewLifecycleOwner) { list -> adapter.submitList(list) }
+
+//        viewModel.getFoodstandList().observe(viewLifecycleOwner, Observer { list ->
+//            (binding.foodstandRecyclerView.adapter as FoodStandAdapter).submitList(list)
+//
+//        })
+
+        viewModel.getFoodstandList().observe(viewLifecycleOwner, Observer {
+            list -> adapter.foodstands = list
+            adapter.notifyDataSetChanged()
+        })
+
+        binding.foodstandRecyclerView.adapter = adapter
+        binding.foodstandRecyclerView.layoutManager = LinearLayoutManager(this.context)
 
         return binding.root
     }
