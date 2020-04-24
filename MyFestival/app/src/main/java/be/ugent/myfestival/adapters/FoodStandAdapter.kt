@@ -17,6 +17,9 @@ import kotlinx.android.synthetic.main.foodstand_item.view.*
 class FoodStandAdapter(val clickListener: (FoodStand) -> Unit) :
     ListAdapter<FoodStand, RecyclerView.ViewHolder>(FoodStandItemDiffCallback()) {
 
+    var foodstands = emptyList<FoodStand>()
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodStandViewHolder {
         val itemView = LayoutInflater
             .from(parent.context)
@@ -29,7 +32,7 @@ class FoodStandAdapter(val clickListener: (FoodStand) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val currentItem = getItem(position)
+        val currentItem = foodstands[position]
 
         GlideApp.with((holder as FoodStandViewHolder).imageView.context)
                 .load(currentItem.logo)
@@ -37,9 +40,6 @@ class FoodStandAdapter(val clickListener: (FoodStand) -> Unit) :
 
         holder.textView1.text = currentItem.name
         holder.itemView.setOnClickListener{clickListener(currentItem)}
-        val TAG = "myFestivalTag"
-        Log.w(TAG, "bind: " + currentItem.name)
-
     }
 
 

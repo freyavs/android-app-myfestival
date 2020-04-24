@@ -45,11 +45,9 @@ class FoodFragment : Fragment() {
 //
 //        })
 
-        viewModel.getFoodstandList().observe(viewLifecycleOwner, Observer { list ->
-
-            val TAG = "myFestivalTag"
-            Log.w(TAG, "lijst:$list")
-            adapter.submitList(list)
+        viewModel.getFoodstandList().observe(viewLifecycleOwner, Observer {
+            list -> adapter.foodstands = list
+            adapter.notifyDataSetChanged()
         })
 
         binding.foodstandRecyclerView.adapter = adapter

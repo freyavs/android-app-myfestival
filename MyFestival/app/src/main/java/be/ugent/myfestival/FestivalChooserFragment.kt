@@ -34,7 +34,11 @@ class FestivalChooserFragment : Fragment() {
             FestivalChooserAdapter() { festivalChooser: FestivalChooser ->
                 handleItemClick(festivalChooser)
             }
-        viewModel.getFestivals().observe(viewLifecycleOwner, Observer { festivals -> adapter.festivalList = festivals })
+
+        viewModel.getFestivals().observe(viewLifecycleOwner, Observer {
+            festivals -> adapter.festivalList = festivals
+            adapter.notifyDataSetChanged()
+        })
 
         binding.festivalRecyclerView.apply {
             this.adapter = adapter
