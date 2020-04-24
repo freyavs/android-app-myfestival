@@ -46,11 +46,7 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
                     if (f.isDirectory()) {
                         deleteTempFiles(f)
                     } else if (!f.absolutePath.contains("festivallist")) {
-                        Log.d("myFestivalTag", "contains festivallist: " + f.absolutePath.contains("festivallist"))
                         f.delete()
-                    }
-                    else {
-                        Log.d("myFestivalTag", "not deleting a file")
                     }
                 }
             }
