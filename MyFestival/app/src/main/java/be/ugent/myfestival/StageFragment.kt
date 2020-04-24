@@ -27,11 +27,6 @@ class StageFragment(val stage: Stage) : Fragment() {
         binding.stageRecycler.layoutManager = LinearLayoutManager(this.context)
         binding.stageRecycler.setHasFixedSize(true)
 
-        //todo(!! wegwerken ...)
-        val decorator = DividerItemDecoration(this.context, LinearLayoutManager.VERTICAL)
-        decorator.setDrawable(ContextCompat.getDrawable(this.context!!, R.drawable.spacer)!!)
-
-        binding.stageRecycler.addItemDecoration(decorator)
 
         return binding.root
     }
