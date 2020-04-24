@@ -314,7 +314,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                             for(ds in dataSnapshot.children) {
                                 //todo: cache legen zodat geen dubbele foto's worden opgeslaan ( getCacheDir )
                                 val logoRef = storageRef.child(ds.child("logo").value.toString())
-                                val localFile = File.createTempFile("foodstand", ".png")
+                                val localFile = File.createTempFile("festivallist", ".png")
                                 logoRef.getFile(localFile).addOnSuccessListener {
                                     festivalChoosers.add(
                                         FestivalChooser(
