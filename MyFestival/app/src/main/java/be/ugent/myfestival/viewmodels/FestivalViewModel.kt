@@ -23,7 +23,6 @@ import java.io.File
 class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewModel() {
     var searchValue: MutableLiveData<String> = MutableLiveData("")
     fun getFestivals() : LiveData<List<FestivalChooser>> = Transformations.switchMap(searchValue) { search ->
-        Log.v("IETSSSS", search)
         Transformations.map(getSearchedFestivals(search)){
             festivals -> festivals
         }
