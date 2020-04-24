@@ -12,6 +12,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import be.ugent.myfestival.data.FestivalRepository
+import be.ugent.myfestival.databinding.FestivalChooserFragmentBindingImpl
 import be.ugent.myfestival.models.Dish
 import be.ugent.myfestival.models.FestivalChooser
 import be.ugent.myfestival.models.FoodStand
@@ -20,19 +21,28 @@ import java.io.File
 
 
 class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewModel() {
-    var festivalList: MutableLiveData<List<FestivalChooser>> = MutableLiveData()
-    fun getFestivals(zoekwaarde: String): MutableLiveData<List<FestivalChooser>> {
-        val allFestivals = festivalRepo.getFestivals()
-        val festivalChoosers = mutableListOf<FestivalChooser>()
-        allFestivals.value?.forEach {
-            if(it.name.toLowerCase().contains(zoekwaarde.toLowerCase())) {
-                festivalChoosers.add(it)
-            }
+    var searchValue: MutableLiveData<String> = MutableLiveData("")
+    fun getFestivals() : LiveData<List<FestivalChooser>> = Transformations.switchMap(searchValue) { search ->
+        Log.v("IETSSSS", search)
+        Transformations.map(getSearchedFestivals(search)){
+            festivals -> festivals
         }
-        festivalList.postValue(festivalChoosers)
-        return festivalList
     }
 
+    fun getSearchedFestivals(search: String) : LiveData<List<FestivalChooser>> = Transformations.map(festivalRepo.getFestivals()) { festivals ->
+        val list = mutableListOf<FestivalChooser>()
+        for(festival in festivals){
+            if(festival.name.toLowerCase().contains(search.toLowerCase()))
+                list.add(festival)
+        }
+        list
+    }
+
+    fun changeSearchValue(value: String){
+        if(searchValue.value!! !== value){
+            searchValue.postValue(value);
+        }
+    }
     fun getWelcomeString(): LiveData<String> =
         Transformations.map(festivalRepo.getFestivalName()) { value ->
             "Welkom bij $value"
