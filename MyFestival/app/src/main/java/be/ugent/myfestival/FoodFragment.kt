@@ -38,13 +38,6 @@ class FoodFragment : Fragment() {
         val adapter = FoodStandAdapter { foodStand: FoodStand ->
                                                handleItemClick(foodStand) }
 
-        //viewModel.foodstands.observe(viewLifecycleOwner) { list -> adapter.submitList(list) }
-
-//        viewModel.getFoodstandList().observe(viewLifecycleOwner, Observer { list ->
-//            (binding.foodstandRecyclerView.adapter as FoodStandAdapter).submitList(list)
-//
-//        })
-
         viewModel.getFoodstandList().observe(viewLifecycleOwner, Observer {
             list -> adapter.foodstands = list
             adapter.notifyDataSetChanged()

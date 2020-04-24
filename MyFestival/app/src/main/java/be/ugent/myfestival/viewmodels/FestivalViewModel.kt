@@ -41,11 +41,8 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
     fun getMap() = festivalRepo.getFestivalMap()
 
     fun getFoodstandList(): MutableLiveData<List<FoodStand>> {
-        val TAG = "myFestivalTag"
-        Log.w(TAG, "getfoodstands")
         return festivalRepo.getFoodstandList()
     }
-    val foodstands = festivalRepo.getFoodstandList()
 
     fun getFoodstandMenu(id: String): LiveData<List<Dish>> =
         Transformations.map(festivalRepo.getFoodstandList()) { foodstands ->

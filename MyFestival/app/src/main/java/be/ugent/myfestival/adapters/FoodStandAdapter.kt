@@ -23,8 +23,6 @@ class FoodStandAdapter(val clickListener: (FoodStand) -> Unit) : RecyclerView.Ad
         val itemView = LayoutInflater
             .from(parent.context)
             .inflate(R.layout.foodstand_item, parent, false)
-        val TAG = "myFestivalTag"
-        Log.w(TAG, "create ")
         return FoodStandViewHolder(
             itemView
         )
