@@ -181,11 +181,11 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                                         localFile.absolutePath,
                                         dishList
                                     ))
+                                    foodstands.postValue(foodList)
                                 }.addOnFailureListener {
                                     Log.d(TAG, "Tempfile failed, couldn't create foodstand: check if foodstand submitted a logo!")
                                 }
                             }
-                            foodstands.postValue(foodList)
                         }
                     }
 
@@ -289,8 +289,8 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                                     ds.child("name").value.toString(),
                                     concerts
                                 ))
+                                lineupstages.postValue(stages)
                             }
-                            lineupstages.postValue(stages)
                         }
                     }
 
@@ -311,7 +311,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         if(dataSnapshot.exists()){
                             val festivalChoosers = mutableListOf<FestivalChooser>()
-                            for(ds in dataSnapshot.children){
+                            for(ds in dataSnapshot.children) {
                                 //todo: cache legen zodat geen dubbele foto's worden opgeslaan ( getCacheDir )
                                 val logoRef = storageRef.child(ds.child("logo").value.toString())
                                 val localFile = File.createTempFile("foodstand", ".png")
@@ -323,11 +323,11 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                                             localFile.absolutePath
                                         )
                                     )
+                                    festivalList.postValue(festivalChoosers)
                                 }.addOnCanceledListener {
                                     Log.d(TAG, "Tempfile failed")
                                 }
                             }
-                            festivalList.postValue(festivalChoosers)
                         }
                     }
 
