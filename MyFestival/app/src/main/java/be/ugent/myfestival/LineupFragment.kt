@@ -72,8 +72,7 @@ class LineupFragment : Fragment() {
             }
         })
 
-        adapter =
-            DayAdapter(this.childFragmentManager)
+        adapter = DayAdapter(this.childFragmentManager)
         binding.stageViewer.adapter = adapter
 
         viewModel.getCurrentStages().observe(viewLifecycleOwner, Observer { stages -> adapter.notifyChange(stages)} )

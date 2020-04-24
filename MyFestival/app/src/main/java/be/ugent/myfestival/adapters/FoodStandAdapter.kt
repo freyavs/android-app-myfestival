@@ -14,8 +14,7 @@ import be.ugent.myfestival.models.FoodStand
 import be.ugent.myfestival.utilities.GlideApp
 import kotlinx.android.synthetic.main.foodstand_item.view.*
 
-class FoodStandAdapter(val clickListener: (FoodStand) -> Unit) :
-    ListAdapter<FoodStand, RecyclerView.ViewHolder>(FoodStandItemDiffCallback()) {
+class FoodStandAdapter(val clickListener: (FoodStand) -> Unit) : RecyclerView.Adapter<FoodStandAdapter.FoodStandViewHolder>() {
 
     var foodstands = emptyList<FoodStand>()
 
@@ -31,10 +30,10 @@ class FoodStandAdapter(val clickListener: (FoodStand) -> Unit) :
         )
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: FoodStandViewHolder, position: Int) {
         val currentItem = foodstands[position]
 
-        GlideApp.with((holder as FoodStandViewHolder).imageView.context)
+        GlideApp.with(holder.imageView.context)
                 .load(currentItem.logo)
                 .into(holder.imageView)
 
@@ -43,19 +42,12 @@ class FoodStandAdapter(val clickListener: (FoodStand) -> Unit) :
     }
 
 
+    override fun getItemCount(): Int {
+        return foodstands.size
+    }
+
     class FoodStandViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.foodstand_image_view
         val textView1: TextView = itemView.fastfood_name_text_view
-    }
-}
-
-private class FoodStandItemDiffCallback : DiffUtil.ItemCallback<FoodStand>() {
-
-    override fun areItemsTheSame(oldItem: FoodStand, newItem: FoodStand): Boolean {
-        return oldItem.name == newItem.name
-    }
-
-    override fun areContentsTheSame(oldItem: FoodStand, newItem: FoodStand): Boolean {
-        return oldItem.name == newItem.name
     }
 }

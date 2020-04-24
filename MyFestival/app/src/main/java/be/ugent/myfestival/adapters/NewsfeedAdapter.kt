@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.newsfeed_item.view.*
 import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
 
-class NewsfeedAdapter(val viewModel : FestivalViewModel) : ListAdapter<NewsfeedItem, RecyclerView.ViewHolder>(NewsItemDiffCallback()){
+class NewsfeedAdapter(val viewModel : FestivalViewModel) : RecyclerView.Adapter<NewsfeedAdapter.NewsItemViewHolder>(){
 
     var posts = emptyList<NewsfeedItem>()
 
@@ -30,7 +30,7 @@ class NewsfeedAdapter(val viewModel : FestivalViewModel) : ListAdapter<NewsfeedI
         )
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: NewsItemViewHolder, position: Int) {
         val post = posts[position]
 
         (holder as NewsItemViewHolder).title.text = post.title
@@ -51,16 +51,5 @@ class NewsfeedAdapter(val viewModel : FestivalViewModel) : ListAdapter<NewsfeedI
         val message: TextView = itemView.message
         val image: ImageView = itemView.image
         val logo: ImageView = itemView.image
-    }
-}
-
-private class NewsItemDiffCallback : DiffUtil.ItemCallback<NewsfeedItem>() {
-
-    override fun areItemsTheSame(oldItem: NewsfeedItem, newItem: NewsfeedItem): Boolean {
-        return oldItem.title == newItem.title && oldItem.time == newItem.time
-    }
-
-    override fun areContentsTheSame(oldItem: NewsfeedItem, newItem: NewsfeedItem): Boolean {
-        return oldItem.title == newItem.title && oldItem.time == newItem.time
     }
 }

@@ -62,7 +62,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
         logo = MutableLiveData()
         map = MutableLiveData()
 
-        //getFoodstandList()
+        getFoodstandList()
         getNewsfeedItems()
         getFestivalMap()
         getLineup()
