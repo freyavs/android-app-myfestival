@@ -289,8 +289,8 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                                     ds.child("name").value.toString(),
                                     concerts
                                 ))
+                                lineupstages.postValue(stages)
                             }
-                            lineupstages.postValue(stages)
                         }
                     }
 
