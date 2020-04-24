@@ -13,14 +13,26 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import be.ugent.myfestival.data.FestivalRepository
 import be.ugent.myfestival.models.Dish
+import be.ugent.myfestival.models.FestivalChooser
 import be.ugent.myfestival.models.FoodStand
 import be.ugent.myfestival.utilities.GlideApp
 import java.io.File
 
 
 class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewModel() {
-
-    fun getFestivals() = festivalRepo.getFestivals();
+    var festivalList: MutableLiveData<List<FestivalChooser>> = MutableLiveData()
+    fun getFestivals(zoekwaarde: String): MutableLiveData<List<FestivalChooser>> {
+        val allFestivals = festivalRepo.getFestivals()
+        val festivalChoosers = mutableListOf<FestivalChooser>()
+        allFestivals.value?.forEach {
+            Log.v("kakapipi", it.toString())
+            if(it.name.toLowerCase().contains(zoekwaarde.toLowerCase())) {
+                festivalChoosers.add(it)
+            }
+        }
+        festivalList.postValue(festivalChoosers)
+        return festivalList
+    }
 
     fun getWelcomeString(): LiveData<String> =
         Transformations.map(festivalRepo.getFestivalName()) { value ->

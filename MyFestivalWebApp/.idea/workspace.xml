@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="652028e1-9c7b-45df-8c59-b3746887c8f1" name="Default Changelist" comment="" />
+    <list default="true" id="652028e1-9c7b-45df-8c59-b3746887c8f1" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -112,6 +114,8 @@
       <workItem from="1586354034198" duration="1746000" />
       <workItem from="1586430311845" duration="298000" />
       <workItem from="1586430658901" duration="168000" />
+      <workItem from="1586980735630" duration="7000" />
+      <workItem from="1587123423463" duration="95000" />
     </task>
     <task id="LOCAL-00001" summary="Festival kan je aanmaken">
       <created>1584731303423</created>
