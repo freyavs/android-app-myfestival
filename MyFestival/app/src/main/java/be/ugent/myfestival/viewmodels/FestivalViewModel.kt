@@ -25,7 +25,6 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
         val allFestivals = festivalRepo.getFestivals()
         val festivalChoosers = mutableListOf<FestivalChooser>()
         allFestivals.value?.forEach {
-            Log.v("kakapipi", it.toString())
             if(it.name.toLowerCase().contains(zoekwaarde.toLowerCase())) {
                 festivalChoosers.add(it)
             }
