@@ -21,9 +21,8 @@ class FestivalRepositoryInterface() {
     private fun getFestivalRepository(database: FirebaseDatabase, storage: StorageReference) =
         FestivalRepository.getInstance(database,storage)
     val repository = getFestivalRepository(db, storage)
-
     //Todo: einde weghalen
-    
+
     // -------------------------- als id wordt gezet --------------------------
     fun reset() = repository.reset()
 

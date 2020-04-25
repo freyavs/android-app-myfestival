@@ -3,6 +3,7 @@ package be.ugent.myfestival.data
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import be.ugent.myfestival.models.*
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
@@ -14,6 +15,7 @@ import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import javax.xml.transform.TransformerFactory
 
 class FestivalRepository(val database: FirebaseDatabase, val storageRef: StorageReference) {
     var name: MutableLiveData<String> = MutableLiveData()
@@ -238,17 +240,16 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                     //todo: rest van volgende functies invullen
 
                     override fun onChildChanged(dataSnapshot: DataSnapshot, previousChildName: String?) {
-                        Log.d(TAG, "onChildChanged: ${dataSnapshot.key}")
-                        // A comment has changed, use the key to determine if we are displaying this
-                        // comment and if so displayed the changed comment.
-                        val newComment = dataSnapshot.getValue()
-                        val commentKey = dataSnapshot.key
+                        onChildRemoved(dataSnapshot)
+                        onChildAdded(dataSnapshot, previousChildName)
                     }
 
                     override fun onChildRemoved(dataSnapshot: DataSnapshot) {
-                        Log.d(TAG, "onChildRemoved:" + dataSnapshot.key!!)
-                        // A comment has changed, use the key to determine if we are displaying this
-                        // comment and if so remove it.
+                        var updatedList : MutableList<NewsfeedItem> =  mutableListOf()
+                        Transformations.map(newsfeed) { list ->
+                             updatedList = (list.filter { it.id != dataSnapshot.key}).toMutableList()
+                        }
+                        newsfeed.postValue(updatedList)
                     }
 
                     override fun onChildMoved(dataSnapshot: DataSnapshot, previousChildName: String?) {
