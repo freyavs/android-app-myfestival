@@ -15,11 +15,8 @@ import be.ugent.myfestival.databinding.FoodFragmentBinding
 import be.ugent.myfestival.models.FoodStand
 import be.ugent.myfestival.utilities.InjectorUtils
 import be.ugent.myfestival.viewmodels.FestivalViewModel
-<<<<<<< HEAD
 import androidx.lifecycle.observe
-=======
 import be.ugent.myfestival.FoodFragmentDirections
->>>>>>> 7152ea23361983443bdedbc04a97e77cba4bee03
 
 
 /**

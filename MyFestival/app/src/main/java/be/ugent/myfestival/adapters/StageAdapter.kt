@@ -5,10 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Space
+import android.widget.Switch
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.marginBottom
 import androidx.recyclerview.widget.RecyclerView
+import be.ugent.myfestival.MyFestival
 import be.ugent.myfestival.R
 import be.ugent.myfestival.models.Concert
 import kotlinx.android.synthetic.main.concert_item.view.*
@@ -40,6 +44,28 @@ class StageAdapter(private val concertList: List<Concert>) : RecyclerView.Adapte
         holder.textView2.text = van
         holder.textView3.text = tot
 
+        holder.switch.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked) {
+                val builder = holder.itemView.context?.let { context ->
+                    NotificationCompat.Builder(context, MyFestival.CHANNEL_1_ID)
+                        .setSmallIcon(R.drawable.lineup_50dp)
+                        .setContentTitle("${concert.artist} begint bijna")
+                        .setContentText("${concert.artist} begint om $van")
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                }
+
+                with(holder.itemView.context?.let { context ->
+                    NotificationManagerCompat.from(
+                        context
+                    )
+                }) {
+                    if (builder != null) {
+                        this?.notify(1, builder.build())
+                    }
+                }
+            }
+        }
+
         val minutes: Long =  concert.start.until(concert.stop, ChronoUnit.MINUTES)
         holder.spacer.layoutParams.height = (230 * minutes/60 * dpfactor).toInt()
 
@@ -61,6 +87,7 @@ class StageAdapter(private val concertList: List<Concert>) : RecyclerView.Adapte
         val textView2: TextView = itemView.start
         val textView3: TextView = itemView.stop
         val spacer: Space = itemView.spacer
+        val switch: Switch = itemView.switch1
     }
 
 }
