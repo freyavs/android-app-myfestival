@@ -20,7 +20,10 @@
     <string name="choices">Keuzes:</string>
     <string name="vouchers">Bonnetjes:</string>
 
-    <string name="loading">Aan het Laden...</string>
+    <string name="swipeR">swipe &gt;&gt;</string>
+    <string name="swipeL">&lt;&lt; swipe</string>
+
+    <string name="loading">…</string>
     <string name="searchString">Naam festival</string>
     <string name="festival">Festival</string>
 </resources>

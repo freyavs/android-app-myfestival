@@ -25,14 +25,11 @@ class NewsfeedFragment : Fragment() {
         val binding : NewsfeedFragmentBinding = NewsfeedFragmentBinding.inflate(inflater, container, false)
         context ?: return binding.root
 
-        //val logo = ResourcesCompat.getDrawable(resources, R.mipmap.bakfietslogo, null)
-        //val img = ResourcesCompat.getDrawable(resources, R.mipmap.uberdope, null)
-
         val viewModel by activityViewModels<FestivalViewModel> {
             InjectorUtils.provideFestivalViewModelFactory()
         }
 
-        var adapter = NewsfeedAdapter(viewModel)
+        val adapter = NewsfeedAdapter(viewModel)
 
         viewModel.getNewsfeedItems().observe(viewLifecycleOwner, Observer {
             posts -> adapter.posts = posts
@@ -42,12 +39,6 @@ class NewsfeedFragment : Fragment() {
         binding.stageRecycler.adapter = adapter
         binding.stageRecycler.layoutManager = LinearLayoutManager(this.context)
         binding.stageRecycler.setHasFixedSize(true)
-
-        //todo(!! wegwerken ...)
-        //val decorator = DividerItemDecoration(this.context, LinearLayoutManager.VERTICAL)
-        //decorator.setDrawable(ContextCompat.getDrawable(this.context!!, R.drawable.spacer)!!)
-
-        //binding.stageRecycler.addItemDecoration(decorator)
 
         return binding.root
     }

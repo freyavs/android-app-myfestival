@@ -26,7 +26,7 @@
             android:layout_height="match_parent"
             android:text="@string/loading"
             android:textAlignment="center"
-            android:textSize="50sp"
+            android:textSize="200sp"
             android:visibility="@{viewModel.notLoading}"/>
 
     </LinearLayout>
@@ -35,7 +35,8 @@
         android:layout_height="match_parent"
         android:layout_margin="20dp"
         android:orientation="vertical"
-        android:weightSum="10">
+        android:weightSum="10"
+        android:visibility="@{viewModel.loading}">
 
 
 
