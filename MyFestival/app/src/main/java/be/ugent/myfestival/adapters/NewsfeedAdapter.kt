@@ -33,7 +33,7 @@ class NewsfeedAdapter(val viewModel : FestivalViewModel) : RecyclerView.Adapter<
     override fun onBindViewHolder(holder: NewsItemViewHolder, position: Int) {
         val post = posts[position]
 
-        (holder as NewsItemViewHolder).title.text = post.title
+        holder.title.text = post.title
         holder.time.text =  DateTimeFormatter.ofPattern("dd/MM HH:mm").format(post.time)
         holder.message.text = post.message
         if (post.image != null) {

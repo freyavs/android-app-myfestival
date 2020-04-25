@@ -48,6 +48,9 @@ class LineupFragment : Fragment() {
         //todo: dit kan sws beter (en layout zeker)
         viewModel.getAllDaysSorted().observe(viewLifecycleOwner, Observer { days ->
             val startDay : LocalDate
+            val map = mapOf<String, String>("MONDAY" to "Maandag", "TUESDAY" to "Dinsdag", "WEDNESDAY" to "Woensdag",
+            "THURSDAY" to "Donderdag", "FRIDAY" to "Vrijdag", "SATURDAY" to "Zaterdag", "SUNDAY" to "Zondag")
+
             //zorgt dat er op vandaag gestart wordt tenzij vandaag niet tussen de lineup days zit
             if (days.contains(viewModel.getToday())){
                 Log.d("myFestivalTag", "today is in list of days.." )
@@ -61,7 +64,7 @@ class LineupFragment : Fragment() {
                 button.setBackgroundResource(R.drawable.radio_background)
                 button.buttonDrawable = StateListDrawable()
                 button.textSize = 25F
-                button.text = (day.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
+                button.text = map.get(day.dayOfWeek.toString())
                 val layout : LinearLayout = binding.root.toggle_group
                 button.setOnClickListener { viewModel.clickedDay(day) }
                 layout.addView(button)
@@ -78,7 +81,6 @@ class LineupFragment : Fragment() {
         viewModel.getCurrentStages().observe(viewLifecycleOwner, Observer { stages -> adapter.notifyChange(stages)} )
 
         binding.setLifecycleOwner(this)
-
 
         return binding.root
     }

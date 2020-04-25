@@ -29,7 +29,7 @@
             android:layout_height="match_parent"
             android:text="@string/loading"
             android:textAlignment="center"
-            android:textSize="50sp"
+            android:textSize="200sp"
             android:visibility="@{viewModel.notLoading}"/>
 
     </LinearLayout>
@@ -38,7 +38,8 @@
         android:layout_height="match_parent"
         android:layout_margin="20dp"
         android:orientation="vertical"
-        android:weightSum="10">
+        android:weightSum="10"
+        android:visibility="@{viewModel.loading}">
 
 
 
@@ -53,16 +54,14 @@
                 android:layout_height="100dp"
                 android:id="@+id/logo_view"
                 android:padding="4dp"
-                app:imageUrl="@{viewModel.logo}"
-                android:visibility="@{viewModel.loading}"/>
+                app:imageUrl="@{viewModel.logo}"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:text="@{viewModel.welcomeString}"
                 android:textSize="35sp"
-                app:layout_constraintTop_toTopOf="parent"
-                android:visibility="@{viewModel.loading}" />
+                app:layout_constraintTop_toTopOf="parent"/>
         </LinearLayout>
 
 

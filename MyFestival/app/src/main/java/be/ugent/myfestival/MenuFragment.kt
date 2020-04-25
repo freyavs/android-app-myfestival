@@ -38,8 +38,6 @@ class MenuFragment: Fragment() {
             .load(args.foodstandImg)
             .into(binding.foodstandImgMenuView);
 
-       // binding.foodstandImgMenuView.setImageResource(args.foodstandImg)
-
         val id: String = args.foodstandId
         val adapter = MenuAdapter()
         viewModel.getFoodstandMenu(id).observe(viewLifecycleOwner, Observer {

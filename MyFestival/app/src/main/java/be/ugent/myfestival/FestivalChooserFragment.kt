@@ -41,7 +41,7 @@ class FestivalChooserFragment : Fragment() {
                 handleItemClick(festivalChooser)
             }
 
-        viewModel.getFestivals("").observe(viewLifecycleOwner, Observer {
+        viewModel.getFestivals().observe(viewLifecycleOwner, Observer {
             festivals -> adapter.festivalList = festivals
             adapter.notifyDataSetChanged()
         })
@@ -55,7 +55,7 @@ class FestivalChooserFragment : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                viewModel.getFestivals(s.toString())
+                viewModel.changeSearchValue(s.toString())
             }
         })
         binding.festivalRecyclerView.apply {

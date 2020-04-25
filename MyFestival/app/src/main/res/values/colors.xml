@@ -6,5 +6,6 @@
     <color name="colorPrimaryLight">#B9E4C9</color>
     <color name="colorAccent">#FD5523</color>
     <color name="backgroundColor">#FFFBE6</color>
+    <color name="lightGray">#D3D3D3</color>
 </resources>
 
