@@ -47,9 +47,25 @@ class StageAdapter(private val concertList: List<Concert>) : RecyclerView.Adapte
         holder.textView2.text = van
         holder.textView3.text = tot
 
+        val context = holder.itemView.context
+        val preference = context?.getSharedPreferences("FestivalPreference", Context.MODE_PRIVATE)
+        val switchvalue = preference?.getBoolean(concert.id,false)
+        if (switchvalue != null) {
+            holder.switch.setChecked(switchvalue)
+        }
+        else {
+            //als switchvalue een probleem geeft moet het sowieso op false staan
+            holder.switch.setChecked(false)
+        }
+
         holder.switch.setOnCheckedChangeListener { buttonView, isChecked ->
-            val context = holder.itemView.context
             if(isChecked) {
+                //toestand v/d switch onthouden
+                val preference = context?.getSharedPreferences("FestivalPreference", Context.MODE_PRIVATE)
+                val editor = preference?.edit()
+                editor?.putBoolean(concert.id,true)
+                editor?.apply()
+                //notificatie instellen
                 val _intent = Intent(context, ReminderBroadcast::class.java)
                 _intent.putExtra("artist", concert.artist)
                 val pendingIntent =
@@ -59,13 +75,20 @@ class StageAdapter(private val concertList: List<Concert>) : RecyclerView.Adapte
                 alarmManager.cancel(pendingIntent)
                 val calendar: Calendar = Calendar.getInstance()
                 calendar.setTimeInMillis(System.currentTimeMillis())
+                /* om de notificatie te testen op jouw gekozen tijdstip
                 calendar.set(Calendar.HOUR_OF_DAY, 14);
                 calendar.set(Calendar.MINUTE, 42);
-                calendar.set(Calendar.SECOND, 0);
-                //calendar.set(concert.start.year, concert.start.monthValue,concert.start.dayOfMonth, concert.start.hour, concert.start.minute)
+                calendar.set(Calendar.SECOND, 0);*/
+                calendar.set(concert.start.year, concert.start.monthValue,concert.start.dayOfMonth, concert.start.hour, concert.start.minute)
                 alarmManager[AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()] = pendingIntent
             }
             else {
+                //toestand v/d switch onthouden
+                val preference = context?.getSharedPreferences("FestivalPreference", Context.MODE_PRIVATE)
+                val editor = preference?.edit()
+                editor?.putBoolean(concert.id,false)
+                editor?.apply()
+                //notificatie cancellen
                 val _intent = Intent(context, ReminderBroadcast::class.java)
                 val pendingIntent =
                     PendingIntent.getBroadcast(context, concert.id.hashCode(), _intent, 0)
