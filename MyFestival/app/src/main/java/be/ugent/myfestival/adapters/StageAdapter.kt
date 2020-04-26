@@ -51,6 +51,7 @@ class StageAdapter(private val concertList: List<Concert>) : RecyclerView.Adapte
             val context = holder.itemView.context
             if(isChecked) {
                 val _intent = Intent(context, ReminderBroadcast::class.java)
+                _intent.putExtra("artist", concert.artist)
                 val pendingIntent =
                     PendingIntent.getBroadcast(context, concert.id.hashCode(), _intent, 0)
                 val alarmManager =
@@ -58,7 +59,10 @@ class StageAdapter(private val concertList: List<Concert>) : RecyclerView.Adapte
                 alarmManager.cancel(pendingIntent)
                 val calendar: Calendar = Calendar.getInstance()
                 calendar.setTimeInMillis(System.currentTimeMillis())
-                calendar.set(concert.start.year, concert.start.monthValue,concert.start.dayOfMonth, concert.start.hour, concert.start.minute)
+                calendar.set(Calendar.HOUR_OF_DAY, 14);
+                calendar.set(Calendar.MINUTE, 42);
+                calendar.set(Calendar.SECOND, 0);
+                //calendar.set(concert.start.year, concert.start.monthValue,concert.start.dayOfMonth, concert.start.hour, concert.start.minute)
                 alarmManager[AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()] = pendingIntent
             }
             else {
@@ -93,8 +97,5 @@ class StageAdapter(private val concertList: List<Concert>) : RecyclerView.Adapte
         val textView3: TextView = itemView.stop
         val spacer: Space = itemView.spacer
         val switch: Switch = itemView.switch1
-    }
-    fun doSomething(){
-        Log.v("timer", "gucci")
     }
 }
