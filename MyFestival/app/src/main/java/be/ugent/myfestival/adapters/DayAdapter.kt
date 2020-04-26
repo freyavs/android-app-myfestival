@@ -20,7 +20,7 @@ class DayAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager, BEHAV
     var baseId: Long = 0
 
     override fun getItem(position: Int): Fragment {
-        return StageFragment(currentStages[position])
+        return StageFragment(currentStages[position], position == 0, position == currentStages.size - 1)
     }
 
     override fun getCount(): Int {
