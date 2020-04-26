@@ -1,5 +1,9 @@
 package be.ugent.myfestival.adapters
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,16 +12,15 @@ import android.widget.Space
 import android.widget.Switch
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
-import androidx.core.view.marginBottom
 import androidx.recyclerview.widget.RecyclerView
-import be.ugent.myfestival.MyFestival
 import be.ugent.myfestival.R
+import be.ugent.myfestival.ReminderBroadcast
 import be.ugent.myfestival.models.Concert
 import kotlinx.android.synthetic.main.concert_item.view.*
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
+import java.util.*
+
 
 class StageAdapter(private val concertList: List<Concert>) : RecyclerView.Adapter<StageAdapter.ConcertViewHolder>() {
 
@@ -45,24 +48,26 @@ class StageAdapter(private val concertList: List<Concert>) : RecyclerView.Adapte
         holder.textView3.text = tot
 
         holder.switch.setOnCheckedChangeListener { buttonView, isChecked ->
+            val context = holder.itemView.context
             if(isChecked) {
-                val builder = holder.itemView.context?.let { context ->
-                    NotificationCompat.Builder(context, MyFestival.CHANNEL_1_ID)
-                        .setSmallIcon(R.drawable.lineup_50dp)
-                        .setContentTitle("${concert.artist} begint bijna")
-                        .setContentText("${concert.artist} begint om $van")
-                        .setPriority(NotificationCompat.PRIORITY_HIGH)
-                }
-
-                with(holder.itemView.context?.let { context ->
-                    NotificationManagerCompat.from(
-                        context
-                    )
-                }) {
-                    if (builder != null) {
-                        this?.notify(1, builder.build())
-                    }
-                }
+                val _intent = Intent(context, ReminderBroadcast::class.java)
+                val pendingIntent =
+                    PendingIntent.getBroadcast(context, concert.id.hashCode(), _intent, 0)
+                val alarmManager =
+                    context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                alarmManager.cancel(pendingIntent)
+                val calendar: Calendar = Calendar.getInstance()
+                calendar.setTimeInMillis(System.currentTimeMillis())
+                calendar.set(concert.start.year, concert.start.monthValue,concert.start.dayOfMonth, concert.start.hour, concert.start.minute)
+                alarmManager[AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()] = pendingIntent
+            }
+            else {
+                val _intent = Intent(context, ReminderBroadcast::class.java)
+                val pendingIntent =
+                    PendingIntent.getBroadcast(context, concert.id.hashCode(), _intent, 0)
+                val alarmManager =
+                    context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                alarmManager.cancel(pendingIntent)
             }
         }
 
@@ -89,5 +94,7 @@ class StageAdapter(private val concertList: List<Concert>) : RecyclerView.Adapte
         val spacer: Space = itemView.spacer
         val switch: Switch = itemView.switch1
     }
-
+    fun doSomething(){
+        Log.v("timer", "gucci")
+    }
 }
