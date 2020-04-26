@@ -234,7 +234,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                             ds.child("message").value.toString(),
                             ds.child("title").value.toString()
                         ))
-                        newMessageTitle = MutableLiveData(ds.child("title").value.toString())
+                        newMessageTitle.postValue(ds.child("title").value.toString())
 
                         list.sortByDescending{it.time}
                         newsfeed.postValue(list)
