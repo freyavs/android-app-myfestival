@@ -19,7 +19,9 @@ import javax.xml.transform.TransformerFactory
 
 class FestivalRepository(val database: FirebaseDatabase, val storageRef: StorageReference) {
     var name: MutableLiveData<String> = MutableLiveData()
+
     var newsfeed: MutableLiveData<MutableList<NewsfeedItem>> = MutableLiveData()
+    var newMessageTitle: MutableLiveData<String> = MutableLiveData()
     var foodstands: MutableLiveData<List<FoodStand>> = MutableLiveData()
 
     var festivalList: MutableLiveData<List<FestivalChooser>> = MutableLiveData()
@@ -232,6 +234,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                             ds.child("message").value.toString(),
                             ds.child("title").value.toString()
                         ))
+                        newMessageTitle = MutableLiveData(ds.child("title").value.toString())
 
                         list.sortByDescending{it.time}
                         newsfeed.postValue(list)
@@ -263,7 +266,6 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
         }
         return newsfeed
     }
-
     // -------------------------- data voor de lineup ------------------------
 
     fun getLineup() : MutableLiveData<List<Stage>> {
