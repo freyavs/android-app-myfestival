@@ -17,7 +17,7 @@ import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import javax.xml.transform.TransformerFactory
 
-class FestivalRepository(val database: FirebaseDatabase, val storageRef: StorageReference) {
+class FestivalRepository(val database: FirebaseDatabase, val storageRef: StorageReference) : FestivalRepositoryInterface {
     var name: MutableLiveData<String> = MutableLiveData()
     var newsfeed: MutableLiveData<MutableList<NewsfeedItem>> = MutableLiveData()
     var foodstands: MutableLiveData<List<FoodStand>> = MutableLiveData()
@@ -56,7 +56,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
 
     // -------------------------- als id wordt gezet --------------------------
 
-    fun reset() {
+    override fun reset() {
         name = MutableLiveData()
         newsfeed = MutableLiveData()
         foodstands = MutableLiveData()
@@ -70,16 +70,16 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
         getLineup()
     }
 
-    fun getId(): String {
+    override fun getId(): String {
         return festivalID
     }
 
-    fun setId(id : String) {
+    override fun setId(id : String) {
         festivalID = id
     }
 
     // ------------- data voor het festival algemeen (home menu, ..)  ----------------
-    fun getFestivalName(): MutableLiveData<String> {
+    override fun getFestivalName(): MutableLiveData<String> {
         if (name.value == null) {
             database
                 .getReference(festivalID).child("name")
@@ -99,7 +99,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
 
 
 
-    fun getFestivalLogo(): MutableLiveData<String> {
+    override fun getFestivalLogo(): MutableLiveData<String> {
         if (logo.value == null) {
             database
                 .getReference(festivalID).child("logo")
@@ -126,7 +126,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
         return logo
     }
 
-    fun getFestivalMap(): MutableLiveData<String> {
+    override fun getFestivalMap(): MutableLiveData<String> {
         if (map.value == null) {
             database
                 .getReference(festivalID).child("location")
@@ -155,7 +155,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
 
 
     // ---------------- data voor de foodstands -------------------------------
-    fun getFoodstandList() : MutableLiveData<List<FoodStand>> {
+    override fun getFoodstandList() : MutableLiveData<List<FoodStand>> {
         if (foodstands.value == null) {
             database
                 .getReference(festivalID).child("foodstand").orderByKey()
@@ -203,7 +203,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
 
     // werk hier met childEventListener aangezien er vaak zal toegevoegd etc worden (ivm met andere data die bijna niet zal veranderen)
 
-    fun getNewsfeedItems(): MutableLiveData<MutableList<NewsfeedItem>> {
+    override fun getNewsfeedItems(): MutableLiveData<MutableList<NewsfeedItem>> {
         //TODO: default newsfeed post in web app laten aanmaken
         if (newsfeed.value.isNullOrEmpty()) {
             newsfeed.value = mutableListOf()
@@ -266,7 +266,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
 
     // -------------------------- data voor de lineup ------------------------
 
-    fun getLineup() : MutableLiveData<List<Stage>> {
+    override fun getLineup() : MutableLiveData<List<Stage>> {
         if (lineupstages.value.isNullOrEmpty()) {
             database
                 .getReference(festivalID).child("stages")
@@ -304,7 +304,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
     }
 
     // -------------- data voor festival chooser ------------------
-    fun getFestivals(): MutableLiveData<List<FestivalChooser>>{
+    override fun getFestivals(): MutableLiveData<List<FestivalChooser>>{
         if(festivalList.value == null){
             database
                 .getReference()
@@ -313,7 +313,6 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                         if(dataSnapshot.exists()){
                             val festivalChoosers = mutableListOf<FestivalChooser>()
                             for(ds in dataSnapshot.children) {
-                                //todo: cache legen zodat geen dubbele foto's worden opgeslaan ( getCacheDir )
                                 val logoRef = storageRef.child(ds.child("logo").value.toString())
                                 val localFile = File.createTempFile("festivallist", ".png")
                                 logoRef.getFile(localFile).addOnSuccessListener {
@@ -323,6 +322,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                                             ds.child("name").value!!.toString(),
                                             localFile.absolutePath
                                         )
+
                                     )
                                     festivalList.postValue(festivalChoosers)
                                 }.addOnCanceledListener {
