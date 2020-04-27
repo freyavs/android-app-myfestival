@@ -8,7 +8,7 @@ import be.ugent.myfestival.models.Stage
 
 interface FestivalRepositoryInterface {
     // -------------------------- als id wordt gezet --------------------------
-    fun reset()
+    fun reset(oldId: String)
 
     fun getId(): String
 

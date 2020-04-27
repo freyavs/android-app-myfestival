@@ -1,17 +1,15 @@
 package be.ugent.myfestival.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import be.ugent.myfestival.R
 import be.ugent.myfestival.models.FoodStand
 import be.ugent.myfestival.utilities.GlideApp
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import kotlinx.android.synthetic.main.foodstand_item.view.*
 
 class FoodStandAdapter(val clickListener: (FoodStand) -> Unit) : RecyclerView.Adapter<FoodStandAdapter.FoodStandViewHolder>() {
@@ -33,6 +31,7 @@ class FoodStandAdapter(val clickListener: (FoodStand) -> Unit) : RecyclerView.Ad
 
         GlideApp.with(holder.imageView.context)
                 .load(currentItem.logo)
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
                 .into(holder.imageView)
 
         holder.textView1.text = currentItem.name

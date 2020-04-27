@@ -28,27 +28,7 @@ import java.io.File
 
 
 class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewModel() {
-    var searchValue: MutableLiveData<String> = MutableLiveData("")
-    fun getFestivals() : LiveData<List<FestivalChooser>> = Transformations.switchMap(searchValue) { search ->
-        Transformations.map(getSearchedFestivals(search)){
-            festivals -> festivals
-        }
-    }
 
-    fun getSearchedFestivals(search: String) : LiveData<List<FestivalChooser>> = Transformations.map(festivalRepo.getFestivals()) { festivals ->
-        val list = mutableListOf<FestivalChooser>()
-        for(festival in festivals){
-            if(festival.name.toLowerCase().contains(search.toLowerCase()))
-                list.add(festival)
-        }
-        list
-    }
-
-    fun changeSearchValue(value: String){
-        if(searchValue.value!! !== value){
-            searchValue.postValue(value);
-        }
-    }
     fun getWelcomeString(): LiveData<String> =
         Transformations.map(festivalRepo.getFestivalName()) { value ->
             "Welkom bij $value"
@@ -58,9 +38,10 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
         val newID = sharedPreferences?.getString("ID","").toString()
         if (newID != festivalRepo.getId()) {
             //verwijder alle files van vorig festival
+            val oldId = festivalRepo.getId()
             deleteTempFiles(context?.cacheDir)
             festivalRepo.setId(sharedPreferences?.getString("ID", "").toString())
-            festivalRepo.reset()
+            festivalRepo.reset(oldId)
         }
     }
 
@@ -99,9 +80,6 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
         }
 
     fun getNewsfeedItems() = festivalRepo.getNewsfeedItems()
-
-
-    //TODO: Loading moet beter / mooier met afbeelding ofzo en buttons mogen ook niet op scherm verschijnen (gwn loading icon/afb die over heel het scherm is)
 
     fun getLoading() : LiveData<Int> = Transformations.map(festivalRepo.lineupstages){ value ->
         Log.v("welcome_string", value.isEmpty().toString())
