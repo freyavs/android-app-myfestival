@@ -41,29 +41,8 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
 
     val TAG = "myFestivalTag"
 
-
-    //TODO: alle listeners verwijderen bij veranderen van festival!!!
     var festivalID = ""
 
-
-    /*voor debug redenen:
-    val connectedRef = Firebase.database.getReference(".info/connected")
-    fun addConnectionListener() {
-        connectedRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val connected = snapshot.getValue(Boolean::class.java) ?: false
-                if (connected) {
-                    Log.d(TAG, "connected")
-                } else {
-                    Log.d(TAG, "not connected")
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.w(TAG, "Listener was cancelled")
-            }
-        })
-    }*/
 
     // -------------------------- als id wordt gezet --------------------------
 
@@ -128,7 +107,6 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
             logoListener = object : ValueEventListener {
                 override fun onDataChange(ds: DataSnapshot) {
                     if (ds.exists()) {
-                        //todo: eerst vorige tempfile verwijderen ofzo (logo wordt wss toch nooit aangepast eig)
                         val logoRef = storageRef.child(ds.value.toString())
                         Log.d(TAG, "logo: " + ds.value.toString())
                         val localFile = File.createTempFile("festival_logo", ".png")
@@ -156,7 +134,6 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
             mapListener = object : ValueEventListener {
                 override fun onDataChange(ds: DataSnapshot) {
                     if (ds.exists()) {
-                        //todo: eerst vorige tempfile verwijderen ofzo (wordt ook wss niet aangepast..)
                         val logoRef = storageRef.child(ds.value.toString())
                         Log.d(TAG, "location: " + ds.value.toString())
                         val localFile = File.createTempFile("festival_map", ".png")
@@ -188,7 +165,6 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                     if (dataSnapshot.exists()) {
                         var foodList = mutableListOf<FoodStand>()
                         for (ds in dataSnapshot.children) {
-                            //todo: cache legen zodat geen dubbele foto's worden opgeslaan of mss zelfs gewoon geen foto's opslaan ( getCacheDir )
                             val logoRef = storageRef.child(ds.child("image").value.toString())
                             val localFile = File.createTempFile("foodstand", ".png")
 
@@ -261,8 +237,6 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                     list.sortByDescending{it.time}
                     newsfeed.postValue(list)
                 }
-
-                //todo: rest van volgende functies invullen
 
                 override fun onChildChanged(dataSnapshot: DataSnapshot, previousChildName: String?) {
                     onChildRemoved(dataSnapshot)

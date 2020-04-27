@@ -17,7 +17,6 @@ import org.mockito.Mock
 
 //aantal unit tests = 5
 
-//TODO: test loading dingen
 //TODO: test foodstand dingen
 //TODO: test of na reset juiste data wordt ingeladen (alle getters dus)
 //denk na welke tests hier moeten en welke in integration test (androidStudio) -> mss eens vragen eig
@@ -71,7 +70,7 @@ class FestivalViewModelUnitTests {
     fun setIdCallsResetAndSetId_whenIdIsNotSet() {
         whenever(repository.getId()).thenReturn("")
         viewModel.setId(preferences,null)
-        verify(repository).reset()
+        verify(repository).reset(any())
         verify(repository).setId(testId1)
     }
 
@@ -80,14 +79,14 @@ class FestivalViewModelUnitTests {
         whenever(preferences.getString("ID",""))
             .thenReturn(testId2)
 
-        verify(repository, never()).reset()
+        verify(repository, never()).reset(any())
         verify(repository, never()).setId(testId2)
     }
 
     @Test
     fun setIdDoesNotCallResetAndSetId_whenIdEqualsOldId() {
         viewModel.setId(preferences,null)
-        verify(repository, never()).reset()
+        verify(repository, never()).reset(any())
         verify(repository, never()).setId(testId1)
     }
 

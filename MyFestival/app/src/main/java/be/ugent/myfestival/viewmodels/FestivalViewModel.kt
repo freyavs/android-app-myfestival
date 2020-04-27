@@ -101,9 +101,6 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
 
     fun getNewsfeedItems() = festivalRepo.getNewsfeedItems()
 
-
-    //TODO: Loading moet beter / mooier met afbeelding ofzo en buttons mogen ook niet op scherm verschijnen (gwn loading icon/afb die over heel het scherm is)
-
     fun getLoading() : LiveData<Int> = Transformations.map(festivalRepo.lineupstages){ value ->
         Log.v("welcome_string", value.isEmpty().toString())
         Log.v("welcome_string", value.toString())
