@@ -58,9 +58,10 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
         val newID = sharedPreferences?.getString("ID","").toString()
         if (newID != festivalRepo.getId()) {
             //verwijder alle files van vorig festival
+            val oldId = festivalRepo.getId()
             deleteTempFiles(context?.cacheDir)
             festivalRepo.setId(sharedPreferences?.getString("ID", "").toString())
-            festivalRepo.reset()
+            festivalRepo.reset(oldId)
         }
     }
 
