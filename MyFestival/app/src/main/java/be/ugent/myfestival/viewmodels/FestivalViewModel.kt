@@ -55,6 +55,7 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
         }
 
     fun getFestivalName() = festivalRepo.getFestivalName()
+    fun getCurrentFestivalId() = festivalRepo.getId()
 
     fun setId(sharedPreferences: SharedPreferences?, context: Context?){
         val newID = sharedPreferences?.getString("ID","").toString()
@@ -103,6 +104,7 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
     fun getNewsfeedItems() = festivalRepo.getNewsfeedItems()
 
     fun getNewMessageTitle(): MutableLiveData<String> = festivalRepo.newMessageTitle
+    fun resetNewMessageTitle() = festivalRepo.resetNewMessageTitle()
 
 
     //TODO: Loading moet beter / mooier met afbeelding ofzo en buttons mogen ook niet op scherm verschijnen (gwn loading icon/afb die over heel het scherm is)

@@ -22,11 +22,12 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
 
     var newsfeed: MutableLiveData<MutableList<NewsfeedItem>> = MutableLiveData()
     var newMessageTitle: MutableLiveData<String> = MutableLiveData()
+
     var foodstands: MutableLiveData<List<FoodStand>> = MutableLiveData()
 
     var festivalList: MutableLiveData<List<FestivalChooser>> = MutableLiveData()
-
     var lineupstages: MutableLiveData<List<Stage>> = MutableLiveData()
+
     var logo: MutableLiveData<String> = MutableLiveData()
     var map: MutableLiveData<String> = MutableLiveData()
 
@@ -265,6 +266,10 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
             })
         }
         return newsfeed
+    }
+
+    fun resetNewMessageTitle() {
+        newMessageTitle.postValue("")
     }
     // -------------------------- data voor de lineup ------------------------
 
