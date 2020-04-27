@@ -28,27 +28,7 @@ import java.io.File
 
 
 class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewModel() {
-    var searchValue: MutableLiveData<String> = MutableLiveData("")
-    fun getFestivals() : LiveData<List<FestivalChooser>> = Transformations.switchMap(searchValue) { search ->
-        Transformations.map(getSearchedFestivals(search)){
-            festivals -> festivals
-        }
-    }
 
-    fun getSearchedFestivals(search: String) : LiveData<List<FestivalChooser>> = Transformations.map(festivalRepo.getFestivals()) { festivals ->
-        val list = mutableListOf<FestivalChooser>()
-        for(festival in festivals){
-            if(festival.name.toLowerCase().contains(search.toLowerCase()))
-                list.add(festival)
-        }
-        list
-    }
-
-    fun changeSearchValue(value: String){
-        if(searchValue.value!! !== value){
-            searchValue.postValue(value);
-        }
-    }
     fun getWelcomeString(): LiveData<String> =
         Transformations.map(festivalRepo.getFestivalName()) { value ->
             "Welkom bij $value"
