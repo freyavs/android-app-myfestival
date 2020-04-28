@@ -45,8 +45,12 @@ class MainActivity : AppCompatActivity() {
         }
         this.viewModel = viewModel
 
-       viewModel.getNewMessageTitle().observe(this, Observer {
-                message -> createNotification(viewModel.getFestivalName().value.toString(), message)
+       viewModel.getNewMessageTitle().observe(this, Observer { message ->
+           Log.d("myFestivalTag", "creating notification: " + message)
+           if (message != "" && message != null) {
+               createNotification(viewModel.getFestivalName().value.toString(), message)
+               viewModel.resetNewMessageTitle()
+           }
         })
 
 

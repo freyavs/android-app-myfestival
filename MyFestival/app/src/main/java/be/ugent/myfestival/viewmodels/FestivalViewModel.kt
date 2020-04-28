@@ -85,7 +85,12 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
     fun getNewsfeedItems() = festivalRepo.getNewsfeedItems()
 
     fun getNewMessageTitle(): MutableLiveData<String> = festivalRepo.newMessageTitle
-    fun resetNewMessageTitle() = festivalRepo.resetNewMessageTitle()
+
+    fun resetNewMessageTitle() {
+        festivalRepo.resetNewMessageTitle()
+    }
+
+    //TODO: zorg dat in elk geval newsfeed niet null is
     fun getNewsfeedItemsSize() = festivalRepo.getNewsfeedItems().value?.size
 
 
