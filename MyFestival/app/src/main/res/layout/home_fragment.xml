@@ -10,6 +10,7 @@
         <variable name="lineupHandler" type="android.view.View.OnClickListener" />
         <variable name="mapHandler" type="android.view.View.OnClickListener" />
         <variable name="FestivalChooserHandler" type="android.view.View.OnClickListener" />
+        <variable name="viewModel" type="be.ugent.myfestival.viewmodels.FestivalViewModel" />
     </data>
 
     <RelativeLayout
