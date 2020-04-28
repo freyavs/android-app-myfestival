@@ -34,7 +34,7 @@ class FestivalChooserFragment : Fragment() {
         }
         val adapter =
             FestivalChooserAdapter() { festivalChooser: FestivalChooser ->
-                handleItemClick(festivalChooser)
+                handleItemClick(festivalChooser, viewModel)
             }
 
         viewModel.getFestivals().observe(viewLifecycleOwner, Observer {
@@ -73,8 +73,11 @@ class FestivalChooserFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
 
-    private fun handleItemClick(festivalChooser: FestivalChooser) {
-
+    private fun handleItemClick(
+        festivalChooser: FestivalChooser,
+        viewModel: FestivalChooserViewModel
+    ) {
+        viewModel.changeSearchValue("")
         val preference = context?.getSharedPreferences("FestivalPreference", Context.MODE_PRIVATE)
         val editor = preference?.edit()
         editor?.putString("ID",festivalChooser.id)
