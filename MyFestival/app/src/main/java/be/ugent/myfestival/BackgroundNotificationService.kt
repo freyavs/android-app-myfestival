@@ -11,6 +11,7 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import java.util.*
 
 class BackgroundNotificationService : JobService() {
 
@@ -66,9 +67,14 @@ class BackgroundNotificationService : JobService() {
                                             .setAutoCancel(true)
                                             .setContentIntent(pendingIntent)
 
+                                    val randomGen: Random = Random()
+                                    val id = randomGen.nextInt(100)
+
                                     with(NotificationManagerCompat.from(applicationContext)) {
-                                        notify(1, builder.build())
+                                        notify(id, builder.build())
+
                                     }
+
                                 }
 
                                 override fun onChildRemoved(p0: DataSnapshot) {

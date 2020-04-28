@@ -26,6 +26,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.iid.FirebaseInstanceId
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -110,9 +111,13 @@ class MainActivity : AppCompatActivity() {
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
 
+            val randomGen: Random = Random()
+            val id = randomGen.nextInt(100)
+
         with(NotificationManagerCompat.from(this)) {
-            notify(1, builder.build())
+            notify(id, builder.build())
             }
+            viewModel.resetNewMessageTitle()
         }
     }
 }

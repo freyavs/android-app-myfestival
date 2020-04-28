@@ -269,7 +269,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
     }
 
     fun resetNewMessageTitle() {
-        newMessageTitle.postValue("")
+        newMessageTitle.value = ""
     }
     // -------------------------- data voor de lineup ------------------------
 
