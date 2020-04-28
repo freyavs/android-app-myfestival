@@ -10,12 +10,14 @@ import android.view.ViewGroup
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import be.ugent.myfestival.MyFestival.Companion.CHANNEL_1_ID
 import be.ugent.myfestival.databinding.HomeFragmentBinding
 import be.ugent.myfestival.utilities.GlideApp
 import be.ugent.myfestival.utilities.InjectorUtils
 import be.ugent.myfestival.viewmodels.FestivalViewModel
+import java.util.Observer
 
 class HomeFragment : Fragment() {
 
@@ -38,8 +40,6 @@ class HomeFragment : Fragment() {
             val action = HomeFragmentDirections.actionHomeFragmentToFestivalChooserFragment()
             findNavController().navigate(action)
         }
-
-
 
         binding.viewModel = viewModel
         
@@ -67,22 +67,6 @@ class HomeFragment : Fragment() {
             findNavController().navigate(action)
         }
 
-    // notificaties
-        binding.notificationHandler = View.OnClickListener {
-            val builder = this.context?.let { context -> NotificationCompat.Builder(context, CHANNEL_1_ID)
-                .setSmallIcon(R.drawable.newsfeed_50dp)
-                .setContentTitle("Title of newsfeed notification")
-                .setContentText("This is the message of the newsfeed notification")
-                .setPriority(NotificationCompat.PRIORITY_HIGH)}
-
-            with (this.context?.let { context -> NotificationManagerCompat.from(context) }) {
-                if (builder != null) {
-                    this?.notify(1, builder.build())
-                }
-            }
-        }
         return binding.root
     }
-
-
 }

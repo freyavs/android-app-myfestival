@@ -19,19 +19,22 @@ import javax.xml.transform.TransformerFactory
 
 class FestivalRepository(val database: FirebaseDatabase, val storageRef: StorageReference) : FestivalRepositoryInterface {
     var name: MutableLiveData<String> = MutableLiveData()
+
     var nameListener: ValueEventListener? = null
 
     var newsfeed: MutableLiveData<MutableList<NewsfeedItem>> = MutableLiveData()
-    var newMessageTitle: MutableLiveData<String> = MutableLiveData()
+    var newMessageTitle: MutableLiveData<String> = MutableLiveData("")
     var newsfeedListener: ChildEventListener? = null
+
 
     var foodstands: MutableLiveData<List<FoodStand>> = MutableLiveData()
     var foodstandsListener: ValueEventListener? = null
 
     var festivalList: MutableLiveData<List<FestivalChooser>> = MutableLiveData()
-
     var lineupstages: MutableLiveData<List<Stage>> = MutableLiveData()
+
     var lineupstagesListener: ValueEventListener? = null
+
 
     var logo: MutableLiveData<String> = MutableLiveData()
     var logoListener: ValueEventListener? = null
@@ -236,6 +239,8 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
 
                     list.sortByDescending{it.time}
                     newsfeed.postValue(list)
+                    newMessageTitle.postValue(ds.child("title").value.toString())
+                    Log.d("BACKGROUNDSERVICE", newMessageTitle.value.toString())
                 }
 
                 override fun onChildChanged(dataSnapshot: DataSnapshot, previousChildName: String?) {
@@ -267,6 +272,9 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
         return newsfeed
     }
 
+    fun resetNewMessageTitle() {
+        newMessageTitle.value = ""
+    }
     // -------------------------- data voor de lineup ------------------------
 
     override fun getLineup() : MutableLiveData<List<Stage>> {
