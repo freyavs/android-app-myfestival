@@ -10,10 +10,6 @@
         <variable name="lineupHandler" type="android.view.View.OnClickListener" />
         <variable name="mapHandler" type="android.view.View.OnClickListener" />
         <variable name="FestivalChooserHandler" type="android.view.View.OnClickListener" />
-        <variable
-            name="notificationHandler"
-            type="android.view.View.OnClickListener" />
-        <variable name="viewModel" type="be.ugent.myfestival.viewmodels.FestivalViewModel" />
     </data>
 
     <RelativeLayout
@@ -198,11 +194,6 @@
                 app:shapeAppearance="@style/ShapeAppearance.MyFestival.Button.Home" />
 
         </LinearLayout>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="notification"
-            android:onClick="@{notificationHandler::onClick}"/>
     </LinearLayout>
 
     </RelativeLayout>

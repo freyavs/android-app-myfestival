@@ -67,20 +67,6 @@ class HomeFragment : Fragment() {
             findNavController().navigate(action)
         }
 
-    // notificaties
-        binding.notificationHandler = View.OnClickListener {
-            val builder = this.context?.let { context -> NotificationCompat.Builder(context, CHANNEL_1_ID)
-                .setSmallIcon(R.drawable.newsfeed_50dp)
-                .setContentTitle("Title of newsfeed notification")
-                .setContentText("This is the message of the newsfeed notification")
-                .setPriority(NotificationCompat.PRIORITY_HIGH)}
-
-            with (this.context?.let { context -> NotificationManagerCompat.from(context) }) {
-                if (builder != null) {
-                    this?.notify(1, builder.build())
-                }
-            }
-        }
         return binding.root
     }
 
