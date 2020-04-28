@@ -47,7 +47,6 @@ class MainActivity : AppCompatActivity() {
 
        viewModel.getNewMessageTitle().observe(this, Observer {
                 message -> createNotification(viewModel.getFestivalName().value.toString(), message)
-                Log.d("NOTIFICATION", "message wordt doorgegeven")
         })
 
 
@@ -73,6 +72,7 @@ class MainActivity : AppCompatActivity() {
         val bundle: PersistableBundle = PersistableBundle()
         bundle.putString("festivalId", viewModel.getCurrentFestivalId())
         bundle.putString("festivalName", viewModel.getFestivalName().value.toString())
+        bundle.putInt("listSize", viewModel.getNewsfeedItemsSize()!!)
         val componentName: ComponentName = ComponentName(this, BackgroundNotificationService::class.java)
         val jobInfo: JobInfo = JobInfo.Builder(123, componentName)
             .setPersisted(true)
@@ -89,8 +89,7 @@ class MainActivity : AppCompatActivity() {
         else {
             Log.d("BACKGROUNDSERVICE", "job scheduling failed")
         }
-
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        
 
     }
 
@@ -124,7 +123,6 @@ class MainActivity : AppCompatActivity() {
         with(NotificationManagerCompat.from(this)) {
             notify(id, builder.build())
             }
-            viewModel.resetNewMessageTitle()
         }
     }
 }

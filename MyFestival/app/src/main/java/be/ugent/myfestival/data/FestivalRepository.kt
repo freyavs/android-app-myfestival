@@ -23,7 +23,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
     var nameListener: ValueEventListener? = null
 
     var newsfeed: MutableLiveData<MutableList<NewsfeedItem>> = MutableLiveData()
-    var newMessageTitle: MutableLiveData<String> = MutableLiveData()
+    var newMessageTitle: MutableLiveData<String> = MutableLiveData("")
     var newsfeedListener: ChildEventListener? = null
 
 
@@ -239,6 +239,8 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
 
                     list.sortByDescending{it.time}
                     newsfeed.postValue(list)
+                    newMessageTitle.postValue(ds.child("title").value.toString())
+                    Log.d("BACKGROUNDSERVICE", newMessageTitle.value.toString())
                 }
 
                 override fun onChildChanged(dataSnapshot: DataSnapshot, previousChildName: String?) {
