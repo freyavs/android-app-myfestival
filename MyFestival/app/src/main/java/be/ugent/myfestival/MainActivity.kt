@@ -28,6 +28,9 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.iid.FirebaseInstanceId
 import java.util.*
 
+import com.google.firebase.storage.FirebaseStorage
+
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -53,6 +56,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         //zorgt voor offline gegevens 
+
         //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
     }
@@ -85,6 +89,9 @@ class MainActivity : AppCompatActivity() {
         else {
             Log.d("BACKGROUNDSERVICE", "job scheduling failed")
         }
+
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
     }
 
     override fun onDestroy() {

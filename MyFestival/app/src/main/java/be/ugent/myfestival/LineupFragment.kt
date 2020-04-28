@@ -45,7 +45,6 @@ class LineupFragment : Fragment() {
         binding.viewModel = viewModel
 
 
-        //todo: dit kan sws beter (en layout zeker)
         viewModel.getAllDaysSorted().observe(viewLifecycleOwner, Observer { days ->
             val startDay : LocalDate
             val map = mapOf<String, String>("MONDAY" to "Maandag", "TUESDAY" to "Dinsdag", "WEDNESDAY" to "Woensdag",

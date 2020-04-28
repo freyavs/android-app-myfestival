@@ -28,27 +28,7 @@ import java.io.File
 
 
 class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewModel() {
-    var searchValue: MutableLiveData<String> = MutableLiveData("")
-    fun getFestivals() : LiveData<List<FestivalChooser>> = Transformations.switchMap(searchValue) { search ->
-        Transformations.map(getSearchedFestivals(search)){
-            festivals -> festivals
-        }
-    }
 
-    fun getSearchedFestivals(search: String) : LiveData<List<FestivalChooser>> = Transformations.map(festivalRepo.getFestivals()) { festivals ->
-        val list = mutableListOf<FestivalChooser>()
-        for(festival in festivals){
-            if(festival.name.toLowerCase().contains(search.toLowerCase()))
-                list.add(festival)
-        }
-        list
-    }
-
-    fun changeSearchValue(value: String){
-        if(searchValue.value!! !== value){
-            searchValue.postValue(value);
-        }
-    }
     fun getWelcomeString(): LiveData<String> =
         Transformations.map(festivalRepo.getFestivalName()) { value ->
             "Welkom bij $value"
@@ -61,15 +41,16 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
         val newID = sharedPreferences?.getString("ID","").toString()
         if (newID != festivalRepo.getId()) {
             //verwijder alle files van vorig festival
-            deleteTempFiles(context?.cacheDir!!)
+            val oldId = festivalRepo.getId()
+            deleteTempFiles(context?.cacheDir)
             festivalRepo.setId(sharedPreferences?.getString("ID", "").toString())
-            festivalRepo.reset()
+            festivalRepo.reset(oldId)
         }
     }
 
     //er is hier een kotlin one-liner voor maar we willen bepaalde files niet verwijderen
-    fun deleteTempFiles(file: File): Boolean {
-        if (file.isDirectory()) {
+    fun deleteTempFiles(file: File?){
+        if (file != null && file.isDirectory()) {
             val files: Array<File>? = file.listFiles()
             if (files != null) {
                 for (f in files) {
@@ -81,7 +62,7 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
                 }
             }
         }
-        return file.delete()
+        //return file.delete()
     }
 
     fun hasFestival(): Boolean{
@@ -103,12 +84,15 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
 
     fun getNewsfeedItems() = festivalRepo.getNewsfeedItems()
 
+<<<<<<< HEAD
     fun getNewMessageTitle(): MutableLiveData<String> = festivalRepo.newMessageTitle
     fun resetNewMessageTitle() = festivalRepo.resetNewMessageTitle()
 
 
     //TODO: Loading moet beter / mooier met afbeelding ofzo en buttons mogen ook niet op scherm verschijnen (gwn loading icon/afb die over heel het scherm is)
 
+=======
+>>>>>>> master
     fun getLoading() : LiveData<Int> = Transformations.map(festivalRepo.lineupstages){ value ->
         Log.v("welcome_string", value.isEmpty().toString())
         Log.v("welcome_string", value.toString())

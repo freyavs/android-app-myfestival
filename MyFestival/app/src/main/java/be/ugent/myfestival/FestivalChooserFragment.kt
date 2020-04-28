@@ -1,15 +1,12 @@
 package be.ugent.myfestival
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.doOnTextChanged
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -20,8 +17,7 @@ import be.ugent.myfestival.adapters.FestivalChooserAdapter
 import be.ugent.myfestival.databinding.FestivalChooserFragmentBinding
 import be.ugent.myfestival.models.FestivalChooser
 import be.ugent.myfestival.utilities.InjectorUtils
-import be.ugent.myfestival.viewmodels.FestivalViewModel
-import kotlinx.android.synthetic.main.festival_chooser_fragment.*
+import be.ugent.myfestival.viewmodels.FestivalChooserViewModel
 
 
 class FestivalChooserFragment : Fragment() {
@@ -33,12 +29,12 @@ class FestivalChooserFragment : Fragment() {
         val binding: FestivalChooserFragmentBinding = FestivalChooserFragmentBinding.inflate(inflater, container, false)
         context?: return binding.root
 
-        val viewModel by activityViewModels<FestivalViewModel>{
-            InjectorUtils.provideFestivalViewModelFactory()
+        val viewModel by activityViewModels<FestivalChooserViewModel>{
+            InjectorUtils.provideFestivalChooserViewModelFactory()
         }
         val adapter =
             FestivalChooserAdapter() { festivalChooser: FestivalChooser ->
-                handleItemClick(festivalChooser)
+                handleItemClick(festivalChooser, viewModel)
             }
 
         viewModel.getFestivals().observe(viewLifecycleOwner, Observer {
@@ -77,8 +73,11 @@ class FestivalChooserFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
 
-    private fun handleItemClick(festivalChooser: FestivalChooser) {
-
+    private fun handleItemClick(
+        festivalChooser: FestivalChooser,
+        viewModel: FestivalChooserViewModel
+    ) {
+        viewModel.changeSearchValue("")
         val preference = context?.getSharedPreferences("FestivalPreference", Context.MODE_PRIVATE)
         val editor = preference?.edit()
         editor?.putString("ID",festivalChooser.id)
