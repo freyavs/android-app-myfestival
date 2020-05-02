@@ -21,8 +21,8 @@ class LineupViewModel(private val festivalRepo : FestivalRepository) : ViewModel
     fun getStages(day: LocalDate): LiveData<List<Stage>> = Transformations.map(festivalRepo.getLineup()) { stages ->
         val list = mutableListOf<Stage>()
         for (stage in stages){
-            var concerts = stage.concerts.filter{it.start.toLocalDate() == day}
-            if (!concerts.isEmpty()){
+            var concerts = stage.concerts.filter{it.start.toLocalDate().isEqual(day)}
+            if (concerts.isNotEmpty()){
                 concerts = concerts.sortedBy { concert -> concert.start }
                 list.add(Stage(stage.id, stage.name, concerts))
             }
@@ -33,6 +33,8 @@ class LineupViewModel(private val festivalRepo : FestivalRepository) : ViewModel
     fun getToday() = LocalDate.now()
 
     fun clickedDay(day: LocalDate) {
+        println("clickedDay: ")
+        println(day)
         if (currentDay.value !== day) {
             currentDay.postValue(day)
         }

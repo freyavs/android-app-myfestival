@@ -107,11 +107,13 @@ class LineupViewModelUnitTests {
 
     @Test
     fun correctStagesReturnedWhenDateInFestival(){
-        lineupViewModel.currentDay.apply { postValue(
-            LocalDate.of(2020, Month.APRIL, 20)) }
         val mockObserver = mock<Observer<List<Stage>>>()
-        lineupViewModel.getStages(LocalDate.of(2020, Month.APRIL, 27)).observeForever(mockObserver)
+        lineupViewModel.getStages(LocalDate.of(2020, Month.APRIL, 26)).observeForever(mockObserver)
 
+        lineupViewModel.currentDay.apply { postValue(
+            LocalDate.of(2020, Month.APRIL, 26)) }
+
+        //hier zou er een manier nodig zijn om de lijsten te comparen op id, dus een transformatie van de observer?
         verify(mockObserver).onChanged(listOf(stage1))
 
     }
@@ -124,16 +126,9 @@ class LineupViewModelUnitTests {
         val mockObserver = mock<Observer<List<Stage>>>()
         lineupViewModel.getCurrentStages().observeForever(mockObserver)
 
-        lineupViewModel.clickedDay(LocalDate.of(2020, Month.APRIL, 27))
-        verify(mockObserver, atLeastOnce()).onChanged(listOf(stage1))
-    }
+        lineupViewModel.clickedDay(LocalDate.of(2020, Month.APRIL, 26))
 
-    @Test
-    fun stagesDoNotChangeWhenDateChangesToDateNotInFestival() {
-        lineupViewModel.currentDay.apply { postValue(
-            LocalDate.of(2020, Month.APRIL, 27)) }
-        val mockObserver = mock<Observer<List<Stage>>>()
-        lineupViewModel.getCurrentStages().observeForever(mockObserver)
+        //currentday wordt aangepast maar de stages worden niet aangepast in de observer
         verify(mockObserver, atLeastOnce()).onChanged(listOf(stage1))
     }
 }
