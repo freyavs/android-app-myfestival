@@ -114,7 +114,7 @@ class LineupViewModelUnitTests {
             LocalDate.of(2020, Month.APRIL, 26)) }
 
         //hier zou er een manier nodig zijn om de lijsten te comparen op id, dus een transformatie van de observer?
-        verify(mockObserver).onChanged(listOf(stage1)) 
+        verify(mockObserver).onChanged(listOf(stage1))
     }
 
     @Test
