@@ -2,6 +2,7 @@ package be.ugent.myfestival
 
 
 import android.content.SharedPreferences
+import android.view.View
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -118,5 +119,16 @@ class FestivalViewModelUnitTests {
         Assert.assertEquals(0, viewModel.getNewsfeedItemsSize())
     }
 
+    @Test
+    fun loadingSwitchesToVisibleWhenReady(){
+        whenever(repository.lineupstages).thenReturn(MutableLiveData())
+        val mockObserver = mock<Observer<Int>>()
+        viewModel.getLoading().observeForever(mockObserver)
+
+        val stage : Stage = mock()
+        repository.lineupstages.apply { postValue(listOf(stage)) }
+
+        verify(mockObserver).onChanged(View.VISIBLE)
+    }
 }
 

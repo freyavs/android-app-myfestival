@@ -14,13 +14,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import be.ugent.myfestival.data.FestivalRepository
-import be.ugent.myfestival.databinding.FestivalChooserFragmentBindingImpl
 import com.bumptech.glide.request.target.Target
 import be.ugent.myfestival.models.Dish
-import be.ugent.myfestival.models.FestivalChooser
 import be.ugent.myfestival.models.FoodStand
 import be.ugent.myfestival.utilities.GlideApp
-import be.ugent.myfestival.utilities.InjectorUtils
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
@@ -50,11 +47,11 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
 
     //er is hier een kotlin one-liner voor maar we willen bepaalde files niet verwijderen
     fun deleteTempFiles(file: File?){
-        if (file != null && file.isDirectory()) {
+        if (file != null && file.isDirectory) {
             val files: Array<File>? = file.listFiles()
             if (files != null) {
                 for (f in files) {
-                    if (f.isDirectory()) {
+                    if (f.isDirectory) {
                         deleteTempFiles(f)
                     } else if (!f.absolutePath.contains("festivallist")) {
                         f.delete()
