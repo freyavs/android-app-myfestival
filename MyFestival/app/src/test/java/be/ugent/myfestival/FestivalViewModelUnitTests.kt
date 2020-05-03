@@ -102,5 +102,21 @@ class FestivalViewModelUnitTests {
         Assert.assertTrue(viewModel.hasFestival())
     }
 
+    @Test
+    fun welcomeStringIsFormatted(){
+        whenever(repository.getFestivalName()).thenReturn( MutableLiveData("TestFest"))
+        val mockObserver = mock<Observer<String>>()
+        viewModel.getWelcomeString().observeForever(mockObserver)
+
+        verify(mockObserver).onChanged("Welkom bij TestFest")
+    }
+
+    @Test
+    fun newsfeedItemSizeIsNullSafe(){
+        whenever(repository.getNewsfeedItems()).thenReturn(MutableLiveData())
+
+        Assert.assertEquals(0, viewModel.getNewsfeedItemsSize())
+    }
+
 }
 

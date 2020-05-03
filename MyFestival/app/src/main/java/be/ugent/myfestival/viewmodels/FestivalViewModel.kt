@@ -90,15 +90,11 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
         festivalRepo.resetNewMessageTitle()
     }
 
-    //TODO: zorg dat in elk geval newsfeed niet null is
-    fun getNewsfeedItemsSize() = festivalRepo.getNewsfeedItems().value?.size
-
+    fun getNewsfeedItemsSize() = festivalRepo.getNewsfeedItems().value?.size ?: 0
 
     //TODO: Loading moet beter / mooier met afbeelding ofzo en buttons mogen ook niet op scherm verschijnen (gwn loading icon/afb die over heel het scherm is)
 
     fun getLoading() : LiveData<Int> = Transformations.map(festivalRepo.lineupstages){ value ->
-        Log.v("welcome_string", value.isEmpty().toString())
-        Log.v("welcome_string", value.toString())
         when(value.isNullOrEmpty()) {
             true -> View.INVISIBLE
             else -> View.VISIBLE
@@ -106,8 +102,6 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
     }
 
     fun getNotLoading() : LiveData<Int> = Transformations.map(festivalRepo.lineupstages){ value ->
-        Log.v("welcome_string", value.isEmpty().toString())
-        Log.v("welcome_string", value.toString())
         when(value.isNullOrEmpty()) {
             true -> View.GONE
             else -> View.INVISIBLE
