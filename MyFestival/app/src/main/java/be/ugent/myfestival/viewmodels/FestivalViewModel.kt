@@ -24,7 +24,7 @@ import com.bumptech.glide.request.RequestListener
 import java.io.File
 
 
-class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewModel() {
+class  FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewModel() {
 
     fun getWelcomeString(): LiveData<String> =
         Transformations.map(festivalRepo.getFestivalName()) { value ->
@@ -32,6 +32,7 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
         }
 
     fun getFestivalName() = festivalRepo.getFestivalName()
+
     fun getCurrentFestivalId() = festivalRepo.getId()
 
     fun setId(sharedPreferences: SharedPreferences?, context: Context?){
@@ -44,6 +45,8 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
             festivalRepo.reset(oldId)
         }
     }
+
+    fun removeListeners() = festivalRepo.removeListeners(festivalRepo.getId())
 
     //er is hier een kotlin one-liner voor maar we willen bepaalde files niet verwijderen
     fun deleteTempFiles(file: File?){
@@ -83,11 +86,11 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
 
     fun getNewMessageTitle(): MutableLiveData<String> = festivalRepo.newMessageTitle
 
+    //TODO: is dit nodig?
     fun resetNewMessageTitle() {
         festivalRepo.resetNewMessageTitle()
     }
 
-    fun getNewsfeedItemsSize() = festivalRepo.getNewsfeedItems().value?.size ?: 0
 
     //TODO: Loading moet beter / mooier met afbeelding ofzo en buttons mogen ook niet op scherm verschijnen (gwn loading icon/afb die over heel het scherm is)
 

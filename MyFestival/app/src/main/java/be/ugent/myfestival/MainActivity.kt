@@ -21,6 +21,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import be.ugent.myfestival.utilities.InjectorUtils
 import be.ugent.myfestival.viewmodels.FestivalViewModel
+import com.google.firebase.FirebaseApp
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var viewModel: FestivalViewModel
+    private val TAG = "myFestivalTag"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         this.viewModel = viewModel
 
        viewModel.getNewMessageTitle().observe(this, Observer { message ->
-           Log.d("myFestivalTag", "creating notification: " + message)
+           Log.d(TAG, "creating notification: " + message)
            if (message != "" && message != null) {
                createNotification(viewModel.getFestivalName().value.toString(), message)
                viewModel.resetNewMessageTitle()
@@ -58,9 +60,11 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        //zorgt voor offline gegevens 
+        //zorgt voor offline gegevens
 
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        if (!FirebaseApp.getApps(this).isEmpty()){
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true)
+        }
 
     }
 
@@ -72,11 +76,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        Log.d("BACKGROUNDSERVICE", "app destroyed")
+        Log.d(TAG, "app destroyed")
         val bundle: PersistableBundle = PersistableBundle()
         bundle.putString("festivalId", viewModel.getCurrentFestivalId())
         bundle.putString("festivalName", viewModel.getFestivalName().value.toString())
-        bundle.putInt("listSize", viewModel.getNewsfeedItemsSize()!!)
         val componentName: ComponentName = ComponentName(this, BackgroundNotificationService::class.java)
         val jobInfo: JobInfo = JobInfo.Builder(123, componentName)
             .setPersisted(true)
@@ -88,10 +91,10 @@ class MainActivity : AppCompatActivity() {
         val jobScheduler: JobScheduler = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
         val resultCode = jobScheduler.schedule(jobInfo)
         if (resultCode == JobScheduler.RESULT_SUCCESS) {
-            Log.d("BACKGROUNDSERVICE", "job scheduled")
+            Log.d(TAG, "job scheduled")
         }
         else {
-            Log.d("BACKGROUNDSERVICE", "job scheduling failed")
+            Log.d(TAG, "job scheduling failed")
         }
         
 
@@ -99,6 +102,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        viewModel.removeListeners()
     }
 
 
@@ -108,7 +112,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun createNotification(title: String, message: String) {
-        Log.d("NOTIFICATION", "geraakt tot in notificatie aanmaken methode")
+        Log.d(TAG, "geraakt tot in notificatie aanmaken methode")
         if (message != "") {
             val resultIntent = Intent(this, MainActivity::class.java)
             val pendingIntent = PendingIntent.getActivity(this, 1, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT)

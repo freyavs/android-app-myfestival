@@ -10,6 +10,8 @@ interface FestivalRepositoryInterface {
     // -------------------------- als id wordt gezet --------------------------
     fun reset(oldId: String)
 
+    fun removeListeners(oldId: String)
+
     fun getId(): String
 
     fun setId(id : String)

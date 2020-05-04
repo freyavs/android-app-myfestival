@@ -20,6 +20,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.Month
 
+// tests = 6
 
 class LineupViewModelUnitTests {
     @get:Rule

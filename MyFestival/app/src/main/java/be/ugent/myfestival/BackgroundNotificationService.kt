@@ -7,10 +7,7 @@ import android.content.Intent
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import java.util.*
 
 class BackgroundNotificationService : JobService() {
@@ -45,7 +42,7 @@ class BackgroundNotificationService : JobService() {
     fun doBackgroundWork(params: JobParameters?) {
         val festivalId = params?.extras?.getString("festivalId")
         val festivalName = params?.extras?.getString("festivalName")
-        val listSize = params?.extras?.getInt("listSize")
+        var newsfeedLoaded = false
         Thread(Runnable {
             run {
                 Log.d(TAG, "listening")
@@ -63,7 +60,7 @@ class BackgroundNotificationService : JobService() {
                         }
 
                         override fun onChildAdded(ds: DataSnapshot, p1: String?) {
-                            if (incomingDataCount >= listSize!!) {
+                            if (newsfeedLoaded) {
                                 val resultIntent =
                                     Intent(applicationContext, MainActivity::class.java)
                                 val pendingIntent = PendingIntent.getActivity(
@@ -106,6 +103,18 @@ class BackgroundNotificationService : JobService() {
                     FirebaseDatabase.getInstance().getReference(festivalId)
                         .child("messages")
                         .addChildEventListener(this.listener as ChildEventListener)
+
+                    //zelfde redenering als in repository: wanneer value event wordt opgeroepen zijn alle initiele children al geladen
+                    FirebaseDatabase.getInstance().getReference(festivalId).child("messages")
+                        .addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                newsfeedLoaded = true
+                                Log.d(TAG, "Newsfeed: All newsfeed items have loaded.")
+                            }
+                            override fun onCancelled(databaseError: DatabaseError) {
+                                //doe niets
+                            }
+                        })
 
                 }
             }

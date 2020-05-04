@@ -16,7 +16,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 
-//aantal unit tests = 5
+//aantal unit tests = 8
 
 //TODO: test foodstand dingen
 //TODO: test of na reset juiste data wordt ingeladen (alle getters dus)
@@ -112,12 +112,12 @@ class FestivalViewModelUnitTests {
         verify(mockObserver).onChanged("Welkom bij TestFest")
     }
 
-    @Test
+   /* @Test
     fun newsfeedItemSizeIsNullSafe(){
         whenever(repository.getNewsfeedItems()).thenReturn(MutableLiveData())
 
         Assert.assertEquals(0, viewModel.getNewsfeedItemsSize())
-    }
+    }*/
 
     @Test
     fun loadingSwitchesToVisibleWhenReady(){

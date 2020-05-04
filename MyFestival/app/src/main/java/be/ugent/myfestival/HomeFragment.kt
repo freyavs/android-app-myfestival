@@ -33,6 +33,7 @@ class HomeFragment : Fragment() {
             InjectorUtils.provideFestivalViewModelFactory()
         }
 
+
         viewModel.setId(context?.getSharedPreferences("FestivalPreference", Context.MODE_PRIVATE), context)
 
         //kijken of er een ID is, zo niet gaat het naar het festival kies scherm
