@@ -57,6 +57,15 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
         logo = MutableLiveData()
         map = MutableLiveData()
 
+        removeListeners(oldId)
+
+        getFoodstandList()
+        getNewsfeedItems()
+        getFestivalMap()
+        getLineup()
+    }
+
+    override fun removeListeners(oldId: String){
         if (oldId != "") {
             Log.d(TAG, "Removing listeners")
             val ref = database.getReference(oldId)
@@ -67,11 +76,6 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
             ref.child("location").removeEventListener(mapListener!!)
             ref.child("stages").removeEventListener(lineupstagesListener!!)
         }
-
-        getFoodstandList()
-        getNewsfeedItems()
-        getFestivalMap()
-        getLineup()
     }
 
 

@@ -16,7 +16,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 
-//aantal unit tests = 5
+//aantal unit tests = 8
 
 //TODO: test foodstand dingen
 //TODO: test of na reset juiste data wordt ingeladen (alle getters dus)
