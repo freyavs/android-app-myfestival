@@ -19,8 +19,7 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            android:layout_gravity="center"
-            app:imageUrl="@{viewModel.map}"/>
+            android:layout_gravity="center" />
 
     </FrameLayout>
 </layout>

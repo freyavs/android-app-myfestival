@@ -6,9 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import be.ugent.myfestival.databinding.HomeFragmentBinding
+import be.ugent.myfestival.utilities.GlideApp
 import be.ugent.myfestival.utilities.InjectorUtils
 import be.ugent.myfestival.viewmodels.FestivalViewModel
 
@@ -36,6 +39,12 @@ class HomeFragment : Fragment() {
         }
 
         binding.viewModel = viewModel
+
+        viewModel.getLogo().observe( this, Observer { logo ->
+            GlideApp.with(context!!)
+                .load(logo)
+                .into(binding.logoView)
+        })
         
         binding.newsfeedHandler = View.OnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToNewsfeedFragment()
