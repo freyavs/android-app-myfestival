@@ -46,6 +46,8 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
 
     var festivalID = ""
 
+    var newsfeedLoaded = false
+
 
     // -------------------------- als id wordt gezet --------------------------
 
@@ -57,6 +59,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
         lineupstages = MutableLiveData()
         logo = MutableLiveData()
         map = MutableLiveData()
+        newsfeedLoaded = false
 
         removeListeners(oldId)
 
@@ -103,7 +106,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
             }
             database
                 .getReference(festivalID).child("name")
-                .addListenerForSingleValueEvent(nameListener!!)
+                .addValueEventListener(nameListener!!)
         }
         return name
     }
@@ -132,7 +135,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
             }
             database
                 .getReference(festivalID).child("logo")
-                .addListenerForSingleValueEvent(logoListener!!)
+                .addValueEventListener(logoListener!!)
         }
         return logo
     }
@@ -159,7 +162,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
             }
             database
                 .getReference(festivalID).child("location")
-                .addListenerForSingleValueEvent(mapListener!!)
+                .addValueEventListener(mapListener!!)
         }
         return map
     }
@@ -205,7 +208,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
             }
             database
                 .getReference(festivalID).child("foodstand").orderByKey()
-                .addListenerForSingleValueEvent(foodstandsListener!!)
+                .addValueEventListener(foodstandsListener!!)
         }
         return foodstands
     }
@@ -244,8 +247,10 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
 
                     list.sortByDescending{it.time}
                     newsfeed.postValue(list)
-                    newMessageTitle.postValue(ds.child("title").value.toString())
-                    Log.d("BACKGROUNDSERVICE", newMessageTitle.value.toString())
+                    if (newsfeedLoaded) {
+                        newMessageTitle.postValue(ds.child("title").value.toString())
+                    }
+                    Log.d(TAG, "Newsfeed: added newsfeed message")
                 }
 
                 override fun onChildChanged(dataSnapshot: DataSnapshot, previousChildName: String?) {
@@ -273,6 +278,24 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                 database
                 .getReference(festivalID).child("messages")
                 .addChildEventListener(newsfeedListener!!)
+
+                /*
+                de childevent listeners zullen eerst getriggered worden -> als alle initiele waarden ingelezen zijn wordt de onderstaande
+                valueevent listener opgeroepen, is de newsfeed dus ingeladen en pas vanaf dan mogen er notificatis aangemaakt worden voor
+                NIEUWE newsfeed posts
+                - een 2de listener hierop zetten is niet erg aangezien firebase de data cached dus alle newsfeed items zullen niet opnieuw
+                door de internet verbinding moeten opgehaald worden
+                 */
+                database.getReference(festivalID).child("messages")
+                    .addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                           newsfeedLoaded = true
+                            Log.d(TAG, "Newsfeed: All newsfeed items have loaded.")
+                        }
+                        override fun onCancelled(databaseError: DatabaseError) {
+                            //doe niets
+                        }
+                    })
         }
         return newsfeed
     }
@@ -285,28 +308,28 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
     override fun getLineup() : MutableLiveData<List<Stage>> {
         if (lineupstages.value.isNullOrEmpty()) {
             lineupstagesListener = object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        Log.d(TAG, "catching lineup")
-                        val stages = mutableListOf<Stage>()
-                        for (ds in dataSnapshot.children) {
-                            val concerts = mutableListOf<Concert>()
-                            for (dss in ds.child("concerts").children) {
-                                concerts.add(Concert(
-                                    dss.key.toString(),
-                                    dss.child("artist").value.toString(),
-                                    LocalDateTime.parse(dss.child("startdate").value.toString()),
-                                    LocalDateTime.parse(dss.child("enddate").value.toString())
-                                ))
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                Log.d(TAG, "catching lineup")
+                                val stages = mutableListOf<Stage>()
+                                for (ds in dataSnapshot.children) {
+                                    val concerts = mutableListOf<Concert>()
+                                    for (dss in ds.child("concerts").children) {
+                                        concerts.add(Concert(
+                                            dss.key.toString(),
+                                            dss.child("artist").value.toString(),
+                                            LocalDateTime.parse(dss.child("startdate").value.toString()),
+                                            LocalDateTime.parse(dss.child("enddate").value.toString())
+                                        ))
+                                    }
+                                    stages.add(Stage(
+                                        ds.key.toString(),
+                                        ds.child("name").value.toString(),
+                                        concerts
+                                    ))
+                                    lineupstages.postValue(stages)
+                                }
                             }
-                            stages.add(Stage(
-                                ds.key.toString(),
-                                ds.child("name").value.toString(),
-                                concerts
-                            ))
-                            lineupstages.postValue(stages)
-                        }
-                    }
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
@@ -315,7 +338,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
             }
             database
                 .getReference(festivalID).child("stages")
-                .addListenerForSingleValueEvent(lineupstagesListener!!)
+                .addValueEventListener(lineupstagesListener!!)
         }
         return lineupstages
     }
@@ -325,7 +348,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
         if(festivalList.value == null){
             database
                 .getReference()
-                .addListenerForSingleValueEvent(object : ValueEventListener{
+                .addValueEventListener(object : ValueEventListener{
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         if(dataSnapshot.exists()){
                             val festivalChoosers = mutableListOf<FestivalChooser>()
