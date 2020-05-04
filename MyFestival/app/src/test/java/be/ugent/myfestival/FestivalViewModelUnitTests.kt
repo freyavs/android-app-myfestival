@@ -112,12 +112,12 @@ class FestivalViewModelUnitTests {
         verify(mockObserver).onChanged("Welkom bij TestFest")
     }
 
-    @Test
+   /* @Test
     fun newsfeedItemSizeIsNullSafe(){
         whenever(repository.getNewsfeedItems()).thenReturn(MutableLiveData())
 
         Assert.assertEquals(0, viewModel.getNewsfeedItemsSize())
-    }
+    }*/
 
     @Test
     fun loadingSwitchesToVisibleWhenReady(){

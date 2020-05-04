@@ -77,7 +77,6 @@ class MainActivity : AppCompatActivity() {
         val bundle: PersistableBundle = PersistableBundle()
         bundle.putString("festivalId", viewModel.getCurrentFestivalId())
         bundle.putString("festivalName", viewModel.getFestivalName().value.toString())
-        bundle.putInt("listSize", viewModel.getNewsfeedItemsSize()!!)
         val componentName: ComponentName = ComponentName(this, BackgroundNotificationService::class.java)
         val jobInfo: JobInfo = JobInfo.Builder(123, componentName)
             .setPersisted(true)
