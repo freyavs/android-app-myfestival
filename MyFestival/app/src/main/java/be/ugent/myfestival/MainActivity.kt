@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
 
         //zorgt voor offline gegevens 
 
-        //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
     }
 
