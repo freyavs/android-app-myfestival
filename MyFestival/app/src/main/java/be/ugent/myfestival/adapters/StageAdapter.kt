@@ -4,7 +4,6 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,10 +13,9 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import be.ugent.myfestival.R
-import be.ugent.myfestival.ReminderBroadcast
+import be.ugent.myfestival.notifications.ReminderBroadcast
 import be.ugent.myfestival.models.Concert
 import kotlinx.android.synthetic.main.concert_item.view.*
-import kotlinx.android.synthetic.main.stage_fragment.view.*
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.util.*

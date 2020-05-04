@@ -10,26 +10,20 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
-import android.view.View
 import androidx.activity.viewModels
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
+import be.ugent.myfestival.notifications.BackgroundNotificationService
+import be.ugent.myfestival.notifications.MyFestival
 import be.ugent.myfestival.utilities.InjectorUtils
 import be.ugent.myfestival.viewmodels.FestivalViewModel
 import com.google.firebase.FirebaseApp
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.iid.FirebaseInstanceId
 import java.util.*
-
-import com.google.firebase.storage.FirebaseStorage
 
 
 class MainActivity : AppCompatActivity() {
@@ -61,10 +55,11 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         //zorgt voor offline gegevens
-
+        //TODO: zorgt voor crash als je op notif klikt terwijl je in de app zit
+        /*
         if (!FirebaseApp.getApps(this).isEmpty()){
             FirebaseDatabase.getInstance().setPersistenceEnabled(true)
-        }
+        }*/
 
     }
 

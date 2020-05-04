@@ -1,4 +1,4 @@
-package be.ugent.myfestival
+package be.ugent.myfestival.notifications
 
 import android.app.Application
 import android.app.NotificationChannel

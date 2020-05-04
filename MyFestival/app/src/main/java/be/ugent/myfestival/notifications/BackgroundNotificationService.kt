@@ -1,4 +1,4 @@
-package be.ugent.myfestival
+package be.ugent.myfestival.notifications
 
 import android.app.PendingIntent
 import android.app.job.JobParameters
@@ -7,6 +7,8 @@ import android.content.Intent
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import be.ugent.myfestival.MainActivity
+import be.ugent.myfestival.R
 import com.google.firebase.database.*
 import java.util.*
 
