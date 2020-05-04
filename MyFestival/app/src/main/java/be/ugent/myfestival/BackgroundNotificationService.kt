@@ -103,7 +103,6 @@ class BackgroundNotificationService : JobService() {
 
 
                 if (festivalId != null) {
-                    FirebaseDatabase.getInstance().setPersistenceEnabled(true)
                     FirebaseDatabase.getInstance().getReference(festivalId)
                         .child("messages")
                         .addChildEventListener(this.listener as ChildEventListener)
