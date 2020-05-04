@@ -50,6 +50,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
     // -------------------------- als id wordt gezet --------------------------
 
     override fun reset(oldId: String) {
+        Log.d(TAG, "RESETTING with old id: " + oldId)
         name = MutableLiveData()
         newsfeed = MutableLiveData()
         foodstands = MutableLiveData()
@@ -67,7 +68,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
 
     override fun removeListeners(oldId: String){
         if (oldId != "") {
-            Log.d(TAG, "Removing listeners")
+            Log.d(TAG, " -------- Removing listeners --------- ")
             val ref = database.getReference(oldId)
             ref.child("messages").removeEventListener(newsfeedListener!!)
             ref.child("name").removeEventListener(nameListener!!)

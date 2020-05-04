@@ -24,7 +24,7 @@ import com.bumptech.glide.request.RequestListener
 import java.io.File
 
 
-class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewModel() {
+class  FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewModel() {
 
     fun getWelcomeString(): LiveData<String> =
         Transformations.map(festivalRepo.getFestivalName()) { value ->
@@ -44,6 +44,8 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
             festivalRepo.reset(oldId)
         }
     }
+
+    fun removeListeners() = festivalRepo.removeListeners(festivalRepo.getId())
 
     //er is hier een kotlin one-liner voor maar we willen bepaalde files niet verwijderen
     fun deleteTempFiles(file: File?){
