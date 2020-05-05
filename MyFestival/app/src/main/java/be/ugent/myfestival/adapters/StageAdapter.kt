@@ -53,11 +53,11 @@ class StageAdapter(private val concertList: List<Concert>) : RecyclerView.Adapte
         val preference = context?.getSharedPreferences("FestivalPreference", Context.MODE_PRIVATE)
         val switchvalue = preference?.getBoolean(concert.id,false)
         if (switchvalue != null) {
-            holder.switch.setChecked(switchvalue)
+            holder.switch.isChecked = switchvalue
         }
         else {
             //als switchvalue een probleem geeft moet het sowieso op false staan
-            holder.switch.setChecked(false)
+            holder.switch.isChecked = false
         }
 
         holder.switch.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -76,13 +76,13 @@ class StageAdapter(private val concertList: List<Concert>) : RecyclerView.Adapte
                     context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
                 alarmManager.cancel(pendingIntent)
                 val calendar: Calendar = Calendar.getInstance()
-                calendar.setTimeInMillis(System.currentTimeMillis())
+                calendar.timeInMillis = System.currentTimeMillis()
                 /* om de notificatie te testen op jouw gekozen tijdstip
                 calendar.set(Calendar.HOUR_OF_DAY, 14);
                 calendar.set(Calendar.MINUTE, 42);
                 calendar.set(Calendar.SECOND, 0);*/
                 calendar.set(concert.start.year, concert.start.monthValue,concert.start.dayOfMonth, concert.start.hour, concert.start.minute)
-                alarmManager[AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()] = pendingIntent
+                alarmManager[AlarmManager.RTC_WAKEUP, calendar.timeInMillis] = pendingIntent
             }
             else {
                 //toestand v/d switch onthouden
