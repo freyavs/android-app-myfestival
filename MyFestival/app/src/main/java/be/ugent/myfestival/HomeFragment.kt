@@ -14,6 +14,7 @@ import be.ugent.myfestival.databinding.HomeFragmentBinding
 import be.ugent.myfestival.utilities.GlideApp
 import be.ugent.myfestival.utilities.InjectorUtils
 import be.ugent.myfestival.viewmodels.FestivalViewModel
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 class HomeFragment : Fragment() {
 
@@ -42,7 +43,9 @@ class HomeFragment : Fragment() {
 
         viewModel.getLogo().observe( this, Observer { logo ->
             GlideApp.with(context!!)
-                .load(viewModel.getLogOffline(context!!))
+                //.load(viewModel.getLogOffline(context!!))
+                .load(logo)
+                //.diskCacheStrategy(DiskCacheStrategy.DATA)
                 .into(binding.logoView)
         })
         
