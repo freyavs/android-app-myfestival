@@ -54,13 +54,6 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        //zorgt voor offline gegevens
-        //TODO: zorgt voor crash als je op notif klikt terwijl je in de app zit
-        /*
-        if (!FirebaseApp.getApps(this).isEmpty()){
-            FirebaseDatabase.getInstance().setPersistenceEnabled(true)
-        }*/
-
     }
 
     override fun onStart() {

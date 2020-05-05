@@ -42,7 +42,7 @@ class HomeFragment : Fragment() {
 
         viewModel.getLogo().observe( this, Observer { logo ->
             GlideApp.with(context!!)
-                .load(logo)
+                .load(viewModel.getLogOffline(context!!))
                 .into(binding.logoView)
         })
         

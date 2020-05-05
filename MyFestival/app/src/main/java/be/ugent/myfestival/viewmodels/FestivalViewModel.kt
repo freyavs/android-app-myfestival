@@ -3,24 +3,14 @@ package be.ugent.myfestival.viewmodels
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.View
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import be.ugent.myfestival.data.FestivalRepository
-import com.bumptech.glide.request.target.Target
 import be.ugent.myfestival.models.Dish
 import be.ugent.myfestival.models.FoodStand
-import be.ugent.myfestival.utilities.GlideApp
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
 import java.io.File
 
 
@@ -63,6 +53,18 @@ class  FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMo
             }
         }
         //return file.delete()
+    }
+
+    fun getLogOffline(context: Context) : String? {
+        val dir = File(context.getCacheDir().getAbsolutePath())
+        if (dir.exists()) {
+            for (f in dir.listFiles()) {
+                if (f.absolutePath.contains("logo")){
+                        return f.absolutePath
+                }
+            }
+        }
+        return null;
     }
 
     fun hasFestival(): Boolean{
