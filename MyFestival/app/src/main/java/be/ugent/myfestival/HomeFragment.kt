@@ -2,6 +2,7 @@ package be.ugent.myfestival
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +12,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import be.ugent.myfestival.databinding.HomeFragmentBinding
+import be.ugent.myfestival.notifications.BackgroundNotificationService.Companion.TAG
 import be.ugent.myfestival.utilities.GlideApp
 import be.ugent.myfestival.utilities.InjectorUtils
 import be.ugent.myfestival.viewmodels.FestivalViewModel
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import java.io.File
 
 class HomeFragment : Fragment() {
 
@@ -41,11 +44,19 @@ class HomeFragment : Fragment() {
 
         binding.viewModel = viewModel
 
-        viewModel.getLogo().observe( this, Observer { logo ->
+        viewModel.getLogo().observe( this, Observer { logoRef ->
+            /*val localFile = File.createTempFile("festival_logo", ".png")
+            logoRef.getFile(localFile).addOnSuccessListener {
+                logoRef.postValue(localFile.absolutePath)
+                Log.d(TAG, "Tempfile created for logo of festival.")
+            }.addOnFailureListener {
+                Log.d(TAG, "Tempfile failed: check if festival submitted a logo!")
+            }*/
+            Log.d("myFestivalTag", "STORAGE REF: " + logoRef.toString())
             GlideApp.with(context!!)
                 //.load(viewModel.getLogOffline(context!!))
-                .load(logo)
-                //.diskCacheStrategy(DiskCacheStrategy.DATA)
+                .load(logoRef)
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
                 .into(binding.logoView)
         })
         

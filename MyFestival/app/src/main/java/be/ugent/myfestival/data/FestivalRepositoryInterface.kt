@@ -5,6 +5,7 @@ import be.ugent.myfestival.models.FestivalChooser
 import be.ugent.myfestival.models.FoodStand
 import be.ugent.myfestival.models.NewsfeedItem
 import be.ugent.myfestival.models.Stage
+import com.google.firebase.storage.StorageReference
 
 interface FestivalRepositoryInterface {
     // -------------------------- als id wordt gezet --------------------------
@@ -20,7 +21,7 @@ interface FestivalRepositoryInterface {
 
     fun getFestivalName(): MutableLiveData<String>
 
-    fun getFestivalLogo(): MutableLiveData<String>
+    fun getFestivalLogo(): MutableLiveData<StorageReference>
 
     fun getFestivalMap(): MutableLiveData<String>
 

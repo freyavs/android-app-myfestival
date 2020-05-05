@@ -40,6 +40,7 @@ class NewsfeedAdapter(val viewModel : FestivalViewModel) : RecyclerView.Adapter<
         if (post.image != null) {
             GlideApp.with(holder.image.context)
                 .load(post.image)
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
                 .into(holder.image)
         }
     }

@@ -36,7 +36,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
     var lineupstagesListener: ValueEventListener? = null
 
 
-    var logo: MutableLiveData<String> = MutableLiveData()
+    var logo: MutableLiveData<StorageReference> = MutableLiveData()
     var logoListener: ValueEventListener? = null
 
     var map: MutableLiveData<String> = MutableLiveData()
@@ -111,22 +111,14 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
         return name
     }
 
-
-
-    override fun getFestivalLogo(): MutableLiveData<String> {
+    override fun getFestivalLogo(): MutableLiveData<StorageReference> {
         if (logo.value == null) {
             logoListener = object : ValueEventListener {
                 override fun onDataChange(ds: DataSnapshot) {
                     if (ds.exists()) {
                         val logoRef = storageRef.child(ds.value.toString())
                         Log.d(TAG, "logo: " + ds.value.toString())
-                        val localFile = File.createTempFile("festival_logo", ".png")
-                        logoRef.getFile(localFile).addOnSuccessListener {
-                            logo.postValue(localFile.absolutePath)
-                            Log.d(TAG, "Tempfile created for logo of festival.")
-                        }.addOnFailureListener {
-                            Log.d(TAG, "Tempfile failed: check if festival submitted a logo!")
-                        }
+                        logo.postValue(logoRef)
                     }
                 }
                 override fun onCancelled(databaseError: DatabaseError) {
