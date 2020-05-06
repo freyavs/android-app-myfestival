@@ -24,6 +24,7 @@ class MyAppGlideModule : AppGlideModule() {
             FirebaseImageLoader.Factory()
         )
     }
+
     override fun applyOptions(context: Context, builder: GlideBuilder) {
         builder.setMemoryCache(LruResourceCache(20 * 1024 * 1024))
         builder.setDiskCache(InternalCacheDiskCacheFactory(context, 100 * 1024 * 1024))

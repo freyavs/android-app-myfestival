@@ -3,11 +3,10 @@ package be.ugent.myfestival
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -17,6 +16,7 @@ import be.ugent.myfestival.utilities.GlideApp
 import be.ugent.myfestival.utilities.InjectorUtils
 import be.ugent.myfestival.viewmodels.FestivalViewModel
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.signature.ObjectKey
 import java.io.File
 
 class HomeFragment : Fragment() {
@@ -45,19 +45,20 @@ class HomeFragment : Fragment() {
         binding.viewModel = viewModel
 
         viewModel.getLogo().observe( this, Observer { logoRef ->
-            /*val localFile = File.createTempFile("festival_logo", ".png")
+            val preference = context?.getSharedPreferences("FestivalLogo", Context.MODE_PRIVATE)
+            val editor = preference?.edit()
+            editor?.putString("ID", logoRef.toString().split("/").last())
+            editor?.apply()
+            val localFile = File(context?.filesDir,"logo.jpeg")
             logoRef.getFile(localFile).addOnSuccessListener {
-                logoRef.postValue(localFile.absolutePath)
-                Log.d(TAG, "Tempfile created for logo of festival.")
+                Log.d("myFestivalTag", "Tempfile created for logo of festival.")
+                GlideApp.with(context!!)
+                    .load(localFile.absolutePath)
+                    .signature(ObjectKey(System.currentTimeMillis().toString()))
+                    .into(binding.logoView)
             }.addOnFailureListener {
-                Log.d(TAG, "Tempfile failed: check if festival submitted a logo!")
-            }*/
-            Log.d("myFestivalTag", "STORAGE REF: " + logoRef.toString())
-            GlideApp.with(context!!)
-                //.load(viewModel.getLogOffline(context!!))
-                .load(logoRef)
-                .diskCacheStrategy(DiskCacheStrategy.DATA)
-                .into(binding.logoView)
+                Log.d("myFestivalTag", "Tempfile failed: check if festival submitted a logo!")
+            }
         })
         
         binding.newsfeedHandler = View.OnClickListener {

@@ -30,30 +30,13 @@ class  FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMo
         if (newID != festivalRepo.getId()) {
             //verwijder alle files van vorig festival
             val oldId = festivalRepo.getId()
-            deleteTempFiles(context?.cacheDir)
-            festivalRepo.setId(sharedPreferences?.getString("ID", "").toString())
+            festivalRepo.setId(newID)
             festivalRepo.reset(oldId)
         }
     }
 
     fun removeListeners() = festivalRepo.removeListeners(festivalRepo.getId())
 
-    //er is hier een kotlin one-liner voor maar we willen bepaalde files niet verwijderen
-    fun deleteTempFiles(file: File?){
-        if (file != null && file.isDirectory) {
-            val files: Array<File>? = file.listFiles()
-            if (files != null) {
-                for (f in files) {
-                    if (f.isDirectory) {
-                        deleteTempFiles(f)
-                    } else if (!f.absolutePath.contains("festivallist")) {
-                        f.delete()
-                    }
-                }
-            }
-        }
-        //return file.delete()
-    }
 
     fun getLogOffline(context: Context) : String? {
         val dir = File(context.getCacheDir().getAbsolutePath())
