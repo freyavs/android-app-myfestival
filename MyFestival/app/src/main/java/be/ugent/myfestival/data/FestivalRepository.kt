@@ -32,6 +32,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
 
     var festivalList: MutableLiveData<List<FestivalChooser>> = MutableLiveData()
     var lineupstages: MutableLiveData<List<Stage>> = MutableLiveData()
+    var festivalListListener: ValueEventListener? = null
 
     var lineupstagesListener: ValueEventListener? = null
 
@@ -79,6 +80,9 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
             ref.child("foodstand").removeEventListener(foodstandsListener!!)
             ref.child("location").removeEventListener(mapListener!!)
             ref.child("stages").removeEventListener(lineupstagesListener!!)
+            if (festivalListListener != null){
+                ref.removeEventListener(festivalListListener!!)
+            }
         }
     }
 
@@ -338,36 +342,29 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
     // -------------- data voor festival chooser ------------------
     override fun getFestivals(): MutableLiveData<List<FestivalChooser>>{
         if(festivalList.value == null){
-            database
-                .getReference()
-                .addValueEventListener(object : ValueEventListener{
-                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        if(dataSnapshot.exists()){
-                            val festivalChoosers = mutableListOf<FestivalChooser>()
-                            for(ds in dataSnapshot.children) {
-                                val logoRef = storageRef.child(ds.child("logo").value.toString())
-                                val localFile = File.createTempFile("festivallist", ".png")
-                                logoRef.getFile(localFile).addOnSuccessListener {
-                                    festivalChoosers.add(
-                                        FestivalChooser(
-                                            ds.key!!,
-                                            ds.child("name").value!!.toString(),
-                                            localFile.absolutePath
-                                        )
-
-                                    )
-                                    festivalList.postValue(festivalChoosers)
-                                }.addOnCanceledListener {
-                                    Log.d(TAG, "Tempfile failed")
-                                }
-                            }
+            festivalListListener = object : ValueEventListener{
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    if(dataSnapshot.exists()){
+                        val festivalChoosers = mutableListOf<FestivalChooser>()
+                        for(ds in dataSnapshot.children) {
+                            val logoRef = storageRef.child(ds.child("logo").value.toString())
+                            festivalChoosers.add(
+                                FestivalChooser(
+                                    ds.key!!,
+                                    ds.child("name").value!!.toString(),
+                                    logoRef ))
+                            festivalList.postValue(festivalChoosers)
                         }
                     }
+                }
 
-                    override fun onCancelled(databaseError: DatabaseError) {
-                        Log.d(TAG, "getFestivals:onCancelled", databaseError.toException())
-                    }
-                })
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Log.d(TAG, "getFestivals:onCancelled", databaseError.toException())
+                }
+            }
+            database
+                .reference
+                .addValueEventListener(festivalListListener!!)
         }
         return festivalList
     }

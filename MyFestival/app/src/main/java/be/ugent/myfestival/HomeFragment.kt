@@ -62,7 +62,6 @@ class HomeFragment : Fragment() {
                     Log.d("myFestivalTag", "Tempfile failed: check if festival submitted a logo!")
                 }
             }
-
         })
         
         binding.newsfeedHandler = View.OnClickListener {

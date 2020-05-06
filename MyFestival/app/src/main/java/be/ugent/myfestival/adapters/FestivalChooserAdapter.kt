@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import be.ugent.myfestival.R
 import be.ugent.myfestival.models.FestivalChooser
 import be.ugent.myfestival.utilities.GlideApp
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import kotlinx.android.synthetic.main.festival_chooser_item.view.*
 
 class FestivalChooserAdapter(val clickListener: (FestivalChooser) -> Unit) :
@@ -32,7 +33,8 @@ class FestivalChooserAdapter(val clickListener: (FestivalChooser) -> Unit) :
         val currentItem = festivalList[position]
 
         GlideApp.with(holder.imageView.context)
-            .load(currentItem.pathLogo)
+            .load(currentItem.logoRef)
+            .diskCacheStrategy(DiskCacheStrategy.DATA)
             .into(holder.imageView)
 
         holder.textView.text = currentItem.name

@@ -1,3 +1,5 @@
 package be.ugent.myfestival.models
 
-data class FestivalChooser(val id: String, val name: String, val pathLogo: String)
+import com.google.firebase.storage.StorageReference
+
+data class FestivalChooser(val id: String, val name: String, val logoRef: StorageReference)
