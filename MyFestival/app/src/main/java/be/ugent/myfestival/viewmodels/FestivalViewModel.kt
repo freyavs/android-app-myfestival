@@ -28,7 +28,6 @@ class  FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMo
     fun setId(sharedPreferences: SharedPreferences?, context: Context?){
         val newID = sharedPreferences?.getString("ID","").toString()
         if (newID != festivalRepo.getId()) {
-            //verwijder alle files van vorig festival
             val oldId = festivalRepo.getId()
             festivalRepo.setId(newID)
             festivalRepo.reset(oldId)
@@ -36,19 +35,6 @@ class  FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMo
     }
 
     fun removeListeners() = festivalRepo.removeListeners(festivalRepo.getId())
-
-
-    fun getLogOffline(context: Context) : String? {
-        val dir = File(context.getCacheDir().getAbsolutePath())
-        if (dir.exists()) {
-            for (f in dir.listFiles()) {
-                if (f.absolutePath.contains("logo")){
-                        return f.absolutePath
-                }
-            }
-        }
-        return null;
-    }
 
     fun hasFestival(): Boolean{
         return festivalRepo.getId() != ""
@@ -70,12 +56,6 @@ class  FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMo
     fun getNewsfeedItems() = festivalRepo.getNewsfeedItems()
 
     fun getNewMessageTitle(): MutableLiveData<String> = festivalRepo.newMessageTitle
-
-    //TODO: is dit nodig?
-    fun resetNewMessageTitle() {
-        festivalRepo.resetNewMessageTitle()
-    }
-
 
     //TODO: Loading moet beter / mooier met afbeelding ofzo en buttons mogen ook niet op scherm verschijnen (gwn loading icon/afb die over heel het scherm is)
 

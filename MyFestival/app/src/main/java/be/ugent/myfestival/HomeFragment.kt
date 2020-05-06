@@ -46,19 +46,23 @@ class HomeFragment : Fragment() {
 
         viewModel.getLogo().observe( this, Observer { logoRef ->
             val preference = context?.getSharedPreferences("FestivalLogo", Context.MODE_PRIVATE)
-            val editor = preference?.edit()
-            editor?.putString("ID", logoRef.toString().split("/").last())
-            editor?.apply()
-            val localFile = File(context?.filesDir,"logo.jpeg")
-            logoRef.getFile(localFile).addOnSuccessListener {
-                Log.d("myFestivalTag", "Tempfile created for logo of festival.")
-                GlideApp.with(context!!)
-                    .load(localFile.absolutePath)
-                    .signature(ObjectKey(System.currentTimeMillis().toString()))
-                    .into(binding.logoView)
-            }.addOnFailureListener {
-                Log.d("myFestivalTag", "Tempfile failed: check if festival submitted a logo!")
+            //als vorige logoRef niet hetzelfde was (dus logo of festival is veranderd) dan laadt opnieuw image
+            if (logoRef.toString().split("/").last() != preference?.getString("ID","").toString()){
+                val editor = preference?.edit()
+                editor?.putString("ID", logoRef.toString().split("/").last())
+                editor?.apply()
+                val localFile = File(context?.filesDir,"logo.jpeg")
+                logoRef.getFile(localFile).addOnSuccessListener {
+                    Log.d("myFestivalTag", "Tempfile created for logo of festival.")
+                    GlideApp.with(context!!)
+                        .load(localFile.absolutePath)
+                        .signature(ObjectKey(System.currentTimeMillis().toString()))
+                        .into(binding.logoView)
+                }.addOnFailureListener {
+                    Log.d("myFestivalTag", "Tempfile failed: check if festival submitted a logo!")
+                }
             }
+
         })
         
         binding.newsfeedHandler = View.OnClickListener {

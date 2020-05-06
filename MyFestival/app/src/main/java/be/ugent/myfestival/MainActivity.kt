@@ -43,10 +43,8 @@ class MainActivity : AppCompatActivity() {
 
        viewModel.getNewMessageTitle().observe(this, Observer { message ->
            Log.d(TAG, "creating notification: " + message)
-           if (message != "" && message != null) {
                createNotification(viewModel.getFestivalName().value.toString(), message)
-               viewModel.resetNewMessageTitle()
-           }
+
         })
 
 
@@ -101,7 +99,6 @@ class MainActivity : AppCompatActivity() {
 
     fun createNotification(title: String, message: String) {
         Log.d(TAG, "geraakt tot in notificatie aanmaken methode")
-        if (message != "") {
             val resultIntent = Intent(this, MainActivity::class.java)
             val pendingIntent = PendingIntent.getActivity(this, 1, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT)
         val builder =
@@ -119,7 +116,7 @@ class MainActivity : AppCompatActivity() {
         with(NotificationManagerCompat.from(this)) {
             notify(id, builder.build())
             }
-        }
+
     }
 }
 
