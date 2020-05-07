@@ -9,22 +9,17 @@ import androidx.recyclerview.widget.RecyclerView
 import be.ugent.myfestival.R
 import be.ugent.myfestival.models.FestivalChooser
 import be.ugent.myfestival.utilities.GlideApp
-import kotlinx.android.synthetic.main.festival_chooser_item.view.*
+import kotlinx.android.synthetic.main.list_item.view.*
 
 class FestivalChooserAdapter(val clickListener: (FestivalChooser) -> Unit) :
     RecyclerView.Adapter<FestivalChooserAdapter.FestivalChooserViewHolder>(){
 
     var festivalList = emptyList<FestivalChooser>()
 
-    class FestivalChooserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val textView: TextView = itemView.festival_name
-        val imageView: ImageView = itemView.festival_logo
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FestivalChooserViewHolder {
         val itemView = LayoutInflater
             .from(parent.context)
-            .inflate(R.layout.festival_chooser_item,parent,false)
+            .inflate(R.layout.list_item,parent,false)
         return FestivalChooserViewHolder(itemView)
     }
 
@@ -41,5 +36,10 @@ class FestivalChooserAdapter(val clickListener: (FestivalChooser) -> Unit) :
 
     override fun getItemCount(): Int {
         return festivalList.size
+    }
+
+    class FestivalChooserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val imageView: ImageView = itemView.list_item_image_view
+        val textView: TextView = itemView.list_item_text_view
     }
 }
