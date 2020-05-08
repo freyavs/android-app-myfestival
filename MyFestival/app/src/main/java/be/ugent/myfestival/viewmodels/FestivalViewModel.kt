@@ -87,5 +87,8 @@ class  FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMo
         }
     }
 
+    fun getCoordsFestival(): MutableLiveData<List<Double>> = festivalRepo.getCoordsFestival()
+
+    fun getStageCoord(): MutableLiveData<HashMap<String,List<Double>>> = festivalRepo.getStageCoords()
 
 }
