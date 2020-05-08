@@ -18,7 +18,7 @@ class  FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMo
 
     fun getWelcomeString(): LiveData<String> =
         Transformations.map(festivalRepo.getFestivalName()) { value ->
-            "Welkom bij $value"
+            "$value"
         }
 
     fun getFestivalName() = festivalRepo.getFestivalName()
@@ -87,5 +87,8 @@ class  FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMo
         }
     }
 
+    fun getCoordsFestival(): MutableLiveData<List<Double>> = festivalRepo.getCoordsFestival()
+
+    fun getStageCoord(): MutableLiveData<HashMap<String,List<Double>>> = festivalRepo.getStageCoords()
 
 }

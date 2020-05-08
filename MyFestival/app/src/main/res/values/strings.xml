@@ -23,6 +23,7 @@
     <string name="swipeL">&lt;&lt; swipe</string>
 
     <string name="loading">…</string>
-    <string name="searchString">Naam festival</string>
+    <string name="searchString">naam festival</string>
     <string name="festival">Festival</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
