@@ -63,6 +63,8 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
         lineupstages = MutableLiveData()
         logo = MutableLiveData()
         map = MutableLiveData()
+        coords = MutableLiveData()
+        concertsCoords = MutableLiveData()
         newsfeedLoaded = false
 
         removeListeners(oldId)
