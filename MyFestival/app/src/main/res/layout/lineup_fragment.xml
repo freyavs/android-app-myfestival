@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:weightSum="10">
+            android:weightSum="15">
 
             <RelativeLayout
                 android:layout_weight="1"
@@ -24,14 +24,14 @@
 
                 <RadioGroup
                     android:id="@+id/toggle_group"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" />
 
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_weight="9"
+                android:layout_weight="14"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:background="@color/backgroundColor">

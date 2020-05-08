@@ -3,11 +3,13 @@ package be.ugent.myfestival
 import android.graphics.drawable.StateListDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.RadioButton
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -47,7 +49,7 @@ class LineupFragment : Fragment() {
 
         viewModel.getAllDaysSorted().observe(viewLifecycleOwner, Observer { days ->
             val startDay : LocalDate
-            val map = mapOf<String, String>("MONDAY" to "Maandag", "TUESDAY" to "Dinsdag", "WEDNESDAY" to "Woensdag",
+            val map = mapOf("MONDAY" to "Maandag", "TUESDAY" to "Dinsdag", "WEDNESDAY" to "Woensdag",
             "THURSDAY" to "Donderdag", "FRIDAY" to "Vrijdag", "SATURDAY" to "Zaterdag", "SUNDAY" to "Zondag")
 
             //zorgt dat er op vandaag gestart wordt tenzij vandaag niet tussen de lineup days zit
@@ -63,7 +65,10 @@ class LineupFragment : Fragment() {
                 button.setBackgroundResource(R.drawable.radio_background)
                 button.buttonDrawable = StateListDrawable()
                 button.textSize = 25F
-                button.text = map.get(day.dayOfWeek.toString())
+                button.text = map[day.dayOfWeek.toString()]
+                button.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT, 1.0f)
+                button.gravity = Gravity.CENTER_HORIZONTAL or Gravity.CENTER_VERTICAL
+
                 val layout : LinearLayout = binding.root.toggle_group
                 button.setOnClickListener { viewModel.clickedDay(day) }
                 layout.addView(button)
@@ -79,7 +84,7 @@ class LineupFragment : Fragment() {
 
         viewModel.getCurrentStages().observe(viewLifecycleOwner, Observer { stages -> adapter.notifyChange(stages)} )
 
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
 
         return binding.root
     }
