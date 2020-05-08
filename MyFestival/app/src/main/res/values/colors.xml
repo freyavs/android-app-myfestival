@@ -4,8 +4,9 @@
     <color name="colorOnPrimary">#B9E4C9</color>
     <color name="colorPrimaryDark">#356859</color>
     <color name="colorPrimaryLight">#B9E4C9</color>
-    <color name="colorAccent">#FD5523</color>
-    <color name="backgroundColor">#FFFBE6</color>
+    <color name="colorAccent">#FF6F59</color>
+    <color name="colorOnBackground">#FFB565</color>
+    <color name="backgroundColor">#F6F7EB</color>
     <color name="lightGray">#D3D3D3</color>
 </resources>
 

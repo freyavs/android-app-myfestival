@@ -1,10 +1,10 @@
 package be.ugent.myfestival
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -15,8 +15,6 @@ import be.ugent.myfestival.databinding.FoodFragmentBinding
 import be.ugent.myfestival.models.FoodStand
 import be.ugent.myfestival.utilities.InjectorUtils
 import be.ugent.myfestival.viewmodels.FestivalViewModel
-import androidx.lifecycle.observe
-import be.ugent.myfestival.FoodFragmentDirections
 
 
 /**
@@ -51,9 +49,8 @@ class FoodFragment : Fragment() {
     }
 
     fun handleItemClick(foodStand: FoodStand) {
-        val action = FoodFragmentDirections.actionFoodFragmentToMenuFragment(foodStand.id, foodStand.logo, foodStand.name)
+        val action = FoodFragmentDirections.actionFoodFragmentToMenuFragment(foodStand.id)
         findNavController().navigate(action)
-
     }
 
 

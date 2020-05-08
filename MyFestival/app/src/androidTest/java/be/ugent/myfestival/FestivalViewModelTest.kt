@@ -64,7 +64,6 @@ class FestivalViewModelTest {
         repository = FestivalRepository(database,storage)
         viewmodel = FestivalViewModel(repository)
         val festivalsObserver = mock<Observer<List<FestivalChooser>>>()
-
         verify(festivalsObserver).onChanged(notNull())
 
     }

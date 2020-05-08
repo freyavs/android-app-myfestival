@@ -14,6 +14,7 @@ import be.ugent.myfestival.models.NewsfeedItem
 import be.ugent.myfestival.utilities.GlideApp
 import be.ugent.myfestival.utilities.InjectorUtils
 import be.ugent.myfestival.viewmodels.FestivalViewModel
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import kotlinx.android.synthetic.main.newsfeed_item.view.*
 import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
@@ -39,6 +40,7 @@ class NewsfeedAdapter(val viewModel : FestivalViewModel) : RecyclerView.Adapter<
         if (post.image != null) {
             GlideApp.with(holder.image.context)
                 .load(post.image)
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
                 .into(holder.image)
         }
     }
@@ -50,6 +52,5 @@ class NewsfeedAdapter(val viewModel : FestivalViewModel) : RecyclerView.Adapter<
         val time: TextView = itemView.time
         val message: TextView = itemView.message
         val image: ImageView = itemView.image
-        val logo: ImageView = itemView.image
     }
 }
