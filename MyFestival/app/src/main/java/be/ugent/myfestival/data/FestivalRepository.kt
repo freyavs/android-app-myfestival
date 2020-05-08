@@ -173,7 +173,6 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                         var foodList = mutableListOf<FoodStand>()
                         for (ds in dataSnapshot.children) {
                             val logoRef = storageRef.child(ds.child("image").value.toString())
-                            val localFile = File.createTempFile("foodstand", ".png")
 
                             //haal al het eten van een bepaalde foodstand af
                             var dishList = mutableListOf<Dish>()
@@ -182,18 +181,15 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                                 dish!!.id = it.key.toString()
                                 dish
                             }
-                            logoRef.getFile(localFile).addOnSuccessListener {
-                                //pas als image ingeladen is, maak foodstand aan
-                                foodList.add (FoodStand(
-                                    ds.key!!,
-                                    ds.child("name").value!!.toString(),
-                                    localFile.absolutePath,
-                                    dishList
-                                ))
-                                foodstands.postValue(foodList)
-                            }.addOnFailureListener {
-                                Log.d(TAG, "Tempfile failed, couldn't create foodstand: check if foodstand submitted a logo!")
-                            }
+                            //pas als image ingeladen is, maak foodstand aan
+                            foodList.add (FoodStand(
+                                ds.key!!,
+                                ds.child("name").value!!.toString(),
+                                logoRef,
+                                dishList
+                            ))
+                            foodstands.postValue(foodList)
+
                         }
                     }
                 }

@@ -48,10 +48,17 @@ class  FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMo
         return festivalRepo.getFoodstandList()
     }
 
+    //TODO: getfoodstandmenu weg en wisseln voor getFoodstand (ook in tests)
     fun getFoodstandMenu(id: String): LiveData<List<Dish>> =
         Transformations.map(festivalRepo.getFoodstandList()) { foodstands ->
             foodstands.filter { it.id == id }[0].menu
         }
+
+    fun getFoodstand(id: String): LiveData<FoodStand> =
+        Transformations.map(festivalRepo.getFoodstandList()) { foodstands ->
+            foodstands.filter { it.id == id }[0]
+        }
+
 
     fun getNewsfeedItems() = festivalRepo.getNewsfeedItems()
 

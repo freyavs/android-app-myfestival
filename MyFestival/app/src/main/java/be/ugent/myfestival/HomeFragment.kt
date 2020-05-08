@@ -44,24 +44,36 @@ class HomeFragment : Fragment() {
 
         binding.viewModel = viewModel
 
+        //speciale methode om het logo te tonen zodat zo weinig mogelijk de afbeelding moet worden opgehaald van de firebase storage
         viewModel.getLogo().observe( this, Observer { logoRef ->
+            GlideApp.with(context!!)
+                .load(logoRef)
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
+                .into(binding.logoView)
+
+            //TODO: controleer of offline ook werkt als logo verandert is, anders moet het als volgt:
+           /*
+            val localFile = File(context?.filesDir,"logo.jpeg")
+            val logoRefId = logoRef?.toString()?.split("/")?.last()
+            Log.d("myFestivalTag", "logo ref id: " + logoRef)
             val preference = context?.getSharedPreferences("FestivalLogo", Context.MODE_PRIVATE)
-            //als vorige logoRef niet hetzelfde was (dus logo of festival is veranderd) dan laadt opnieuw image
-            if (logoRef.toString().split("/").last() != preference?.getString("ID","").toString()){
-                val editor = preference?.edit()
-                editor?.putString("ID", logoRef.toString().split("/").last())
-                editor?.apply()
-                val localFile = File(context?.filesDir,"logo.jpeg")
+            val prevId = preference?.getString("ID","").toString()
+            //als vorige logoRef niet hetzelfde was (dus logo of festival is veranderd) of nog niet bestond dan laadt opnieuw image
+            if (!localFile.exists() || logoRefId != prevId ){
                 logoRef.getFile(localFile).addOnSuccessListener {
                     Log.d("myFestivalTag", "Tempfile created for logo of festival.")
-                    GlideApp.with(context!!)
-                        .load(localFile.absolutePath)
-                        .signature(ObjectKey(System.currentTimeMillis().toString()))
-                        .into(binding.logoView)
+                    loadLogo(localFile.absolutePath, binding)
+                    val editor = preference?.edit()
+                    editor?.putString("ID", logoRefId)
+                    editor?.apply()
                 }.addOnFailureListener {
                     Log.d("myFestivalTag", "Tempfile failed: check if festival submitted a logo!")
                 }
             }
+            else {
+                Log.d("myFestivalTag", "LOGO: logo already exists, loading logo.jpeg")
+                loadLogo(localFile.absolutePath, binding)
+            }*/
         })
         
         binding.newsfeedHandler = View.OnClickListener {
@@ -89,5 +101,12 @@ class HomeFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    fun loadLogo(filepath: String, binding: HomeFragmentBinding){
+        GlideApp.with(context!!)
+            .load(filepath)
+            .signature(ObjectKey(System.currentTimeMillis().toString()))
+            .into(binding.logoView)
     }
 }
