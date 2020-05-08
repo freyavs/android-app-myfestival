@@ -94,7 +94,7 @@ class FestivalRepositoryUnitTests {
     @Test
     fun resetSetsAllValuesNull() {
         fillRepository(repository)
-        repository.reset()
+        repository.reset("")
         Assert.assertNull(repository.name.value)
         Assert.assertNull(repository.logo.value)
         Assert.assertNull(repository.map.value)
@@ -105,7 +105,7 @@ class FestivalRepositoryUnitTests {
 
     @Test
     fun getFestivalNameCallsDatabase_AfterResetOfValues() {
-        repository.reset()
+        repository.reset("")
 
         //moet 4x opgeroepen worden voor foodstands, linup, logo en kaart
         verify(database, times(4)).getReference(testId)

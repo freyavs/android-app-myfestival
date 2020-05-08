@@ -2,6 +2,7 @@ package be.ugent.myfestival
 
 
 import android.content.SharedPreferences
+import android.view.View
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -15,9 +16,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 
-//aantal unit tests = 5
+//aantal unit tests = 8
 
-//TODO: test loading dingen
 //TODO: test foodstand dingen
 //TODO: test of na reset juiste data wordt ingeladen (alle getters dus)
 //denk na welke tests hier moeten en welke in integration test (androidStudio) -> mss eens vragen eig
@@ -71,7 +71,7 @@ class FestivalViewModelUnitTests {
     fun setIdCallsResetAndSetId_whenIdIsNotSet() {
         whenever(repository.getId()).thenReturn("")
         viewModel.setId(preferences,null)
-        verify(repository).reset()
+        verify(repository).reset(any())
         verify(repository).setId(testId1)
     }
 
@@ -80,14 +80,14 @@ class FestivalViewModelUnitTests {
         whenever(preferences.getString("ID",""))
             .thenReturn(testId2)
 
-        verify(repository, never()).reset()
+        verify(repository, never()).reset(any())
         verify(repository, never()).setId(testId2)
     }
 
     @Test
     fun setIdDoesNotCallResetAndSetId_whenIdEqualsOldId() {
         viewModel.setId(preferences,null)
-        verify(repository, never()).reset()
+        verify(repository, never()).reset(any())
         verify(repository, never()).setId(testId1)
     }
 
@@ -103,5 +103,32 @@ class FestivalViewModelUnitTests {
         Assert.assertTrue(viewModel.hasFestival())
     }
 
+    @Test
+    fun welcomeStringIsFormatted(){
+        whenever(repository.getFestivalName()).thenReturn( MutableLiveData("TestFest"))
+        val mockObserver = mock<Observer<String>>()
+        viewModel.getWelcomeString().observeForever(mockObserver)
+
+        verify(mockObserver).onChanged("Welkom bij TestFest")
+    }
+
+   /* @Test
+    fun newsfeedItemSizeIsNullSafe(){
+        whenever(repository.getNewsfeedItems()).thenReturn(MutableLiveData())
+
+        Assert.assertEquals(0, viewModel.getNewsfeedItemsSize())
+    }*/
+
+    @Test
+    fun loadingSwitchesToVisibleWhenReady(){
+        whenever(repository.lineupstages).thenReturn(MutableLiveData())
+        val mockObserver = mock<Observer<Int>>()
+        viewModel.getLoading().observeForever(mockObserver)
+
+        val stage : Stage = mock()
+        repository.lineupstages.apply { postValue(listOf(stage)) }
+
+        verify(mockObserver).onChanged(View.VISIBLE)
+    }
 }
 

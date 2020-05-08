@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import be.ugent.myfestival.databinding.HomeFragmentBinding
 import be.ugent.myfestival.databinding.MapFragmentBinding
+import be.ugent.myfestival.utilities.GlideApp
 import be.ugent.myfestival.utilities.InjectorUtils
 import be.ugent.myfestival.viewmodels.FestivalViewModel
 
@@ -28,6 +30,12 @@ class MapFragment : Fragment() {
         }
 
         binding.viewModel = viewModel
+
+        viewModel.getMap().observe( this, Observer { logo ->
+            GlideApp.with(context!!)
+                .load(logo)
+                .into(binding.mapView)
+        })
 
         return binding.root
     }

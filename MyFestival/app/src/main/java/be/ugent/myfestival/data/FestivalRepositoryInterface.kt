@@ -1,56 +1,43 @@
 package be.ugent.myfestival.data
 
 import androidx.lifecycle.MutableLiveData
-import be.ugent.myfestival.models.*
-import com.google.firebase.database.*
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
+import be.ugent.myfestival.models.FestivalChooser
+import be.ugent.myfestival.models.FoodStand
+import be.ugent.myfestival.models.NewsfeedItem
+import be.ugent.myfestival.models.Stage
 import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.ktx.storage
-import java.io.File
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.ZoneOffset
-import java.time.format.DateTimeFormatter
 
-class FestivalRepositoryInterface() {
-
-    //Todo: weghalen bij integratie
-    private val db = FirebaseDatabase.getInstance()
-    private val storage = Firebase.storage.reference
-    private fun getFestivalRepository(database: FirebaseDatabase, storage: StorageReference) =
-        FestivalRepository.getInstance(database,storage)
-    val repository = getFestivalRepository(db, storage)
-    //Todo: einde weghalen
-
+interface FestivalRepositoryInterface {
     // -------------------------- als id wordt gezet --------------------------
-    fun reset() = repository.reset()
+    fun reset(oldId: String)
 
-    fun getId() = repository.reset()
+    fun removeListeners(oldId: String)
 
-    fun setId(id : String) = repository.setId(id)
+    fun getId(): String
+
+    fun setId(id : String)
 
     // ------------- data voor het festival algemeen (home menu, ..)  ----------------
 
-    fun getFestivalName(): MutableLiveData<String> = repository.getFestivalName()
+    fun getFestivalName(): MutableLiveData<String>
 
-    fun getFestivalLogo(): MutableLiveData<String> = repository.getFestivalLogo()
+    fun getFestivalLogo(): MutableLiveData<StorageReference>
 
-    fun getFestivalMap(): MutableLiveData<String> = repository.getFestivalMap()
+    fun getFestivalMap(): MutableLiveData<String>
 
     // ---------------- data voor de foodstands -------------------------------
-    fun getFoodstandList() : MutableLiveData<List<FoodStand>> = repository.getFoodstandList()
+    fun getFoodstandList() : MutableLiveData<List<FoodStand>>
 
 
     // ---------------------- data voor de newsfeed -------------------------------
 
 
-    fun getNewsfeedItems(): MutableLiveData<MutableList<NewsfeedItem>> = repository.getNewsfeedItems()
+    fun getNewsfeedItems(): MutableLiveData<MutableList<NewsfeedItem>>
 
     // -------------------------- data voor de lineup ------------------------
 
-    fun getLineup() : MutableLiveData<List<Stage>> = repository.getLineup()
+    fun getLineup() : MutableLiveData<List<Stage>>
 
     // -------------- data voor festival chooser ------------------
-    fun getFestivals(): MutableLiveData<List<FestivalChooser>> = repository.getFestivals()
+    fun getFestivals(): MutableLiveData<List<FestivalChooser>>
 }

@@ -11,10 +11,12 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import be.ugent.myfestival.adapters.MenuAdapter
 import be.ugent.myfestival.databinding.MenuFragmentBinding
+import be.ugent.myfestival.models.FoodStand
 import be.ugent.myfestival.utilities.GlideApp
 import be.ugent.myfestival.utilities.InjectorUtils
 import be.ugent.myfestival.viewmodels.FestivalViewModel
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 class MenuFragment: Fragment() {
 
@@ -31,19 +33,22 @@ class MenuFragment: Fragment() {
         }
 
         val args: MenuFragmentArgs by navArgs()
-        binding.foodstandNameMenuView.text = args.foodstandName
-
-        //todo: met binding adapter
-        GlideApp.with(binding.foodstandImgMenuView.context)
-            .load(args.foodstandImg)
-            .into(binding.foodstandImgMenuView);
-
         val id: String = args.foodstandId
+
         val adapter = MenuAdapter()
-        viewModel.getFoodstandMenu(id).observe(viewLifecycleOwner, Observer {
-            menu -> adapter.menuList = menu
+
+        viewModel.getFoodstand(id).observe(viewLifecycleOwner, Observer {foodstand ->
+            binding.foodstandNameMenuView.text = foodstand.name
+
+            GlideApp.with(binding.foodstandImgMenuView.context)
+                .load(foodstand.logoRef)
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
+                .into(binding.foodstandImgMenuView)
+
+            adapter.menuList = foodstand.menu
             adapter.notifyDataSetChanged()
         })
+
 
         binding.menuRecyclerView.apply {
             this.adapter = adapter
