@@ -1,24 +1,23 @@
 package be.ugent.myfestival
 
-import androidx.fragment.app.Fragment
-
+import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import be.ugent.myfestival.utilities.InjectorUtils
-import be.ugent.myfestival.viewmodels.FestivalChooserViewModel
 import be.ugent.myfestival.viewmodels.FestivalViewModel
-
 import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+
 
 class MapsFragment : Fragment() {
 
@@ -53,10 +52,17 @@ class MapsFragment : Fragment() {
                 val lat : Double = coords!!.get(0)
                 val long : Double = coords!!.get(1)
                 val concert = LatLng(lat,long)
-                googleMap.addMarker(MarkerOptions().position(concert).title(stage))
+                googleMap.addMarker(MarkerOptions().position(concert).title(stage).icon(getMarkerIcon("#FFB565")))
                 googleMap.moveCamera(CameraUpdateFactory.newLatLng(concert))
             }
         })
+    }
+
+    // method definition
+    fun getMarkerIcon(color: String?): BitmapDescriptor? {
+        val hsv = FloatArray(3)
+        Color.colorToHSV(Color.parseColor(color), hsv)
+        return BitmapDescriptorFactory.defaultMarker(hsv[0])
     }
 
     override fun onCreateView(
