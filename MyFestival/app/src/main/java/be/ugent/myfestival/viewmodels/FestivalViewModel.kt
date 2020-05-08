@@ -18,7 +18,7 @@ class  FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMo
 
     fun getWelcomeString(): LiveData<String> =
         Transformations.map(festivalRepo.getFestivalName()) { value ->
-            "Welkom bij $value"
+            "$value"
         }
 
     fun getFestivalName() = festivalRepo.getFestivalName()
