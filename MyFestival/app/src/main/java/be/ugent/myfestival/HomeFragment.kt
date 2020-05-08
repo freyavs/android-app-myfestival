@@ -50,30 +50,6 @@ class HomeFragment : Fragment() {
                 .load(logoRef)
                 .diskCacheStrategy(DiskCacheStrategy.DATA)
                 .into(binding.logoView)
-
-            //TODO: controleer of offline ook werkt als logo verandert is, anders moet het als volgt:
-           /*
-            val localFile = File(context?.filesDir,"logo.jpeg")
-            val logoRefId = logoRef?.toString()?.split("/")?.last()
-            Log.d("myFestivalTag", "logo ref id: " + logoRef)
-            val preference = context?.getSharedPreferences("FestivalLogo", Context.MODE_PRIVATE)
-            val prevId = preference?.getString("ID","").toString()
-            //als vorige logoRef niet hetzelfde was (dus logo of festival is veranderd) of nog niet bestond dan laadt opnieuw image
-            if (!localFile.exists() || logoRefId != prevId ){
-                logoRef.getFile(localFile).addOnSuccessListener {
-                    Log.d("myFestivalTag", "Tempfile created for logo of festival.")
-                    loadLogo(localFile.absolutePath, binding)
-                    val editor = preference?.edit()
-                    editor?.putString("ID", logoRefId)
-                    editor?.apply()
-                }.addOnFailureListener {
-                    Log.d("myFestivalTag", "Tempfile failed: check if festival submitted a logo!")
-                }
-            }
-            else {
-                Log.d("myFestivalTag", "LOGO: logo already exists, loading logo.jpeg")
-                loadLogo(localFile.absolutePath, binding)
-            }*/
         })
         
         binding.newsfeedHandler = View.OnClickListener {
@@ -103,10 +79,4 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    fun loadLogo(filepath: String, binding: HomeFragmentBinding){
-        GlideApp.with(context!!)
-            .load(filepath)
-            .signature(ObjectKey(System.currentTimeMillis().toString()))
-            .into(binding.logoView)
-    }
 }

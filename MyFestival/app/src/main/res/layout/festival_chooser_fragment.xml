@@ -19,7 +19,6 @@
                 android:inputType="textPersonName"
                 android:hint="@string/searchString"
                 android:drawableLeft="@drawable/ic_search_black_24dp"
-                android:gravity="center"
                 android:background="@drawable/edittext"
                 android:backgroundTintMode="@color/colorAccent"/>
 

@@ -64,25 +64,9 @@ class  FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMo
 
     fun getNewMessageTitle(): MutableLiveData<String> = festivalRepo.newMessageTitle
 
-    //TODO: Loading moet beter / mooier met afbeelding ofzo en buttons mogen ook niet op scherm verschijnen (gwn loading icon/afb die over heel het scherm is)
-
     fun getLoading() : LiveData<Int> = Transformations.map(festivalRepo.lineupstages){ value ->
         when(value.isNullOrEmpty()) {
             true -> View.INVISIBLE
-            else -> View.VISIBLE
-        }
-    }
-
-    fun getNotLoading() : LiveData<Int> = Transformations.map(festivalRepo.lineupstages){ value ->
-        when(value.isNullOrEmpty()) {
-            true -> View.GONE
-            else -> View.INVISIBLE
-        }
-    }
-
-    fun getReady(): LiveData<Int> = Transformations.map(festivalRepo.getFestivalName()){ value ->
-        when(value.isNullOrEmpty()) {
-            false -> View.GONE
             else -> View.VISIBLE
         }
     }
