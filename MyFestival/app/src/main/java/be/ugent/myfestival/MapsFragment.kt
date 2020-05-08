@@ -49,11 +49,16 @@ class MapsFragment : Fragment() {
         viewModel.getStageCoord().observe(viewLifecycleOwner, Observer { hashmap ->
             for(stage in hashmap.keys){
                 val coords = hashmap[stage]
-                val lat : Double = coords!!.get(0)
-                val long : Double = coords!!.get(1)
-                val concert = LatLng(lat,long)
-                googleMap.addMarker(MarkerOptions().position(concert).title(stage).icon(getMarkerIcon("#FFB565")))
-                googleMap.moveCamera(CameraUpdateFactory.newLatLng(concert))
+                if (coords != null) {
+                    val lat: Double = coords.get(0)
+                    val long: Double = coords.get(1)
+                    val concert = LatLng(lat, long)
+                    googleMap.addMarker(
+                        MarkerOptions().position(concert).title(stage)
+                            .icon(getMarkerIcon("#FFB565"))
+                    )
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(concert))
+                }
             }
         })
     }
