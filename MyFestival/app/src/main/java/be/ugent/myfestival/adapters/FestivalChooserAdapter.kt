@@ -10,7 +10,6 @@ import be.ugent.myfestival.R
 import be.ugent.myfestival.models.FestivalChooser
 import be.ugent.myfestival.utilities.GlideApp
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import kotlinx.android.synthetic.main.festival_chooser_item.view.*
 import kotlinx.android.synthetic.main.list_item.view.*
 
 class FestivalChooserAdapter(val clickListener: (FestivalChooser) -> Unit) :
