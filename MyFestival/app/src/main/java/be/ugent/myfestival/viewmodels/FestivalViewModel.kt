@@ -108,6 +108,10 @@ class FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMod
         }
     }
 
+    fun getCoordsFestival(): MutableLiveData<List<Double>> = festivalRepo.getCoordsFestival()
+
+    fun getStageCoord(): MutableLiveData<HashMap<String,List<Double>>> = festivalRepo.getStageCoords()
+
     companion object {
         //databinding met glide
         @JvmStatic

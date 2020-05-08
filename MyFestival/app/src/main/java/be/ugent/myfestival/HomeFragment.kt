@@ -58,7 +58,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.mapHandler = View.OnClickListener {
-            val action = HomeFragmentDirections.actionHomeFragmentToMapFragment()
+            val action = HomeFragmentDirections.actionHomeFragmentToMapsFragment()
             findNavController().navigate(action)
         }
         binding.festivalChooserHandler = View.OnClickListener {

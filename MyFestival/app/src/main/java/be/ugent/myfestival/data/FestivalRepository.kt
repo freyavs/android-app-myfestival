@@ -28,6 +28,9 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
     var logo: MutableLiveData<String> = MutableLiveData()
     var map: MutableLiveData<String> = MutableLiveData()
 
+    var coords: MutableLiveData<List<Double>> = MutableLiveData()
+    var concertsCoords: MutableLiveData<HashMap<String, List<Double>>> = MutableLiveData()
+
     val TAG = "myFestivalTag"
 
 
@@ -152,7 +155,48 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
         }
         return map
     }
+    fun getCoordsFestival(): MutableLiveData<List<Double>> {
+        if (coords.value == null){
+            val co = mutableListOf<Double>()
+            database
+                .getReference(festivalID).child("coords")
+                .addListenerForSingleValueEvent(object: ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        co.add(dataSnapshot.child("lat").value.toString().toDouble())
+                        co.add(dataSnapshot.child("long").value.toString().toDouble())
+                        coords.postValue(co)
+                    }
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        Log.d(TAG, "it failed")
+                    }
+                })
+        }
+        return coords
+    }
 
+    fun getStageCoords(): MutableLiveData<HashMap<String, List<Double>>> {
+        if(concertsCoords.value == null){
+            var cco: HashMap<String, List<Double>> = HashMap<String, List<Double>>()
+            database
+                .getReference(festivalID).child("stages")
+                .addListenerForSingleValueEvent(object: ValueEventListener{
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        for (ds in dataSnapshot.children){
+                            val co = mutableListOf<Double>()
+                            val name = ds.child("name").value.toString()
+                            co.add(ds.child("coords").child("lat").value.toString().toDouble())
+                            co.add(ds.child("coords").child("long").value.toString().toDouble())
+                            cco.put(name,co)
+                        }
+                        concertsCoords.postValue(cco)
+                    }
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        Log.d(TAG, "it failed")
+                    }
+                })
+        }
+        return concertsCoords
+    }
 
     // ---------------- data voor de foodstands -------------------------------
     fun getFoodstandList() : MutableLiveData<List<FoodStand>> {
