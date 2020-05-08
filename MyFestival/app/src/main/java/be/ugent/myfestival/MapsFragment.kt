@@ -56,7 +56,6 @@ class MapsFragment : Fragment() {
                 googleMap.addMarker(MarkerOptions().position(concert).title(stage))
                 googleMap.moveCamera(CameraUpdateFactory.newLatLng(concert))
             }
-            Log.v("coords", hashmap.toString())
         })
     }
 
