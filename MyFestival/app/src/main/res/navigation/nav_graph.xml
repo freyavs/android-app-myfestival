@@ -19,11 +19,11 @@
             android:id="@+id/action_homeFragment_to_lineupFragment"
             app:destination="@id/lineupFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_mapFragment"
-            app:destination="@id/mapFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_festivalChooserFragment"
             app:destination="@id/festivalChooserFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
     </fragment>
     <fragment
         android:id="@+id/newsfeedFragment"
@@ -45,11 +45,6 @@
         android:label="@string/line_up"
         tools:layout="@layout/lineup_fragment" />
     <fragment
-        android:id="@+id/mapFragment"
-        android:name="be.ugent.myfestival.MapFragment"
-        android:label="@string/map"
-        tools:layout="@layout/map_fragment" />
-    <fragment
         android:id="@+id/menuFragment"
         android:name="be.ugent.myfestival.MenuFragment"
         android:label="@string/menu"
@@ -66,6 +61,11 @@
             android:id="@+id/action_festivalChooserFragment_to_homeFragment2"
             app:destination="@id/homeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="be.ugent.myfestival.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" />
 
 
 </navigation>

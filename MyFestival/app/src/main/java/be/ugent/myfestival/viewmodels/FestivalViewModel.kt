@@ -87,5 +87,27 @@ class  FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMo
         }
     }
 
+    fun getCoordsFestival(): MutableLiveData<List<Double>> = festivalRepo.getCoordsFestival()
+
+    fun getStageCoord(): MutableLiveData<HashMap<String,List<Double>>> = festivalRepo.getStageCoords()
+
+    companion object {
+        //databinding met glide
+        @JvmStatic
+        @BindingAdapter("imageUrl")
+        fun loadImage(view: ImageView, url: String?) {
+            GlideApp.with(view.context).load(url)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                        return false
+                    }
+                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                        Log.d("myL", "OnResourceReady")
+
+                        //do something when picture already loaded
+                        return false
+                    }
+                })
+                .into(view)
 
 }
