@@ -115,8 +115,9 @@ class LineupViewModelUnitTests {
             LocalDate.of(2020, Month.APRIL, 26)) }
 
         //hier zou er een manier nodig zijn om de lijsten te comparen op id, dus een transformatie van de observer?
-        verify(mockObserver).onChanged(listOf(stage1))
-
+        verify(mockObserver).onChanged(argForWhich {
+            this.size == 1 && stage1.id  == this[0].id
+        })
     }
 
     @Test
@@ -127,9 +128,13 @@ class LineupViewModelUnitTests {
         val mockObserver = mock<Observer<List<Stage>>>()
         lineupViewModel.getCurrentStages().observeForever(mockObserver)
 
-        lineupViewModel.clickedDay(LocalDate.of(2020, Month.APRIL, 26))
-
+        val day = LocalDate.of(2020, Month.APRIL, 26);
+        lineupViewModel.clickedDay(day)
         //currentday wordt aangepast maar de stages worden niet aangepast in de observer
-        verify(mockObserver, atLeastOnce()).onChanged(listOf(stage1))
-    }
+        verify(mockObserver).onChanged(listOf())
+        verify(mockObserver, atLeastOnce()).onChanged(
+            argForWhich {
+                this.size == 1 && stage1.id  == this[0].id
+            }
+        ) }
 }

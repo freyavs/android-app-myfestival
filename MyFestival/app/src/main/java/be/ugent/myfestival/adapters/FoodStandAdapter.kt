@@ -10,20 +10,17 @@ import be.ugent.myfestival.R
 import be.ugent.myfestival.models.FoodStand
 import be.ugent.myfestival.utilities.GlideApp
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import kotlinx.android.synthetic.main.foodstand_item.view.*
+import kotlinx.android.synthetic.main.list_item.view.*
 
 class FoodStandAdapter(val clickListener: (FoodStand) -> Unit) : RecyclerView.Adapter<FoodStandAdapter.FoodStandViewHolder>() {
 
     var foodstands = emptyList<FoodStand>()
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodStandViewHolder {
         val itemView = LayoutInflater
             .from(parent.context)
-            .inflate(R.layout.foodstand_item, parent, false)
-        return FoodStandViewHolder(
-            itemView
-        )
+            .inflate(R.layout.list_item, parent, false)
+        return FoodStandViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: FoodStandViewHolder, position: Int) {
@@ -34,17 +31,16 @@ class FoodStandAdapter(val clickListener: (FoodStand) -> Unit) : RecyclerView.Ad
                 .diskCacheStrategy(DiskCacheStrategy.DATA)
                 .into(holder.imageView)
 
-        holder.textView1.text = currentItem.name
+        holder.textView.text = currentItem.name
         holder.itemView.setOnClickListener{clickListener(currentItem)}
     }
-
 
     override fun getItemCount(): Int {
         return foodstands.size
     }
 
     class FoodStandViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val imageView: ImageView = itemView.foodstand_image_view
-        val textView1: TextView = itemView.fastfood_name_text_view
+        val imageView: ImageView = itemView.list_item_image_view
+        val textView: TextView = itemView.list_item_text_view
     }
 }
