@@ -25,6 +25,7 @@
             android:id="@+id/list_item_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/list_item_image_view"
             android:text="@string/listItem"
             android:textColor="@android:color/black"
