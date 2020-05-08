@@ -27,7 +27,7 @@ class FoodStandAdapter(val clickListener: (FoodStand) -> Unit) : RecyclerView.Ad
         val currentItem = foodstands[position]
 
         GlideApp.with(holder.imageView.context)
-                .load(currentItem.logo)
+                .load(currentItem.logoRef)
                 .diskCacheStrategy(DiskCacheStrategy.DATA)
                 .into(holder.imageView)
 

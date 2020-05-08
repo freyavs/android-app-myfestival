@@ -43,23 +43,14 @@ class MainActivity : AppCompatActivity() {
 
        viewModel.getNewMessageTitle().observe(this, Observer { message ->
            Log.d(TAG, "creating notification: " + message)
-           if (message != "" && message != null) {
                createNotification(viewModel.getFestivalName().value.toString(), message)
-               viewModel.resetNewMessageTitle()
-           }
+
         })
 
 
        val navController = findNavController(R.id.nav_host_fragment)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
-
-        //zorgt voor offline gegevens
-        //TODO: zorgt voor crash als je op notif klikt terwijl je in de app zit
-        /*
-        if (!FirebaseApp.getApps(this).isEmpty()){
-            FirebaseDatabase.getInstance().setPersistenceEnabled(true)
-        }*/
 
     }
 
@@ -108,7 +99,6 @@ class MainActivity : AppCompatActivity() {
 
     fun createNotification(title: String, message: String) {
         Log.d(TAG, "geraakt tot in notificatie aanmaken methode")
-        if (message != "") {
             val resultIntent = Intent(this, MainActivity::class.java)
             val pendingIntent = PendingIntent.getActivity(this, 1, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT)
         val builder =
@@ -126,7 +116,7 @@ class MainActivity : AppCompatActivity() {
         with(NotificationManagerCompat.from(this)) {
             notify(id, builder.build())
             }
-        }
+
     }
 }
 
