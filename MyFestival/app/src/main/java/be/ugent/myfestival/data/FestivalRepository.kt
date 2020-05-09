@@ -53,7 +53,6 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
     // -------------------------- als id wordt gezet --------------------------
 
     override fun reset(oldId: String) {
-        Log.d(TAG, "Setting id " + oldId)
         //zet alles terug op null
         name = MutableLiveData()
         newsfeed = MutableLiveData()
@@ -78,7 +77,6 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
     override fun removeListeners(oldId: String){
         //remove enkel de listeners als het vorige festival bestond
         if (oldId != "") {
-            Log.d(TAG, "Removing listeners of $oldId")
             val ref = database.getReference(oldId)
             ref.child("messages").removeEventListener(newsfeedListener!!)
             ref.child("name").removeEventListener(nameListener!!)
@@ -154,7 +152,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                         coords.postValue(co)
                     }
                     override fun onCancelled(databaseError: DatabaseError) {
-                        Log.d(TAG, "it failed")
+                        Log.d(TAG, "getName:onCancelled", databaseError.toException())
                     }
                 })
         }
@@ -187,7 +185,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                     returnVariable.postValue(cco)
                 }
                 override fun onCancelled(databaseError: DatabaseError) {
-                    Log.d(TAG, "it failed")
+                    Log.d(TAG, "getName:onCancelled", databaseError.toException())
                 }
             })
         return returnVariable
@@ -271,7 +269,6 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                     if (newsfeedLoaded) {
                         newMessageTitle.postValue(ds.child("title").value.toString())
                     }
-                    Log.d(TAG, "Newsfeed: added newsfeed message")
                 }
 
                 override fun onChildChanged(dataSnapshot: DataSnapshot, previousChildName: String?) {
@@ -311,7 +308,6 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                     .addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onDataChange(dataSnapshot: DataSnapshot) {
                            newsfeedLoaded = true
-                            Log.d(TAG, "Newsfeed: All newsfeed items have loaded.")
                         }
                         override fun onCancelled(databaseError: DatabaseError) {
                             //doe niets
@@ -328,7 +324,6 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
             lineupstagesListener = object : ValueEventListener {
                         override fun onDataChange(dataSnapshot: DataSnapshot) {
                             if (dataSnapshot.exists()) {
-                                Log.d(TAG, "catching lineup")
                                 val stages = mutableListOf<Stage>()
                                 for (ds in dataSnapshot.children) {
                                     val concerts = mutableListOf<Concert>()
