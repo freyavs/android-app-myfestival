@@ -32,8 +32,6 @@ class FestivalViewModelUnitTests {
 
     private lateinit var viewModel: FestivalViewModel
 
-    private lateinit var lineupObserver: Observer<List<Stage>>
-
     private val testId1 = "123abc"
     private val testId2 = "456def"
 
@@ -42,23 +40,6 @@ class FestivalViewModelUnitTests {
         repository = mock()
         preferences = mock()
         viewModel = FestivalViewModel(repository)
-
-        //TODO: dingen testen met observers? zie code H7 of dit uit H8:
-        /*@Test
-        fun getWishListReturnsReturnsData() {
-            val wishes = listOf(Wishlist("Victoria", listOf("RW Book")))
-            whenever(mockRepository.getWishlists())
-                .thenReturn(MutableLiveData<List<Wishlist>>().apply { postValue(wishes) })
-
-            val mockObserver = mock<Observer<List<Wishlist>>>()
-            viewModel.getWishlists().observeForever(mockObserver)
-
-            verify(mockObserver).onChanged(wishes)
-        }*/
-
-        //lineupObserver = mock()
-        //viewModel.getLineup().observeForever(mapObserver)
-
         whenever(preferences.getString("ID",""))
             .thenReturn(testId1)
 
@@ -69,7 +50,7 @@ class FestivalViewModelUnitTests {
     @Test
     fun setIdCallsResetAndSetId_whenIdIsNotSet() {
         whenever(repository.getId()).thenReturn("")
-        viewModel.setId(preferences,null)
+        viewModel.setId(preferences)
         verify(repository).reset(any())
         verify(repository).setId(testId1)
     }
@@ -85,7 +66,7 @@ class FestivalViewModelUnitTests {
 
     @Test
     fun setIdDoesNotCallResetAndSetId_whenIdEqualsOldId() {
-        viewModel.setId(preferences,null)
+        viewModel.setId(preferences)
         verify(repository, never()).reset(any())
         verify(repository, never()).setId(testId1)
     }
@@ -110,13 +91,6 @@ class FestivalViewModelUnitTests {
 
         verify(mockObserver).onChanged("Welkom bij TestFest")
     }
-
-   /* @Test
-    fun newsfeedItemSizeIsNullSafe(){
-        whenever(repository.getNewsfeedItems()).thenReturn(MutableLiveData())
-
-        Assert.assertEquals(0, viewModel.getNewsfeedItemsSize())
-    }*/
 
     @Test
     fun loadingSwitchesToVisibleWhenReady(){

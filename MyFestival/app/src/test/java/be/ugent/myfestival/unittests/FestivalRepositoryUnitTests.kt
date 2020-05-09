@@ -54,7 +54,6 @@ class FestivalRepositoryUnitTests {
         repo.foodstands.value  = mutableListOf(mock())
         repo.lineupstages.value = mutableListOf(mock())
         repo.logo.value = storage
-        repo.map.value = "url"
         repo.festivalList.value = mutableListOf(mock())
     }
 
@@ -62,7 +61,6 @@ class FestivalRepositoryUnitTests {
     fun gettersCallDatabase_whenFieldsAreNotSet() {
         repository.getFestivalName()
         repository.getFestivalLogo()
-        repository.getFestivalMap()
         repository.getFestivals()
         repository.getFoodstandList()
         repository.getLineup()
@@ -77,7 +75,6 @@ class FestivalRepositoryUnitTests {
         fillRepository(repository)
         repository.getFestivalName()
         repository.getFestivalLogo()
-        repository.getFestivalMap()
         repository.getFestivals()
         repository.getFoodstandList()
         repository.getLineup()
@@ -92,7 +89,6 @@ class FestivalRepositoryUnitTests {
         repository.reset("")
         Assert.assertNull(repository.name.value)
         Assert.assertNull(repository.logo.value)
-        Assert.assertNull(repository.map.value)
         Assert.assertNull(repository.lineupstages.value)
         Assert.assertNull(repository.foodstands.value)
         Assert.assertTrue(repository.newsfeed.value.isNullOrEmpty())
