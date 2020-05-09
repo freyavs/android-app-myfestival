@@ -42,10 +42,12 @@ class HomeFragment : Fragment() {
 
         //glideApp werkt met een cache dus logo zal niet elke keer moeten worden afgehaald van het internet
         viewModel.getLogo().observe( this, Observer { logoRef ->
-            GlideApp.with(context!!)
-                .load(logoRef)
-                .diskCacheStrategy(DiskCacheStrategy.DATA)
-                .into(binding.logoView)
+            if (context != null) {
+                GlideApp.with(context!!) // nullcheck gedaan, context kan niet zonder !! gebruikt worden hier
+                    .load(logoRef)
+                    .diskCacheStrategy(DiskCacheStrategy.DATA)
+                    .into(binding.logoView)
+            }
         })
         
         binding.newsfeedHandler = View.OnClickListener {
