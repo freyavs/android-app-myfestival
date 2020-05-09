@@ -1,18 +1,13 @@
-package be.ugent.myfestival
+package be.ugent.myfestival.unittests
 
-import android.content.SharedPreferences
-import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import be.ugent.myfestival.data.FestivalRepository
 import be.ugent.myfestival.models.Concert
 import be.ugent.myfestival.models.Stage
-import be.ugent.myfestival.viewmodels.FestivalViewModel
 import be.ugent.myfestival.viewmodels.LineupViewModel
 import com.nhaarman.mockitokotlin2.*
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

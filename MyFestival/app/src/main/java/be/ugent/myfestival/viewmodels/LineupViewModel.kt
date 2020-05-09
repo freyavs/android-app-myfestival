@@ -30,11 +30,9 @@ class LineupViewModel(private val festivalRepo : FestivalRepository) : ViewModel
         list
     }
 
-    fun getToday() = LocalDate.now()
+    fun getToday(): LocalDate = LocalDate.now()
 
     fun clickedDay(day: LocalDate) {
-        println("clickedDay: ")
-        println(day)
         if (currentDay.value !== day) {
             currentDay.postValue(day)
         }

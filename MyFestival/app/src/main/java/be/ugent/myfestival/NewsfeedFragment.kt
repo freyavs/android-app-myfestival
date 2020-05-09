@@ -13,9 +13,6 @@ import be.ugent.myfestival.viewmodels.FestivalViewModel
 import androidx.lifecycle.Observer
 import be.ugent.myfestival.databinding.NewsfeedFragmentBinding
 
-/**
- * A simple [Fragment] subclass.
- */
 class NewsfeedFragment : Fragment() {
 
     override fun onCreateView(
@@ -29,7 +26,7 @@ class NewsfeedFragment : Fragment() {
             InjectorUtils.provideFestivalViewModelFactory()
         }
 
-        val adapter = NewsfeedAdapter(viewModel)
+        val adapter = NewsfeedAdapter()
 
         viewModel.getNewsfeedItems().observe(viewLifecycleOwner, Observer {
             posts -> adapter.posts = posts
