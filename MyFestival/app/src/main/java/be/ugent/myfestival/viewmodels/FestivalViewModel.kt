@@ -1,7 +1,5 @@
 package be.ugent.myfestival.viewmodels
 
-
-import android.content.Context
 import android.content.SharedPreferences
 import android.view.View
 import androidx.lifecycle.LiveData
@@ -9,9 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import be.ugent.myfestival.data.FestivalRepository
-import be.ugent.myfestival.models.Dish
 import be.ugent.myfestival.models.FoodStand
-import java.io.File
 
 
 class  FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewModel() {
@@ -25,7 +21,7 @@ class  FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMo
 
     fun getCurrentFestivalId() = festivalRepo.getId()
 
-    fun setId(sharedPreferences: SharedPreferences?, context: Context?){
+    fun setId(sharedPreferences: SharedPreferences?){
         val newID = sharedPreferences?.getString("ID","").toString()
         if (newID != festivalRepo.getId()) {
             val oldId = festivalRepo.getId()
@@ -42,17 +38,9 @@ class  FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMo
 
     fun getLogo() = festivalRepo.getFestivalLogo()
 
-    fun getMap() = festivalRepo.getFestivalMap()
-
     fun getFoodstandList(): MutableLiveData<List<FoodStand>> {
         return festivalRepo.getFoodstandList()
     }
-
-    //TODO: getfoodstandmenu weg en wisseln voor getFoodstand (ook in tests)
-    fun getFoodstandMenu(id: String): LiveData<List<Dish>> =
-        Transformations.map(festivalRepo.getFoodstandList()) { foodstands ->
-            foodstands.filter { it.id == id }[0].menu
-        }
 
     fun getFoodstand(id: String): LiveData<FoodStand> =
         Transformations.map(festivalRepo.getFoodstandList()) { foodstands ->
