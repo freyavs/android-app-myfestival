@@ -26,6 +26,25 @@ class MapsFragment : Fragment() {
         val viewModel by activityViewModels<FestivalViewModel>{
             InjectorUtils.provideFestivalViewModelFactory()
         }
+
+        viewModel.getStageCoord().observe(viewLifecycleOwner, Observer { hashmap ->
+            for(stage in hashmap.keys){
+                val coords = hashmap[stage]
+                val lat : Double = coords!!.get(0)
+                val long : Double = coords!!.get(1)
+                val concert = LatLng(lat,long)
+                googleMap.addMarker(MarkerOptions().position(concert).title(stage).icon(getMarkerIcon("#FFB565")))
+            }
+        })
+        viewModel.getFoodstandCoord().observe(viewLifecycleOwner, Observer { hashmap ->
+            for(stage in hashmap.keys){
+                val coords = hashmap[stage]
+                val lat : Double = coords!!.get(0)
+                val long : Double = coords!!.get(1)
+                val concert = LatLng(lat,long)
+                googleMap.addMarker(MarkerOptions().position(concert).title(stage).icon(getMarkerIcon("#37966F")))
+            }
+        })
         var welcomeString: String = ""
         viewModel.getWelcomeString().observe(viewLifecycleOwner, Observer { name ->
             welcomeString = name
@@ -33,25 +52,10 @@ class MapsFragment : Fragment() {
         viewModel.getCoordsFestival().observe(viewLifecycleOwner, Observer{ coords ->
             val lat : Double = coords.get(0)
             val long : Double = coords.get(1)
-
             val entrance = LatLng(lat, long)
-            googleMap.addMarker(MarkerOptions().position(entrance).title(welcomeString))
+            googleMap.addMarker(MarkerOptions().position(entrance).title(welcomeString).icon(getMarkerIcon("#FF6F59")))
+            googleMap.moveCamera(CameraUpdateFactory.zoomTo(15.0f))
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(entrance))
-        })
-        viewModel.getStageCoord().observe(viewLifecycleOwner, Observer { hashmap ->
-            for(stage in hashmap.keys){
-                val coords = hashmap[stage]
-                if (coords != null) {
-                    val lat: Double = coords.get(0)
-                    val long: Double = coords.get(1)
-                    val concert = LatLng(lat, long)
-                    googleMap.addMarker(
-                        MarkerOptions().position(concert).title(stage)
-                            .icon(getMarkerIcon("#FFB565"))
-                    )
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(concert))
-                }
-            }
         })
     }
 

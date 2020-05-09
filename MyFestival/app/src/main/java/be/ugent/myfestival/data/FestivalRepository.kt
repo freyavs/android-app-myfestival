@@ -42,6 +42,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
 
     var coords: MutableLiveData<List<Double>> = MutableLiveData()
     var concertsCoords: MutableLiveData<HashMap<String, List<Double>>> = MutableLiveData()
+    var foodstandsCoords: MutableLiveData<HashMap<String, List<Double>>> = MutableLiveData()
 
     val TAG = "myFestivalTag"
 
@@ -160,28 +161,36 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
         return coords
     }
 
-    fun getStageCoords(): MutableLiveData<HashMap<String, List<Double>>> {
-        if(concertsCoords.value == null){
-            var cco: HashMap<String, List<Double>> = HashMap<String, List<Double>>()
-            database
-                .getReference(festivalID).child("stages")
-                .addListenerForSingleValueEvent(object: ValueEventListener{
-                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        for (ds in dataSnapshot.children){
-                            val co = mutableListOf<Double>()
-                            val name = ds.child("name").value.toString()
-                            co.add(ds.child("coords").child("lat").value.toString().toDouble())
-                            co.add(ds.child("coords").child("long").value.toString().toDouble())
-                            cco.put(name,co)
-                        }
-                        concertsCoords.postValue(cco)
-                    }
-                    override fun onCancelled(databaseError: DatabaseError) {
-                        Log.d(TAG, "it failed")
-                    }
-                })
+    fun getStageCoords(stage: Boolean): MutableLiveData<HashMap<String, List<Double>>> {
+        val searchString: String
+        val returnVariable: MutableLiveData<HashMap<String, List<Double>>>
+        if(stage){
+            searchString = "stages"
+            returnVariable = concertsCoords
         }
-        return concertsCoords
+        else {
+            searchString = "foodstand"
+            returnVariable = foodstandsCoords
+        }
+        val cco: HashMap<String, List<Double>> = HashMap<String, List<Double>>()
+        database
+            .getReference(festivalID).child(searchString)
+            .addListenerForSingleValueEvent(object: ValueEventListener{
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    for (ds in dataSnapshot.children){
+                        val co = mutableListOf<Double>()
+                        val name = ds.child("name").value.toString()
+                        co.add(ds.child("coords").child("lat").value.toString().toDouble())
+                        co.add(ds.child("coords").child("long").value.toString().toDouble())
+                        cco.put(name,co)
+                    }
+                    returnVariable.postValue(cco)
+                }
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Log.d(TAG, "it failed")
+                }
+            })
+        return returnVariable
     }
 
     // ---------------- data voor de foodstands -------------------------------
