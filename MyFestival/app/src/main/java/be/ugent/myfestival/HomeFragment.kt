@@ -3,7 +3,6 @@ package be.ugent.myfestival
 import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,13 +11,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import be.ugent.myfestival.databinding.HomeFragmentBinding
-import be.ugent.myfestival.notifications.BackgroundNotificationService.Companion.TAG
 import be.ugent.myfestival.utilities.GlideApp
 import be.ugent.myfestival.utilities.InjectorUtils
 import be.ugent.myfestival.viewmodels.FestivalViewModel
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.signature.ObjectKey
-import java.io.File
 
 class HomeFragment : Fragment() {
 

@@ -62,7 +62,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        Log.d(TAG, "app destroyed")
         val bundle: PersistableBundle = PersistableBundle()
         bundle.putString("festivalId", viewModel.getCurrentFestivalId())
         bundle.putString("festivalName", viewModel.getFestivalName().value.toString())
@@ -75,15 +74,7 @@ class MainActivity : AppCompatActivity() {
             .setExtras(bundle)
             .build()
         val jobScheduler: JobScheduler = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
-        val resultCode = jobScheduler.schedule(jobInfo)
-        if (resultCode == JobScheduler.RESULT_SUCCESS) {
-            Log.d(TAG, "job scheduled")
-        }
-        else {
-            Log.d(TAG, "job scheduling failed")
-        }
-        
-
+        jobScheduler.schedule(jobInfo)
     }
 
     override fun onDestroy() {
@@ -98,7 +89,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun createNotification(title: String, message: String) {
-        Log.d(TAG, "geraakt tot in notificatie aanmaken methode")
             val resultIntent = Intent(this, MainActivity::class.java)
             val pendingIntent = PendingIntent.getActivity(this, 1, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT)
         val builder =

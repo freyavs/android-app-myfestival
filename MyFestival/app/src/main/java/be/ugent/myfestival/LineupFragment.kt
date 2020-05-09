@@ -3,7 +3,6 @@ package be.ugent.myfestival
 import android.content.pm.ActivityInfo
 import android.graphics.drawable.StateListDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -49,17 +48,14 @@ class LineupFragment : Fragment() {
 
 
         viewModel.getAllDaysSorted().observe(viewLifecycleOwner, Observer { days ->
-            val startDay : LocalDate
             val map = mapOf("MONDAY" to "Maandag", "TUESDAY" to "Dinsdag", "WEDNESDAY" to "Woensdag",
             "THURSDAY" to "Donderdag", "FRIDAY" to "Vrijdag", "SATURDAY" to "Zaterdag", "SUNDAY" to "Zondag")
 
             //zorgt dat er op vandaag gestart wordt tenzij vandaag niet tussen de lineup days zit
-            if (days.contains(viewModel.getToday())){
-                Log.d("myFestivalTag", "today is in list of days.." )
-                startDay = viewModel.getToday()
-            }
-            else {
-                startDay = days[0]
+            val startDay : LocalDate = if (days.contains(viewModel.getToday())){
+                viewModel.getToday()
+            } else {
+                days[0]
             }
             for (day in days){
                 val button = RadioButton(this.context)
