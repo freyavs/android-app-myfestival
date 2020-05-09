@@ -33,8 +33,7 @@ class HomeFragment : Fragment() {
             InjectorUtils.provideFestivalViewModelFactory()
         }
 
-
-        viewModel.setId(context?.getSharedPreferences("FestivalPreference", Context.MODE_PRIVATE), context)
+        viewModel.setId(context?.getSharedPreferences("FestivalPreference", Context.MODE_PRIVATE))
 
         //kijken of er een ID is, zo niet gaat het naar het festival kies scherm
         if(!viewModel.hasFestival()){
@@ -44,7 +43,7 @@ class HomeFragment : Fragment() {
 
         binding.viewModel = viewModel
 
-        //speciale methode om het logo te tonen zodat zo weinig mogelijk de afbeelding moet worden opgehaald van de firebase storage
+        //glideApp werkt met een cache dus logo zal niet elke keer moeten worden afgehaald van het internet
         viewModel.getLogo().observe( this, Observer { logoRef ->
             GlideApp.with(context!!)
                 .load(logoRef)

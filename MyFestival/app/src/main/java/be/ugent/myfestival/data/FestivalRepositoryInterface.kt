@@ -23,7 +23,6 @@ interface FestivalRepositoryInterface {
 
     fun getFestivalLogo(): MutableLiveData<StorageReference>
 
-    fun getFestivalMap(): MutableLiveData<String>
 
     // ---------------- data voor de foodstands -------------------------------
     fun getFoodstandList() : MutableLiveData<List<FoodStand>>
