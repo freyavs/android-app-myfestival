@@ -1,6 +1,5 @@
 package be.ugent.myfestival.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -30,11 +29,9 @@ class LineupViewModel(private val festivalRepo : FestivalRepository) : ViewModel
         list
     }
 
-    fun getToday() = LocalDate.now()
+    fun getToday(): LocalDate = LocalDate.now()
 
     fun clickedDay(day: LocalDate) {
-        println("clickedDay: ")
-        println(day)
         if (currentDay.value !== day) {
             currentDay.postValue(day)
         }

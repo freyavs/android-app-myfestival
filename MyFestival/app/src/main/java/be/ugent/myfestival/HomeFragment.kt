@@ -1,8 +1,8 @@
 package be.ugent.myfestival
 
 import android.content.Context
+import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,13 +11,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import be.ugent.myfestival.databinding.HomeFragmentBinding
-import be.ugent.myfestival.notifications.BackgroundNotificationService.Companion.TAG
 import be.ugent.myfestival.utilities.GlideApp
 import be.ugent.myfestival.utilities.InjectorUtils
 import be.ugent.myfestival.viewmodels.FestivalViewModel
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.signature.ObjectKey
-import java.io.File
 
 class HomeFragment : Fragment() {
 
@@ -33,8 +30,7 @@ class HomeFragment : Fragment() {
             InjectorUtils.provideFestivalViewModelFactory()
         }
 
-
-        viewModel.setId(context?.getSharedPreferences("FestivalPreference", Context.MODE_PRIVATE), context)
+        viewModel.setId(context?.getSharedPreferences("FestivalPreference", Context.MODE_PRIVATE))
 
         //kijken of er een ID is, zo niet gaat het naar het festival kies scherm
         if(!viewModel.hasFestival()){
@@ -44,36 +40,12 @@ class HomeFragment : Fragment() {
 
         binding.viewModel = viewModel
 
-        //speciale methode om het logo te tonen zodat zo weinig mogelijk de afbeelding moet worden opgehaald van de firebase storage
+        //glideApp werkt met een cache dus logo zal niet elke keer moeten worden afgehaald van het internet
         viewModel.getLogo().observe( this, Observer { logoRef ->
             GlideApp.with(context!!)
                 .load(logoRef)
                 .diskCacheStrategy(DiskCacheStrategy.DATA)
                 .into(binding.logoView)
-
-            //TODO: controleer of offline ook werkt als logo verandert is, anders moet het als volgt:
-           /*
-            val localFile = File(context?.filesDir,"logo.jpeg")
-            val logoRefId = logoRef?.toString()?.split("/")?.last()
-            Log.d("myFestivalTag", "logo ref id: " + logoRef)
-            val preference = context?.getSharedPreferences("FestivalLogo", Context.MODE_PRIVATE)
-            val prevId = preference?.getString("ID","").toString()
-            //als vorige logoRef niet hetzelfde was (dus logo of festival is veranderd) of nog niet bestond dan laadt opnieuw image
-            if (!localFile.exists() || logoRefId != prevId ){
-                logoRef.getFile(localFile).addOnSuccessListener {
-                    Log.d("myFestivalTag", "Tempfile created for logo of festival.")
-                    loadLogo(localFile.absolutePath, binding)
-                    val editor = preference?.edit()
-                    editor?.putString("ID", logoRefId)
-                    editor?.apply()
-                }.addOnFailureListener {
-                    Log.d("myFestivalTag", "Tempfile failed: check if festival submitted a logo!")
-                }
-            }
-            else {
-                Log.d("myFestivalTag", "LOGO: logo already exists, loading logo.jpeg")
-                loadLogo(localFile.absolutePath, binding)
-            }*/
         })
         
         binding.newsfeedHandler = View.OnClickListener {
@@ -103,10 +75,14 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    fun loadLogo(filepath: String, binding: HomeFragmentBinding){
-        GlideApp.with(context!!)
-            .load(filepath)
-            .signature(ObjectKey(System.currentTimeMillis().toString()))
-            .into(binding.logoView)
+    //zorgen dat homescreen niet kan draaien
+    override fun onResume() {
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+        super.onResume()
+    }
+
+    override fun onPause() {
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR;
+        super.onPause()
     }
 }

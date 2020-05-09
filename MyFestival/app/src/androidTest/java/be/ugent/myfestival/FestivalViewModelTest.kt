@@ -1,6 +1,7 @@
 package be.ugent.myfestival
 
 
+import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import androidx.test.platform.app.InstrumentationRegistry
@@ -8,6 +9,7 @@ import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import be.ugent.myfestival.data.FestivalRepository
 import be.ugent.myfestival.models.FestivalChooser
 import be.ugent.myfestival.viewmodels.FestivalViewModel
+import com.google.firebase.FirebaseApp
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -18,6 +20,7 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.notNull
 import com.nhaarman.mockitokotlin2.verify
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -46,19 +49,19 @@ class FestivalViewModelTest {
      fun setup(){
      }*/
 
-    /*@Test
+    @Test
     fun testDatabase() {
         val db = FirebaseDatabase.getInstance()
-        //Assert.assertNotNull(db)
-        //Assert.assertEquals(
-        //  FirebaseApp.getInstance().options.databaseUrl, db.reference.toString())
-    }*/
+        Log.d("TESTS", "db: $db")
+        Assert.assertNotNull(db)
+        Assert.assertEquals(FirebaseApp.getInstance().options.databaseUrl, db.reference.toString())
+    }
 
     @Test
     fun getFestivalsReadsFestivals() {
-        val appContext = getInstrumentation().targetContext
-        Firebase.initialize(appContext)
-        database = Mockito.spy(Firebase.database)
+        //val appContext = getInstrumentation().targetContext
+        //Firebase.initialize(appContext)
+        database = Mockito.spy(FirebaseDatabase.getInstance())
         storage = Mockito.spy(Firebase.storage.reference)
 
         repository = FestivalRepository(database,storage)

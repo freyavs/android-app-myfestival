@@ -10,20 +10,24 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+
             <EditText
                 android:id="@+id/search_festival"
+                android:layout_margin="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:hint="@string/searchString" />
+                android:hint="@string/searchString"
+                android:drawableLeft="@drawable/ic_search_black_24dp"
+                android:background="@drawable/edittext"
+                android:backgroundTintMode="@color/colorAccent"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/festival_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:padding="4dp"
-                tools:listitem="@layout/festival_chooser_item" />
+                android:padding="4dp" />
 
         </LinearLayout>
     </RelativeLayout>

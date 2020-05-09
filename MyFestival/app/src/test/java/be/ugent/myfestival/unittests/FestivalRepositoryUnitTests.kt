@@ -1,12 +1,7 @@
-package be.ugent.myfestival
+package be.ugent.myfestival.unittests
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.MutableLiveData
 import be.ugent.myfestival.data.FestivalRepository
-import be.ugent.myfestival.models.FestivalChooser
-import be.ugent.myfestival.models.FoodStand
-import be.ugent.myfestival.models.NewsfeedItem
-import be.ugent.myfestival.models.Stage
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.StorageReference
@@ -58,7 +53,7 @@ class FestivalRepositoryUnitTests {
         repo.newsfeed.value = mutableListOf(mock())
         repo.foodstands.value  = mutableListOf(mock())
         repo.lineupstages.value = mutableListOf(mock())
-        repo.logo.value = "url"
+        repo.logo.value = storage
         repo.map.value = "url"
         repo.festivalList.value = mutableListOf(mock())
     }

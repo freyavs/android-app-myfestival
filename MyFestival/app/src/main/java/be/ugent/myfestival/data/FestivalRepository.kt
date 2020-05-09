@@ -25,23 +25,20 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
     var newsfeed: MutableLiveData<MutableList<NewsfeedItem>> = MutableLiveData()
     var newMessageTitle: MutableLiveData<String> = MutableLiveData()
     var newsfeedListener: ChildEventListener? = null
+    var newsfeedLoaded = false
 
 
     var foodstands: MutableLiveData<List<FoodStand>> = MutableLiveData()
     var foodstandsListener: ValueEventListener? = null
 
     var festivalList: MutableLiveData<List<FestivalChooser>> = MutableLiveData()
-    var lineupstages: MutableLiveData<List<Stage>> = MutableLiveData()
     var festivalListListener: ValueEventListener? = null
 
+    var lineupstages: MutableLiveData<List<Stage>> = MutableLiveData()
     var lineupstagesListener: ValueEventListener? = null
-
 
     var logo: MutableLiveData<StorageReference> = MutableLiveData()
     var logoListener: ValueEventListener? = null
-
-    var map: MutableLiveData<String> = MutableLiveData()
-    var mapListener: ValueEventListener? = null
 
     var coords: MutableLiveData<List<Double>> = MutableLiveData()
     var concertsCoords: MutableLiveData<HashMap<String, List<Double>>> = MutableLiveData()
@@ -51,47 +48,50 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
 
     var festivalID = ""
 
-    var newsfeedLoaded = false
 
 
     // -------------------------- als id wordt gezet --------------------------
 
     override fun reset(oldId: String) {
-        Log.d(TAG, "RESETTING with old id: " + oldId)
+        Log.d(TAG, "Setting id " + oldId)
+        //zet alles terug op null
         name = MutableLiveData()
         newsfeed = MutableLiveData()
         foodstands = MutableLiveData()
         lineupstages = MutableLiveData()
         logo = MutableLiveData()
-        map = MutableLiveData()
         coords = MutableLiveData()
         concertsCoords = MutableLiveData()
         newsfeedLoaded = false
 
+        //verwijder eventueel de oude listeners
         removeListeners(oldId)
 
+        //laad de nieuwe data in
         getFoodstandList()
         getNewsfeedItems()
-        getFestivalMap()
         getLineup()
+        //getCoordsFestival()
+        //getStageCoords()
     }
 
     override fun removeListeners(oldId: String){
+        //remove enkel de listeners als het vorige festival bestond
         if (oldId != "") {
-            Log.d(TAG, " -------- Removing listeners --------- ")
+            Log.d(TAG, "Removing listeners of $oldId")
             val ref = database.getReference(oldId)
             ref.child("messages").removeEventListener(newsfeedListener!!)
             ref.child("name").removeEventListener(nameListener!!)
             ref.child("logo").removeEventListener(logoListener!!)
             ref.child("foodstand").removeEventListener(foodstandsListener!!)
-            ref.child("location").removeEventListener(mapListener!!)
             ref.child("stages").removeEventListener(lineupstagesListener!!)
+
+            //alle listeners zullen nooit null zijn behalve de listener op de volledige lijst van festival
             if (festivalListListener != null){
                 ref.removeEventListener(festivalListListener!!)
             }
         }
     }
-
 
     override fun getId(): String {
         return festivalID
@@ -102,6 +102,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
     }
 
     // ------------- data voor het festival algemeen (home menu, ..)  ----------------
+
     override fun getFestivalName(): MutableLiveData<String> {
         if (name.value == null) {
             nameListener = object : ValueEventListener {
@@ -127,7 +128,6 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                 override fun onDataChange(ds: DataSnapshot) {
                     if (ds.exists()) {
                         val logoRef = storageRef.child(ds.value.toString())
-                        Log.d(TAG, "logo: " + ds.value.toString())
                         logo.postValue(logoRef)
                     }
                 }
@@ -142,32 +142,6 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
         return logo
     }
 
-    override fun getFestivalMap(): MutableLiveData<String> {
-        if (map.value == null) {
-            mapListener = object : ValueEventListener {
-                override fun onDataChange(ds: DataSnapshot) {
-                    if (ds.exists()) {
-                        val logoRef = storageRef.child(ds.value.toString())
-                        Log.d(TAG, "location: " + ds.value.toString())
-                        val localFile = File.createTempFile("festival_map", ".png")
-                        logoRef.getFile(localFile).addOnSuccessListener {
-                            map.postValue(localFile.absolutePath)
-                            Log.d(TAG, "Tempfile created for map of festival.")
-                        }.addOnFailureListener {
-                            Log.d(TAG, "Tempfile failed: check if festival submitted a map!")
-                        }
-                    }
-                }
-                override fun onCancelled(databaseError: DatabaseError) {
-                    Log.d(TAG, "getFestivalLogo:onCancelled", databaseError.toException())
-                }
-            }
-            database
-                .getReference(festivalID).child("location")
-                .addValueEventListener(mapListener!!)
-        }
-        return map
-    }
     fun getCoordsFestival(): MutableLiveData<List<Double>> {
         if (coords.value == null){
             val co = mutableListOf<Double>()
@@ -347,9 +321,6 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
         return newsfeed
     }
 
-    fun resetNewMessageTitle() {
-        newMessageTitle.postValue("")
-    }
     // -------------------------- data voor de lineup ------------------------
 
     override fun getLineup() : MutableLiveData<List<Stage>> {
