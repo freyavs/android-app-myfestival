@@ -43,22 +43,6 @@ class FestivalViewModelUnitTests {
         preferences = mock()
         viewModel = FestivalViewModel(repository)
 
-        //TODO: dingen testen met observers? zie code H7 of dit uit H8:
-        /*@Test
-        fun getWishListReturnsReturnsData() {
-            val wishes = listOf(Wishlist("Victoria", listOf("RW Book")))
-            whenever(mockRepository.getWishlists())
-                .thenReturn(MutableLiveData<List<Wishlist>>().apply { postValue(wishes) })
-
-            val mockObserver = mock<Observer<List<Wishlist>>>()
-            viewModel.getWishlists().observeForever(mockObserver)
-
-            verify(mockObserver).onChanged(wishes)
-        }*/
-
-        //lineupObserver = mock()
-        //viewModel.getLineup().observeForever(mapObserver)
-
         whenever(preferences.getString("ID",""))
             .thenReturn(testId1)
 
@@ -69,7 +53,7 @@ class FestivalViewModelUnitTests {
     @Test
     fun setIdCallsResetAndSetId_whenIdIsNotSet() {
         whenever(repository.getId()).thenReturn("")
-        viewModel.setId(preferences,null)
+        viewModel.setId(preferences)
         verify(repository).reset(any())
         verify(repository).setId(testId1)
     }
@@ -85,7 +69,7 @@ class FestivalViewModelUnitTests {
 
     @Test
     fun setIdDoesNotCallResetAndSetId_whenIdEqualsOldId() {
-        viewModel.setId(preferences,null)
+        viewModel.setId(preferences)
         verify(repository, never()).reset(any())
         verify(repository, never()).setId(testId1)
     }
@@ -108,7 +92,7 @@ class FestivalViewModelUnitTests {
         val mockObserver = mock<Observer<String>>()
         viewModel.getWelcomeString().observeForever(mockObserver)
 
-        verify(mockObserver).onChanged("Welkom bij TestFest")
+        verify(mockObserver).onChanged("TestFest")
     }
 
    /* @Test
