@@ -1,4 +1,4 @@
-package be.ugent.myfestival
+package be.ugent.myfestival.unittests
 
 
 import android.content.SharedPreferences
@@ -14,7 +14,6 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mock
 
 //aantal unit tests = 8
 

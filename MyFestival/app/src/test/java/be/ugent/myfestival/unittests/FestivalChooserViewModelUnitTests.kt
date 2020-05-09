@@ -1,4 +1,4 @@
-package be.ugent.myfestival
+package be.ugent.myfestival.unittests
 
 import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
@@ -24,9 +24,10 @@ class FestivalChooserViewModelUnitTests {
     @get:Rule
     @Suppress("unused")
     var instantTaskExecutorRule = InstantTaskExecutorRule()
-    val festival1 = FestivalChooser("f1", "Festival1", "")
-    val festival2 = FestivalChooser("f2", "Festival2", "")
-    val festival3 = FestivalChooser("f3", "AnotherName", "")
+    val logoRef : StorageReference = mock()
+    val festival1 = FestivalChooser("f1", "Festival1", logoRef)
+    val festival2 = FestivalChooser("f2", "Festival2", logoRef)
+    val festival3 = FestivalChooser("f3", "AnotherName", logoRef)
 
     val festivals: List<FestivalChooser> = listOf(festival1,festival2,festival3)
 
