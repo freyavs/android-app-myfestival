@@ -30,6 +30,7 @@ class MenuAdapter() : RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
         if (currentItem.vegan && currentItem.veggie) {  holder.diet.text = "vegetarisch, veganistisch" }
         else if (currentItem.veggie) {  holder.diet.text = "vegetarisch" }
         else if (currentItem.vegan) {  holder.diet.text = "veganistisch" }
+        else {  holder.diet.text = "" }
     }
 
     override fun getItemCount(): Int {

@@ -13,6 +13,10 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import kotlinx.android.synthetic.main.list_item.view.*
 
 class FoodStandAdapter(val clickListener: (FoodStand) -> Unit) : RecyclerView.Adapter<FoodStandAdapter.FoodStandViewHolder>() {
+    /*
+    Deze adapter lijkt sterk op de FestivalChooserAdapter maar we gebruiken een andere clickListener,
+    ook houden we graag overzicht door deze 2 adapters gesplitst te houden.
+     */
 
     var foodstands = emptyList<FoodStand>()
 

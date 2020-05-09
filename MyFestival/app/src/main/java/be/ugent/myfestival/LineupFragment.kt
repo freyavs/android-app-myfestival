@@ -1,5 +1,6 @@
 package be.ugent.myfestival
 
+import android.content.pm.ActivityInfo
 import android.graphics.drawable.StateListDrawable
 import android.os.Bundle
 import android.util.Log
@@ -72,8 +73,8 @@ class LineupFragment : Fragment() {
                 val layout : LinearLayout = binding.root.toggle_group
                 button.setOnClickListener { viewModel.clickedDay(day) }
                 layout.addView(button)
+                //zet de dag goed in viewmodel
                 if (day === startDay){
-                    Log.d("myFestivalTag", "select day" )
                     button.performClick()
                 }
             }
@@ -89,4 +90,14 @@ class LineupFragment : Fragment() {
         return binding.root
     }
 
+    //zorgen dat lineup niet kan draaien
+    override fun onResume() {
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+        super.onResume()
+    }
+
+    override fun onPause() {
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR;
+        super.onPause()
+    }
 }

@@ -12,9 +12,11 @@ import be.ugent.myfestival.utilities.GlideApp
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import kotlinx.android.synthetic.main.list_item.view.*
 
-class FestivalChooserAdapter(val clickListener: (FestivalChooser) -> Unit) :
-    RecyclerView.Adapter<FestivalChooserAdapter.FestivalChooserViewHolder>(){
-
+class FestivalChooserAdapter(val clickListener: (FestivalChooser) -> Unit) : RecyclerView.Adapter<FestivalChooserAdapter.FestivalChooserViewHolder>(){
+    /*
+    Deze adapter lijkt sterk op de FoodStandAdapter maar we gebruiken een andere clickListener,
+    ook houden we graag overzicht door deze 2 adapters gesplitst te houden.
+    */
     var festivalList = emptyList<FestivalChooser>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FestivalChooserViewHolder {

@@ -1,6 +1,7 @@
 package be.ugent.myfestival
 
 import android.content.Context
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -78,4 +79,14 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    //zorgen dat homescreen niet kan draaien
+    override fun onResume() {
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+        super.onResume()
+    }
+
+    override fun onPause() {
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR;
+        super.onPause()
+    }
 }

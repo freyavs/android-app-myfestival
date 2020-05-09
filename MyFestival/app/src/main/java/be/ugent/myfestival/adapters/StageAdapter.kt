@@ -49,17 +49,10 @@ class StageAdapter(private val concertList: List<Concert>) : RecyclerView.Adapte
         val dpfactor =
             holder.itemView.context.resources.displayMetrics.density
 
-        //size van card
-        val minutes: Long =  concert.start.until(concert.stop, ChronoUnit.MINUTES)
-        holder.spacer.layoutParams.height = (230 * minutes/60 * dpfactor).toInt()
-
-        //size van pauze
+        //ruimte tussen listitems, maar niet voor de laatste
         if (position < concertList.size - 1) {
-            val pause: Long =
-                concert.stop.until(concertList[position + 1].start, ChronoUnit.MINUTES)
-
             val params = (holder.card.layoutParams as ViewGroup.MarginLayoutParams)
-            params.bottomMargin = (pause*dpfactor).toInt()
+            params.bottomMargin = (20*dpfactor).toInt()
         }
 
         //notificaties
@@ -82,10 +75,6 @@ class StageAdapter(private val concertList: List<Concert>) : RecyclerView.Adapte
 
                 val calendar: Calendar = Calendar.getInstance()
                 calendar.timeInMillis = System.currentTimeMillis()
-                /* om de notificatie te testen op jouw gekozen tijdstip
-                calendar.set(Calendar.HOUR_OF_DAY, 14);
-                calendar.set(Calendar.MINUTE, 42);
-                calendar.set(Calendar.SECOND, 0);*/
                 if(concert.start > LocalDateTime.now()) {
                     calendar.set(
                         concert.start.year,
@@ -120,7 +109,6 @@ class StageAdapter(private val concertList: List<Concert>) : RecyclerView.Adapte
         val artistView: TextView = itemView.artist
         val startView: TextView = itemView.start
         val stopView: TextView = itemView.stop
-        val spacer: Space = itemView.spacer
         val switch: Switch = itemView.switch1
     }
 }
