@@ -23,9 +23,6 @@ import org.mockito.Mockito
 @RunWith(AndroidJUnit4::class)
 class uiTestActivity : KoinTest {
 
-    private val repositoryInstance: FestivalRepositoryInterface = InjectorUtils.provideRepository()
-    private val repository = Mockito.spy(repositoryInstance)
-
     @Before
     fun setUp() {
 
@@ -33,8 +30,10 @@ class uiTestActivity : KoinTest {
 
     @Test
     fun newsfeedButtonIsClickable(){
-        whenever(repository.getId()).thenReturn("id123")
         ActivityScenario.launch(MainActivity::class.java)
+        val repositoryInstance: FestivalRepositoryInterface = InjectorUtils.provideRepository()
+        val repository = Mockito.spy(repositoryInstance)
+        whenever(repository.getId()).thenReturn("id123")
         onView(withId(R.id.newsfeed_btn)).perform(click())
     }
     @Test
