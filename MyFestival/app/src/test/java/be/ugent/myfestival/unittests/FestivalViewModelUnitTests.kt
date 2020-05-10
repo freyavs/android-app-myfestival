@@ -14,6 +14,7 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import java.util.function.DoubleBinaryOperator
 
 
 class FestivalViewModelUnitTests {
@@ -88,6 +89,44 @@ class FestivalViewModelUnitTests {
         verify(mockObserver).onChanged("TestFest")
     }
 
+    @Test
+    fun getCoordsFromAFestival(){
+        val co = listOf(50.455650,3.545465)
+        whenever(repository.getCoordsFestival()).thenReturn(MutableLiveData(co))
+        val mockObserver = mock<Observer<List<Double>>>()
+        viewModel.getCoordsFestival().observeForever(mockObserver)
+
+        verify(mockObserver).onChanged(co)
+    }
+
+    @Test
+    fun getCoordsFromFoodstands(){
+        val foodstands = HashMap<String, List<Double>>()
+        foodstands.put("foodstand1", listOf(3.4545,50.545))
+        foodstands.put("foodstand2", listOf(3.4546,50.546))
+        whenever(repository.getStageCoords(false)).thenReturn(MutableLiveData(foodstands))
+        val mockObserver = mock<Observer<HashMap<String, List<Double>>>>()
+        viewModel.getFoodstandCoord().observeForever(mockObserver)
+        verify(mockObserver).onChanged(foodstands)
+    }
+
+    @Test
+    fun getCoordsFromStages(){
+        val stages = HashMap<String, List<Double>>()
+        stages.put("stage1", listOf(3.4545,50.545))
+        stages.put("stage2", listOf(3.4546,50.546))
+        whenever(repository.getStageCoords(true)).thenReturn(MutableLiveData(stages))
+        val mockObserver = mock<Observer<HashMap<String, List<Double>>>>()
+        viewModel.getStageCoord().observeForever(mockObserver)
+        verify(mockObserver).onChanged(stages)
+    }
+
+   /* @Test
+    fun newsfeedItemSizeIsNullSafe(){
+        whenever(repository.getNewsfeedItems()).thenReturn(MutableLiveData())
+
+        Assert.assertEquals(0, viewModel.getNewsfeedItemsSize())
+    }*/
     @Test
     fun loadingSwitchesToVisibleWhenReady(){
         whenever(repository.lineupstages).thenReturn(MutableLiveData())

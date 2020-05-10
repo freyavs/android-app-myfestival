@@ -49,31 +49,31 @@ class FestivalChooserViewModelUnitTests {
         verify(mockObserver).onChanged(festivals)
     }
     @Test
-    fun testNameFestival(){
+    fun testMultipleWithLookAlikeNames(){
         val mockObserver = mock<Observer<List<FestivalChooser>>>()
         festivalChooserViewModel.getFestivals().observeForever(mockObserver)
         festivalChooserViewModel.changeSearchValue("Festival")
         verify(mockObserver).onChanged(listOf(festival1,festival2))
     }
     @Test
-    fun testFestival1(){
-        val mockObserver = mock<Observer<List<FestivalChooser>>>()
-        festivalChooserViewModel.getFestivals().observeForever(mockObserver)
-        festivalChooserViewModel.changeSearchValue("Festival1")
-        verify(mockObserver).onChanged(listOf(festival1))
-    }
-    @Test
-    fun testFestival2(){
-        val mockObserver = mock<Observer<List<FestivalChooser>>>()
-        festivalChooserViewModel.getFestivals().observeForever(mockObserver)
-        festivalChooserViewModel.changeSearchValue("Festival2")
-        verify(mockObserver).onChanged(listOf(festival2))
-    }
-    @Test
-    fun testAnotherName(){
+    fun testCorrectName(){
         val mockObserver = mock<Observer<List<FestivalChooser>>>()
         festivalChooserViewModel.getFestivals().observeForever(mockObserver)
         festivalChooserViewModel.changeSearchValue("AnotherName")
         verify(mockObserver).onChanged(listOf(festival3))
+    }
+    @Test
+    fun testNameAllCaps(){
+        val mockObserver = mock<Observer<List<FestivalChooser>>>()
+        festivalChooserViewModel.getFestivals().observeForever(mockObserver)
+        festivalChooserViewModel.changeSearchValue("ANOTHERNAME")
+        verify(mockObserver).onChanged(listOf(festival3))
+    }
+    @Test
+    fun testWrongName(){
+        val mockObserver = mock<Observer<List<FestivalChooser>>>()
+        festivalChooserViewModel.getFestivals().observeForever(mockObserver)
+        festivalChooserViewModel.changeSearchValue("sdjkfhsdjkfhjksdfh")
+        verify(mockObserver).onChanged(listOf())
     }
 }
