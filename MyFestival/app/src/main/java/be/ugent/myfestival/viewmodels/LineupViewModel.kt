@@ -18,6 +18,10 @@ class LineupViewModel(private val festivalRepo : FestivalRepository) : ViewModel
         concerts.map{it.start.toLocalDate()}.distinct().sorted()
     }
 
+    /*getStages en getCurrentStages kunnen eigenlijk in 1 functie, maar we kiezen om deze appart te laten staan zodat we ze allebei
+    grondig kunnen testen
+     */
+
     fun getStages(day: LocalDate): LiveData<List<Stage>> = Transformations.map(festivalRepo.getLineup()) { stages ->
         val list = mutableListOf<Stage>()
         for (stage in stages){
@@ -30,15 +34,15 @@ class LineupViewModel(private val festivalRepo : FestivalRepository) : ViewModel
         list
     }
 
+    fun getCurrentStages() : LiveData<List<Stage>> =  Transformations.switchMap(currentDay) { day ->
+        getStages(day)
+    }
+
     fun getToday(): LocalDate = LocalDate.now()
 
     fun clickedDay(day: LocalDate) {
         if (currentDay.value !== day) {
             currentDay.postValue(day)
         }
-    }
-
-    fun getCurrentStages() : LiveData<List<Stage>> =  Transformations.switchMap(currentDay) { day ->
-        getStages(day)
     }
 }

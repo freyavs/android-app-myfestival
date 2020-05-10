@@ -13,7 +13,6 @@ import com.nhaarman.mockitokotlin2.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mockito.doAnswer
 import org.mockito.invocation.InvocationOnMock
 
 
@@ -25,7 +24,6 @@ class FestivalChooserViewModelTests {
     private lateinit var database : FirebaseDatabase
     private lateinit var databaseRef : DatabaseReference
     private lateinit var storage : StorageReference
-    private lateinit var listener: ValueEventListener
 
     private lateinit var repository : FestivalRepository
     private lateinit var viewmodel : FestivalChooserViewModel
@@ -42,7 +40,6 @@ class FestivalChooserViewModelTests {
         database = mock()
         storage = mock()
         databaseRef = mock()
-        listener = mock()
         repository = FestivalRepository(database,storage)
         viewmodel = FestivalChooserViewModel(repository)
 
@@ -63,6 +60,8 @@ class FestivalChooserViewModelTests {
             }
 
     }
+
+    //filtering wordt getest in unit tests
 
     @Test
     fun getFestivalsReadsFestivalsFromFirebaseAndAddsListener() {
