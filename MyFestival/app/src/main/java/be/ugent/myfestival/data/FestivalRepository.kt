@@ -17,7 +17,7 @@ import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import javax.xml.transform.TransformerFactory
 
-open class FestivalRepository(val database: FirebaseDatabase, val storageRef: StorageReference) : FestivalRepositoryInterface {
+class FestivalRepository(val database: FirebaseDatabase, val storageRef: StorageReference) : FestivalRepositoryInterface {
     var name: MutableLiveData<String> = MutableLiveData()
 
     var nameListener: ValueEventListener? = null

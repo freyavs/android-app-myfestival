@@ -30,14 +30,6 @@ import org.mockito.Mockito
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 class uiTestActivity : KoinTest {
 
-    @get:Rule
-    var instantTaskExecutorRule = InstantTaskExecutorRule()
-    val repositoryInstance: FestivalRepositoryInterface = InjectorUtils.provideRepository()
-    private var repository = Mockito.spy(repositoryInstance)
-    @Before
-    fun setUp() {
-        //whenever(repository.getId()).thenReturn("-M3b9hJNsFaCXAi8Gegq")
-    }
     @Test
     fun aChooseAFestival(){
         ActivityScenario.launch(MainActivity::class.java)
