@@ -24,11 +24,11 @@ class NewsfeedAdapter() : RecyclerView.Adapter<NewsfeedAdapter.NewsItemViewHolde
     var posts = emptyList<NewsfeedItem>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsItemViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.newsfeed_item, parent, false)
+        val itemView = LayoutInflater
+            .from(parent.context)
+            .inflate(R.layout.newsfeed_item, parent, false)
 
-        return NewsItemViewHolder(
-            itemView
-        )
+        return NewsItemViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: NewsItemViewHolder, position: Int) {

@@ -35,6 +35,8 @@ class DayAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager, BEHAV
         return baseId + position
     }
 
+    //omdat we willen dat er enkel nieuwe fragmenten in de pageviewer zitten moeten we het id shiften
+    //en een nieuw id geven aan de stages. Anders blijven de vorige staan
     fun notifyChange(newStages: List<Stage>) {
         baseId += count + currentStages.size
         currentStages = newStages

@@ -39,7 +39,7 @@ class FestivalRepositoryUnitTests {
         childReference = mock()
 
         whenever(database.getReference(any())).thenReturn(reference)
-        whenever(database.getReference()).thenReturn(reference)
+        whenever(database.reference).thenReturn(reference)
         whenever(reference.child(any())).thenReturn(childReference)
         whenever(childReference.orderByKey()).thenReturn(childReference)
 
@@ -67,7 +67,7 @@ class FestivalRepositoryUnitTests {
         repository.getNewsfeedItems()
 
         verify(database, times(6)).getReference(testId)
-        verify(database).getReference()
+        verify(database).reference
     }
 
     @Test

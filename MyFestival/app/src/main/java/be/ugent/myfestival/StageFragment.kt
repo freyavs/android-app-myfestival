@@ -1,5 +1,6 @@
 package be.ugent.myfestival
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -36,5 +37,15 @@ class StageFragment(val stage: Stage, val isFirst: Boolean, val isLast: Boolean)
 
 
         return binding.root
+    }
+    //zorgen dat stages in lineuppageviewer niet kunnen draaien
+    override fun onResume() {
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+        super.onResume()
+    }
+
+    override fun onPause() {
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR;
+        super.onPause()
     }
 }

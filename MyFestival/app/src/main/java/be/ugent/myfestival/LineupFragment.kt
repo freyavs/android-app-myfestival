@@ -1,8 +1,8 @@
 package be.ugent.myfestival
 
+import android.content.pm.ActivityInfo
 import android.graphics.drawable.StateListDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -48,17 +48,14 @@ class LineupFragment : Fragment() {
 
 
         viewModel.getAllDaysSorted().observe(viewLifecycleOwner, Observer { days ->
-            val startDay : LocalDate
             val map = mapOf("MONDAY" to "Maandag", "TUESDAY" to "Dinsdag", "WEDNESDAY" to "Woensdag",
             "THURSDAY" to "Donderdag", "FRIDAY" to "Vrijdag", "SATURDAY" to "Zaterdag", "SUNDAY" to "Zondag")
 
             //zorgt dat er op vandaag gestart wordt tenzij vandaag niet tussen de lineup days zit
-            if (days.contains(viewModel.getToday())){
-                Log.d("myFestivalTag", "today is in list of days.." )
-                startDay = viewModel.getToday()
-            }
-            else {
-                startDay = days[0]
+            val startDay : LocalDate = if (days.contains(viewModel.getToday())){
+                viewModel.getToday()
+            } else {
+                days[0]
             }
             for (day in days){
                 val button = RadioButton(this.context)
@@ -72,8 +69,8 @@ class LineupFragment : Fragment() {
                 val layout : LinearLayout = binding.root.toggle_group
                 button.setOnClickListener { viewModel.clickedDay(day) }
                 layout.addView(button)
+                //zet de dag goed in viewmodel
                 if (day === startDay){
-                    Log.d("myFestivalTag", "select day" )
                     button.performClick()
                 }
             }
@@ -89,4 +86,14 @@ class LineupFragment : Fragment() {
         return binding.root
     }
 
+    //zorgen dat lineup niet kan draaien
+    override fun onResume() {
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+        super.onResume()
+    }
+
+    override fun onPause() {
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR;
+        super.onPause()
+    }
 }

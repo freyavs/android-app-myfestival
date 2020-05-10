@@ -25,7 +25,7 @@ class FestivalChooserViewModel(private val festivalRepo : FestivalRepository) : 
     }
 
     fun changeSearchValue(value: String){
-        if(searchValue.value!! !== value){
+        if(searchValue.value !== value){
             searchValue.postValue(value);
         }
     }

@@ -40,6 +40,7 @@ class FestivalViewModelUnitTests {
         repository = mock()
         preferences = mock()
         viewModel = FestivalViewModel(repository)
+
         whenever(preferences.getString("ID",""))
             .thenReturn(testId1)
 
@@ -89,7 +90,7 @@ class FestivalViewModelUnitTests {
         val mockObserver = mock<Observer<String>>()
         viewModel.getWelcomeString().observeForever(mockObserver)
 
-        verify(mockObserver).onChanged("Welkom bij TestFest")
+        verify(mockObserver).onChanged("TestFest")
     }
 
     @Test
