@@ -8,6 +8,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import be.ugent.myfestival.data.FestivalRepository
 import be.ugent.myfestival.data.FestivalRepositoryInterface
+import be.ugent.myfestival.utilities.InjectorUtils
 import be.ugent.myfestival.viewmodels.FestivalViewModel
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Single
@@ -17,15 +18,17 @@ import org.junit.runner.RunWith
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import org.koin.test.mock.declareMock
+import org.mockito.Mockito
 
 @RunWith(AndroidJUnit4::class)
 class uiTestActivity : KoinTest {
 
-    private val repository: FestivalRepositoryInterface by inject()
+    private val repositoryInstance: FestivalRepositoryInterface = InjectorUtils.provideRepository()
+    private val repository = Mockito.spy(repositoryInstance)
 
     @Before
     fun setUp() {
-        declareMock<FestivalRepositoryInterface>()
+
     }
 
     @Test

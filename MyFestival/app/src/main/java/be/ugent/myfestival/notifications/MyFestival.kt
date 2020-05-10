@@ -27,23 +27,6 @@ class MyFestival : Application() {
         super.onCreate()
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         createNotificationChannels()
-        val appModule = module {
-
-            single<FestivalRepositoryInterface> { FestivalRepository(get(),get()) }
-            single<FirebaseDatabase> { FirebaseDatabase.getInstance() }
-            single<StorageReference> { Firebase.storage.reference }
-            viewModel { FestivalViewModel(get()) }
-        }
-        startKoin {
-
-            // use the Android context given there
-            androidContext(this@MyFestival)
-
-            // load properties from assets/koin.properties file
-
-            // module list
-            modules(appModule)
-        }
     }
 
     fun createNotificationChannels() {
