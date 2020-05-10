@@ -5,7 +5,18 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
+import be.ugent.myfestival.data.FestivalRepository
+import be.ugent.myfestival.data.FestivalRepositoryInterface
+import be.ugent.myfestival.viewmodels.FestivalViewModel
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.viewmodel.dsl.viewModel
+import org.koin.core.context.startKoin
+import org.koin.dsl.module
+import org.koin.android.viewmodel.dsl.viewModel
 
 class MyFestival : Application() {
     companion object {
@@ -16,6 +27,23 @@ class MyFestival : Application() {
         super.onCreate()
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         createNotificationChannels()
+        val appModule = module {
+
+            single<FestivalRepositoryInterface> { FestivalRepository(get(),get()) }
+            single<FirebaseDatabase> { FirebaseDatabase.getInstance() }
+            single<StorageReference> { Firebase.storage.reference }
+            viewModel { FestivalViewModel(get()) }
+        }
+        startKoin {
+
+            // use the Android context given there
+            androidContext(this@MyFestival)
+
+            // load properties from assets/koin.properties file
+
+            // module list
+            modules(appModule)
+        }
     }
 
     fun createNotificationChannels() {
