@@ -27,7 +27,6 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
     var newsfeedListener: ChildEventListener? = null
     var newsfeedLoaded = false
 
-
     var foodstands: MutableLiveData<List<FoodStand>> = MutableLiveData()
     var foodstandsListener: ValueEventListener? = null
 
@@ -70,8 +69,9 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
         getFoodstandList()
         getNewsfeedItems()
         getLineup()
-        //getCoordsFestival()
-        //getStageCoords()
+        getCoordsFestival()
+        getStageCoords(true)
+        getStageCoords(false)
     }
 
     override fun removeListeners(oldId: String){
@@ -208,7 +208,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                                 dish!!.id = it.key.toString()
                                 dish
                             }
-                            //pas als image ingeladen is, maak foodstand aan
+
                             foodList.add (FoodStand(
                                 ds.key!!,
                                 ds.child("name").value!!.toString(),
@@ -302,7 +302,8 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                 valueevent listener opgeroepen, is de newsfeed dus ingeladen en pas vanaf dan mogen er notificatis aangemaakt worden voor
                 NIEUWE newsfeed posts
                 - een 2de listener hierop zetten is niet erg aangezien firebase de data cached dus alle newsfeed items zullen niet opnieuw
-                door de internet verbinding moeten opgehaald worden
+                door de internet verbinding moeten opgehaald worden, en addListenerForSingleValueEvent zal maar 1x uitvoeren dus we moeten
+                die listener niet verwijderen
                  */
                 database.getReference(festivalID).child("messages")
                     .addListenerForSingleValueEvent(object : ValueEventListener {

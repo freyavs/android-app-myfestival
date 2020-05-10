@@ -15,11 +15,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-//aantal unit tests = 8
-
-//TODO: test foodstand dingen
-//TODO: test of na reset juiste data wordt ingeladen (alle getters dus)
-//denk na welke tests hier moeten en welke in integration test (androidStudio) -> mss eens vragen eig
 
 class FestivalViewModelUnitTests {
     @get:Rule
