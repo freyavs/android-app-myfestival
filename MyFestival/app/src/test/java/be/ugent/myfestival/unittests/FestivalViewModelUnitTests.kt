@@ -16,11 +16,6 @@ import org.junit.Rule
 import org.junit.Test
 import java.util.function.DoubleBinaryOperator
 
-//aantal unit tests = 8
-
-//TODO: test foodstand dingen
-//TODO: test of na reset juiste data wordt ingeladen (alle getters dus)
-//denk na welke tests hier moeten en welke in integration test (androidStudio) -> mss eens vragen eig
 
 class FestivalViewModelUnitTests {
     @get:Rule
@@ -32,8 +27,6 @@ class FestivalViewModelUnitTests {
     private lateinit var preferences: SharedPreferences
 
     private lateinit var viewModel: FestivalViewModel
-
-    private lateinit var lineupObserver: Observer<List<Stage>>
 
     private val testId1 = "123abc"
     private val testId2 = "456def"
@@ -134,7 +127,6 @@ class FestivalViewModelUnitTests {
 
         Assert.assertEquals(0, viewModel.getNewsfeedItemsSize())
     }*/
-
     @Test
     fun loadingSwitchesToVisibleWhenReady(){
         whenever(repository.lineupstages).thenReturn(MutableLiveData())
