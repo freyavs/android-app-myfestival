@@ -113,16 +113,6 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
 
     override fun getFestivalName(): MutableLiveData<String> {
         if (name.value == null) {
-            /*als er na 1 seconde nog steeds geen naam is, is er zeker en vast geen internet verbinding en is het festival nog niet kunnen laden,
-            het laden van gebeurt heel snel als die wel al is geladen in cache
-             */
-            Timer().schedule(object : TimerTask() {
-                override fun run() {
-                    if (name.value == null){
-                        name.postValue("")
-                    }
-                }
-            }, 1000)
             nameListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     if (dataSnapshot.exists()) {
@@ -136,6 +126,17 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
             database
                 .getReference(festivalID).child("name")
                 .addValueEventListener(nameListener!!)
+
+            /*als er na 1,5 seconde nog steeds geen naam is, is er zeker en vast geen internet verbinding en is het festival nog niet kunnen laden,
+              het laden van gebeurt heel snel want die sowieso al in de cache geladen door de festivals lijst (getFestivals)
+             */
+            Timer().schedule(object : TimerTask() {
+                override fun run() {
+                    if (name.value == null){
+                        name.postValue("")
+                    }
+                }
+            }, 1500)
         }
         return name
     }
@@ -295,6 +296,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                         .format(
                             DateTimeFormatter.ofPattern( "uuuu-MM-dd'T'HH:mm:ss" )
                         )
+                    Log.d(TAG,"newsfeed foto: " + reference )
 
                     list.add(NewsfeedItem(
                         ds.key.toString(),
