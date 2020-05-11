@@ -21,8 +21,6 @@ import be.ugent.myfestival.notifications.BackgroundNotificationService
 import be.ugent.myfestival.notifications.MyFestival
 import be.ugent.myfestival.utilities.InjectorUtils
 import be.ugent.myfestival.viewmodels.FestivalViewModel
-import com.google.firebase.FirebaseApp
-import com.google.firebase.database.FirebaseDatabase
 import java.util.*
 
 

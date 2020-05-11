@@ -39,4 +39,9 @@ object InjectorUtils {
                 db, storage
             )
         )
+
+    fun provideRepository() =
+        getFestivalRepository(
+            db,storage
+        )
 }
