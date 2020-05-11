@@ -249,6 +249,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                                 dish!!.id = it.key.toString()
                                 dish
                             }
+                            dishList.sortBy{it.price}
 
                             foodList.add (FoodStand(
                                 ds.key!!,
@@ -267,7 +268,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                 }
             }
             database
-                .getReference(festivalID).child("foodstand").orderByKey()
+                .getReference(festivalID).child("foodstand").orderByChild("name")
                 .addValueEventListener(foodstandsListener!!)
         }
         return foodstands
@@ -412,6 +413,9 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                                     ds.key!!,
                                     ds.child("name").value!!.toString(),
                                     logoRef ))
+
+                            //elke keer als festival wordt toegevoegd toon nieuwe in lijst, maar zorg wel dat die gesorteerd blijft
+                            festivalChoosers.sortBy{it.name}
                             festivalList.postValue(festivalChoosers)
                         }
                     }
