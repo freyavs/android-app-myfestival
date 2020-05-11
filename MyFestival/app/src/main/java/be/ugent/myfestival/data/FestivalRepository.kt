@@ -318,10 +318,9 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                 }
 
                 override fun onChildRemoved(dataSnapshot: DataSnapshot) {
-                    var updatedList : MutableList<NewsfeedItem>
+                    val updatedList : MutableList<NewsfeedItem>
                     if (!newsfeed.value.isNullOrEmpty()) {
                         updatedList = (newsfeed.value!!.filter { it.id != dataSnapshot.key }).toMutableList()
-                        Log.d(TAG, "newsfeeditem verwijderd: " + updatedList.size)
                         newsfeed.postValue(updatedList)
                     }
                 }
