@@ -147,9 +147,14 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                 .getReference(festivalID).child("coords")
                 .addListenerForSingleValueEvent(object: ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        co.add(dataSnapshot.child("lat").value.toString().toDouble())
-                        co.add(dataSnapshot.child("long").value.toString().toDouble())
-                        coords.postValue(co)
+                        val lat = dataSnapshot.child("lat").value
+                        val long = dataSnapshot.child("long").value
+                        //als geen coordinaten heeft, niet toevoegen aan kaart
+                        if (lat != null && long != null) {
+                            co.add(lat.toString().toDouble())
+                            co.add(long.toString().toDouble())
+                            coords.postValue(co)
+                        }
                     }
                     override fun onCancelled(databaseError: DatabaseError) {
                         Log.d(TAG, "getName:onCancelled", databaseError.toException())
@@ -170,7 +175,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
             searchString = "foodstand"
             returnVariable = foodstandsCoords
         }
-        val cco: HashMap<String, List<Double>> = HashMap<String, List<Double>>()
+        val coordsMap: HashMap<String, List<Double>> = HashMap()
         database
             .getReference(festivalID).child(searchString)
             .addListenerForSingleValueEvent(object: ValueEventListener{
@@ -178,11 +183,16 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                     for (ds in dataSnapshot.children){
                         val co = mutableListOf<Double>()
                         val name = ds.child("name").value.toString()
-                        co.add(ds.child("coords").child("lat").value.toString().toDouble())
-                        co.add(ds.child("coords").child("long").value.toString().toDouble())
-                        cco.put(name,co)
+                        val lat = ds.child("coords").child("lat").value
+                        val long = ds.child("coords").child("long").value
+                        //als geen coordinaten heeft, niet toevoegen aan kaart
+                        if (lat != null && long != null) {
+                            co.add(lat.toString().toDouble())
+                            co.add(long.toString().toDouble())
+                            coordsMap[name] = co
+                        }
                     }
-                    returnVariable.postValue(cco)
+                    returnVariable.postValue(coordsMap)
                 }
                 override fun onCancelled(databaseError: DatabaseError) {
                     Log.d(TAG, "getName:onCancelled", databaseError.toException())
