@@ -23,13 +23,17 @@ interface FestivalRepositoryInterface {
 
     fun getFestivalLogo(): MutableLiveData<StorageReference>
 
+    // ------------- data voor het kaart  -------------------------------------------
+
+    fun getCoordsFestival(): MutableLiveData<List<Double>>
+
+    fun getStageCoords(stage: Boolean): MutableLiveData<HashMap<String, List<Double>>>
 
     // ---------------- data voor de foodstands -------------------------------
+
     fun getFoodstandList() : MutableLiveData<List<FoodStand>>
 
-
     // ---------------------- data voor de newsfeed -------------------------------
-
 
     fun getNewsfeedItems(): MutableLiveData<MutableList<NewsfeedItem>>
 

@@ -140,7 +140,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
         return logo
     }
 
-    fun getCoordsFestival(): MutableLiveData<List<Double>> {
+    override fun getCoordsFestival(): MutableLiveData<List<Double>> {
         if (coords.value == null){
             val co = mutableListOf<Double>()
             database
@@ -159,7 +159,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
         return coords
     }
 
-    fun getStageCoords(stage: Boolean): MutableLiveData<HashMap<String, List<Double>>> {
+    override fun getStageCoords(stage: Boolean): MutableLiveData<HashMap<String, List<Double>>> {
         val searchString: String
         val returnVariable: MutableLiveData<HashMap<String, List<Double>>>
         if(stage){
