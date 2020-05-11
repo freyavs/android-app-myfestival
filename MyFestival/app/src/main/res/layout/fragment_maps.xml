@@ -25,6 +25,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="horizontal"
         android:layout_weight="95">
 
         <ImageView
@@ -49,8 +50,6 @@
             android:id="@+id/kraampjes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_x="183dp"
-            android:layout_y="694dp"
             android:text="@string/foodndrinks" />
         <ImageView
             android:layout_width="20dp"
