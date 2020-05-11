@@ -4,7 +4,10 @@ import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.ViewAction
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.pressKey
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
@@ -29,11 +32,11 @@ class uiTestActivity : KoinTest {
         val targetContext : Context = getInstrumentation().targetContext
         val preference = targetContext.getSharedPreferences("FestivalPreference", Context.MODE_PRIVATE)
         preference.edit().putString("ID","").apply()
+        ActivityScenario.launch(MainActivity::class.java)
     }
 
     @Test
     fun chooseFestival(){
-        ActivityScenario.launch(MainActivity::class.java)
         onView(withId(R.id.festival_recycler_view)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 0,
@@ -44,7 +47,6 @@ class uiTestActivity : KoinTest {
     }
     @Test
     fun newsfeedButtonIsClickable(){
-        ActivityScenario.launch(MainActivity::class.java)
         onView(withId(R.id.festival_recycler_view)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 0,
@@ -55,7 +57,6 @@ class uiTestActivity : KoinTest {
     }
     @Test
     fun lineupButtonIsClickable(){
-        ActivityScenario.launch(MainActivity::class.java)
         onView(withId(R.id.festival_recycler_view)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 0,
@@ -66,7 +67,6 @@ class uiTestActivity : KoinTest {
     }
     @Test
     fun switchDayInFestivalLineup(){
-        ActivityScenario.launch(MainActivity::class.java)
         onView(withId(R.id.festival_recycler_view)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 1,
@@ -78,7 +78,6 @@ class uiTestActivity : KoinTest {
     }
     @Test
     fun foodButtonIsClickable(){
-        ActivityScenario.launch(MainActivity::class.java)
         onView(withId(R.id.festival_recycler_view)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 0,
@@ -89,7 +88,6 @@ class uiTestActivity : KoinTest {
     }
     @Test
     fun menuItemsOpenMenu(){
-        ActivityScenario.launch(MainActivity::class.java)
         onView(withId(R.id.festival_recycler_view)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 0,
@@ -106,7 +104,6 @@ class uiTestActivity : KoinTest {
     }
     @Test
     fun mapButtonIsClickable(){
-        ActivityScenario.launch(MainActivity::class.java)
         onView(withId(R.id.festival_recycler_view)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 0,
@@ -118,7 +115,6 @@ class uiTestActivity : KoinTest {
 
     @Test
     fun returnToFestivalChooser(){
-        ActivityScenario.launch(MainActivity::class.java)
         onView(withId(R.id.festival_recycler_view)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 0,
@@ -126,6 +122,11 @@ class uiTestActivity : KoinTest {
             )
         )
         onView(withId(R.id.festival_chooser_btn)).perform(click())
+    }
+
+    @Test
+    fun addTextInSearchField() {
+        onView(withId(R.id.search_festival)).perform(click()).perform(pressKey(1))
     }
 
 }
