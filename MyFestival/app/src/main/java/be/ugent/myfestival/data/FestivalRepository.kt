@@ -249,7 +249,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                                 dish!!.id = it.key.toString()
                                 dish
                             }
-                            dishList.sortBy{it.price.toInt()}
+                            dishList.sortBy{it.price.toFloat()}
 
                             foodList.add (FoodStand(
                                 ds.key!!,
