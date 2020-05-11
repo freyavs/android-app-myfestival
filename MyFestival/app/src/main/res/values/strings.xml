@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MyFestival</string>
     <string name="newsfeed"> Nieuwsoverzicht </string>
-    <string name="food"> Eten en Drinken </string>
+    <string name="food"> Eten &amp; Drinken </string>
     <string name="line_up"> Line-up </string>
     <string name="map"> Kaart </string>
     <string name="menu"> Menu </string>
