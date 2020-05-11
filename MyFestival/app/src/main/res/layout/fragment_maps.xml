@@ -3,19 +3,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <AbsoluteLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:weightSum="100"
+        android:orientation="vertical"
         tools:context=".FoodFragment">
-
-        <fragment
-            android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="683dp"
-            android:layout_y="0dp"
-            tools:context=".MapsFragment" />
+            android:layout_height="match_parent"
+            android:layout_weight="5">
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="683dp"
+                android:layout_y="0dp"
+                tools:context=".MapsFragment" />
+        </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="95">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginHorizontal="5dp"
+            android:background="@color/colorAccent"/>
         <TextView
             android:id="@+id/ingang"
             android:layout_width="wrap_content"
@@ -24,15 +40,11 @@
             android:layout_y="694dp"
             android:text="@string/entrance" />
 
-        <TextView
-            android:id="@+id/color1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_x="9dp"
-            android:layout_y="694dp"
-            android:background="@color/colorAccent"
-            android:text="    " />
-
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginHorizontal="5dp"
+            android:background="@color/colorPrimary"/>
         <TextView
             android:id="@+id/kraampjes"
             android:layout_width="wrap_content"
@@ -40,36 +52,21 @@
             android:layout_x="183dp"
             android:layout_y="694dp"
             android:text="@string/foodndrinks" />
-
-        <TextView
-            android:id="@+id/color2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_x="163dp"
-            android:layout_y="694dp"
-            android:background="@color/colorPrimary"
-            android:text="    " />
-
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginHorizontal="5dp"
+            android:background="@color/colorOnBackground"/>
         <TextView
             android:id="@+id/podia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_x="312dp"
-            android:layout_y="694dp"
             android:text="@string/stages" />
-        <TextView
-            android:id="@+id/color3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_x="292dp"
-            android:layout_y="694dp"
-            android:background="@color/colorOnBackground"
-            android:text="    " />
+    </LinearLayout>
 
 
 
-
-    </AbsoluteLayout>
+    </LinearLayout>
 
 
 </layout>
