@@ -1,18 +1,12 @@
 package be.ugent.myfestival.unittests
 
-import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import be.ugent.myfestival.data.FestivalRepository
 import be.ugent.myfestival.models.FestivalChooser
 import be.ugent.myfestival.viewmodels.FestivalChooserViewModel
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.MutableData
 import com.google.firebase.storage.StorageReference
-import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever

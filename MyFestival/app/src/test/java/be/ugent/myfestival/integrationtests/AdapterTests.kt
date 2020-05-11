@@ -1,7 +1,6 @@
 package be.ugent.myfestival.integrationtests
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.MutableLiveData
 import be.ugent.myfestival.adapters.DayAdapter
 import be.ugent.myfestival.adapters.FestivalChooserAdapter
@@ -12,7 +11,6 @@ import be.ugent.myfestival.models.*
 import be.ugent.myfestival.viewmodels.FestivalChooserViewModel
 import be.ugent.myfestival.viewmodels.FestivalViewModel
 import be.ugent.myfestival.viewmodels.LineupViewModel
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.StorageReference
 import com.nhaarman.mockitokotlin2.doNothing
 import com.nhaarman.mockitokotlin2.mock

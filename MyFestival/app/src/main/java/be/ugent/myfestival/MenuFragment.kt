@@ -11,11 +11,9 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import be.ugent.myfestival.adapters.MenuAdapter
 import be.ugent.myfestival.databinding.MenuFragmentBinding
-import be.ugent.myfestival.models.FoodStand
 import be.ugent.myfestival.utilities.GlideApp
 import be.ugent.myfestival.utilities.InjectorUtils
 import be.ugent.myfestival.viewmodels.FestivalViewModel
-import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 class MenuFragment: Fragment() {

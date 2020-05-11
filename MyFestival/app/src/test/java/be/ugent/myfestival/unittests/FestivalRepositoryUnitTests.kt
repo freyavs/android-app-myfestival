@@ -13,8 +13,6 @@ import org.junit.Test
 
 //aantal unit tests: 4
 
-//TODO: mss nog ?
-
 class FestivalRepositoryUnitTests {
     @get:Rule
     @Suppress("unused")
