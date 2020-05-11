@@ -3,6 +3,7 @@ package be.ugent.myfestival
 import android.content.pm.ActivityInfo
 import android.graphics.drawable.StateListDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +21,7 @@ import be.ugent.myfestival.viewmodels.FestivalViewModel
 import be.ugent.myfestival.viewmodels.LineupViewModel
 import kotlinx.android.synthetic.main.lineup_fragment.view.*
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class LineupFragment : Fragment() {
@@ -48,8 +50,8 @@ class LineupFragment : Fragment() {
             val map = viewModel.getDaysMap(days.size)
 
             //zorgt dat er op vandaag gestart wordt tenzij vandaag niet tussen de lineup days zit
-            val startDay : LocalDate = if (days.contains(viewModel.getToday())){
-                viewModel.getToday()
+            val startDay : LocalDate = if (days.contains(LocalDate.now())){
+                LocalDate.now()
             } else {
                 days[0]
             }
@@ -65,8 +67,8 @@ class LineupFragment : Fragment() {
                 val layout : LinearLayout = binding.root.toggle_group
                 button.setOnClickListener { viewModel.clickedDay(day) }
                 layout.addView(button)
-                //zet de dag goed in viewmodel
-                if (day === startDay){
+                //zet de dag goed in de view
+                if (day == startDay){
                     button.performClick()
                 }
             }
