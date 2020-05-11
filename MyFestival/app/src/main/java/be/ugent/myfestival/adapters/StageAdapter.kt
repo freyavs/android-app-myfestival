@@ -79,10 +79,10 @@ class StageAdapter(private val concertList: List<Concert>) : RecyclerView.Adapte
                     calendar.timeInMillis = System.currentTimeMillis()
                     calendar.set(
                         concert.start.year,
-                        concert.start.monthValue,
+                        concert.start.monthValue -1,
                         concert.start.dayOfMonth,
                         concert.start.hour,
-                        concert.start.minute
+                        concert.start.minute-1
                     )
 
                     alarmManager[AlarmManager.RTC_WAKEUP, calendar.timeInMillis] = pendingIntent
