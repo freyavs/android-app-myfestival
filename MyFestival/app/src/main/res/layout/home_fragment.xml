@@ -168,7 +168,7 @@
                 android:onClick="@{FestivalChooserHandler::onClick}"
                 android:padding="10dp"
                 android:textColor="?attr/colorPrimary"
-                android:text="FESTIVAL SELECTIE"
+                android:text="@string/festicalChooser"
                 android:textSize="15dp"
                 app:backgroundTint="@color/colorOnBackground"
                 app:layout_constraintStart_toStartOf="parent"
