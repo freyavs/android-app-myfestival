@@ -11,8 +11,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-//aantal unit tests: 4
-
 class FestivalRepositoryUnitTests {
     @get:Rule
     @Suppress("unused")
