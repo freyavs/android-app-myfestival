@@ -4,6 +4,19 @@
     <meta charset="UTF-8">
     <title>Title</title><!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+        #map {
+            height: 100%;
+        }
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
 </head>
 <body onload="toonInfo()">
 <div class="container">
@@ -13,30 +26,22 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class='card'>
                 <h3 class='card-header'>Stages</h3>
                 <div class="card-body" id="id_stages"></div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class='card'>
                 <h3 class='card-header'>Foodstands</h3>
                 <div class="card-body" id="id_foodstands"></div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class='card'>
                 <h3 class='card-header'>Messages</h3>
                 <div class="card-body" id="id_messages"></div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class='card'>
-                <h3 class='card-header'>Map</h3>
-                <img src="" class="img-fluid" alt="Responsive image"  id="id_image_map">
-                <input type="file" id="id_map">
-                <button class="btn btn-primary" onclick="uploadMap()">Save</button>
             </div>
         </div>
     </div>
@@ -47,7 +52,7 @@
         </div>
     </div>
 </div>
-
+<div id="map"></div>
 
 <!-- Modal -->
 <div class="modal fade" id="addStage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -138,6 +143,8 @@
         </div>
     </div>
 </div>
+
+
 <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
 <script>
     const firebaseConfig = {
@@ -153,7 +160,8 @@
     firebase.initializeApp(firebaseConfig);
 </script>
 <script src="infoFestival.js"></script>
-
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXbN8gRwF38KOSUWZDqLofnQvx5CFiQcA&callback=initMap"
+        async defer></script>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

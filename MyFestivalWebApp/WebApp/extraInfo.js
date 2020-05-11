@@ -143,6 +143,28 @@ function gotConcerten(data) {
     divInfo.innerHTML = innerHTML;
 }
 
+var map;
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 0, lng: 0},
+        zoom: 1
+    });
+
+
+    google.maps.event.addListener(map, 'click', function(event) {
+        addMarker({coords:event.latLng})
+    })
+}
+function addMarker(props){
+    var marker = new google.maps.Marker({
+        position: props.coords,
+        map:map
+    })
+    let coords = props.coords.toString().substr(1).slice(0,-1).split(',')
+    ref = database.ref(id + "/coords");
+    ref.update({'lat': coords[0], 'long': coords[1]})
+}
+
 function gotMenu(data) {
     let info = data.val();
     let divInfo = document.getElementById("id_divInfo");

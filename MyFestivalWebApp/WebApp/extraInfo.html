@@ -4,6 +4,19 @@
     <meta charset="UTF-8">
     <title>Title</title><!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+        #map {
+            height: 100%;
+        }
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
 </head>
 <body onload="extraInfoLaden()">
 
@@ -20,7 +33,7 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
 </div>
-
+<div id="map"></div>
 
 
 
@@ -39,6 +52,8 @@
     firebase.initializeApp(firebaseConfig);
 </script>
 <script src="extraInfo.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXbN8gRwF38KOSUWZDqLofnQvx5CFiQcA&callback=initMap"
+        async defer></script>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

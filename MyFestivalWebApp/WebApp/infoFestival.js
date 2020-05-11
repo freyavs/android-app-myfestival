@@ -108,38 +108,57 @@ function addMessage() {
     let titel = document.getElementById("id_titel_message").value;
     let bericht = document.getElementById("id_bericht_message").value;
     let image = document.getElementById('id_foto_message').files.item(0);
-    let metadata = {
-        contentType: image.type,
-    };
-    let date = new Date().toISOString();
+    if(image !== null) {
+        let metadata = {
+            contentType: image.type,
+        };
+        let date = new Date().toISOString();
+        if (titel !== '' && bericht !== '') {
+            var storageRef = firebase.storage().ref('messages/'+date);
+            storageRef.put(image, metadata).then(function (snapshot) {
+                ref = database.ref(id + "/messages");
+                let message = {
+                    title: titel,
+                    message: bericht,
+                    image: "messages/" + date,
+                    date: date
+                };
+                ref.push(message);
+            })
+        }
+    }
     if (titel !== '' && bericht !== '') {
-        var storageRef = firebase.storage().ref('messages/'+date);
-        storageRef.put(image, metadata).then(function (snapshot) {
-            ref = database.ref(id + "/messages");
-            let message = {
-                title: titel,
-                message: bericht,
-                image: "messages/" + date,
-                date: date
-            };
-            ref.push(message);
-        })
+        ref = database.ref(id + "/messages");
+        let date = new Date().toISOString();
+        let message = {
+            title: titel,
+            message: bericht,
+            date: date
+        };
+        ref.push(message);
     }
 }
 
-function uploadMap() {
-    let map = document.getElementById('id_map').files.item(0);
-    let metadata = {
-        contentType: map.type,
-    };
-    var storageRef = firebase.storage().ref('maps/'+id);
-    storageRef.put(map, metadata).then(function (snapshot) {
-        ref = database.ref(id);
-        let updates= {};
-        updates['location'] = "maps/"+id;
-        ref.update(updates);
-        location.reload();
+var map;
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 0, lng: 0},
+        zoom: 1
+    });
+
+
+    google.maps.event.addListener(map, 'click', function(event) {
+        addMarker({coords:event.latLng})
     })
+}
+function addMarker(props){
+    var marker = new google.maps.Marker({
+        position: props.coords,
+        map:map
+    })
+    let coords = props.coords.toString().substr(1).slice(0,-1).split(',')
+    ref = database.ref(id + "/coords");
+    ref.update({'lat': coords[0], 'long': coords[1]})
 }
 
 function uploadLogo() {
