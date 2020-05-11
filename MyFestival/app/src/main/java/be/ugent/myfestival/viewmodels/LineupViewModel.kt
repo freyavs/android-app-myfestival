@@ -12,11 +12,17 @@ class LineupViewModel(private val festivalRepo : FestivalRepository) : ViewModel
 
     var currentDay: MutableLiveData<LocalDate> = MutableLiveData()
 
+    //zodat wanneer we op de viewmodel zitten, geen extra knoppen worden toegevoegd als een lineup wordt toegevoegd
+    var buttonsSet = false
+
     fun getAllDaysSorted() : LiveData<List<LocalDate>> = Transformations.map(festivalRepo.getLineup()) {stages ->
         val concerts = stages.flatMap{ it.concerts }
         concerts.map{it.start.toLocalDate()}.distinct().sorted()
     }
 
+    fun setButtons(bool: Boolean) {
+        buttonsSet = bool
+    }
 
     fun getDaysMap(listSize: Int) : Map<String, String>{
         if (listSize <= 4) {
