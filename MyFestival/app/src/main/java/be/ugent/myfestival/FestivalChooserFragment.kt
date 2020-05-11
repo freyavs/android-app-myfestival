@@ -83,7 +83,7 @@ class FestivalChooserFragment : Fragment() {
         val editor = preference?.edit()
         editor?.putString("ID",festivalChooser.id)
         editor?.apply()
-        val action = FestivalChooserFragmentDirections.actionFestivalChooserFragmentToHomeFragment2()
+        val action = FestivalChooserFragmentDirections.actionFestivalChooserFragmentToHomeFragment()
         findNavController().navigate(action)
     }
 }
