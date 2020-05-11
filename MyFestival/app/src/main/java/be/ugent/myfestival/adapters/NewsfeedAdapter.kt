@@ -34,7 +34,7 @@ class NewsfeedAdapter() : RecyclerView.Adapter<NewsfeedAdapter.NewsItemViewHolde
         holder.message.text = post.message
 
         /*gaat in sommige gevallen null loaden en een glideException gooien maar dat is niet erg, we willen dat
-        er iets laadt, anders vertoond adapter incorrect gedrag
+        er iets laadt, anders vertonen glide en adapter incorrect gedrag
          */
         GlideApp.with(holder.image.context)
             .load(post.image)

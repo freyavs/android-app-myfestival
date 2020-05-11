@@ -296,7 +296,6 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                         .format(
                             DateTimeFormatter.ofPattern( "uuuu-MM-dd'T'HH:mm:ss" )
                         )
-                    Log.d(TAG,"newsfeed foto: " + reference )
 
                     list.add(NewsfeedItem(
                         ds.key.toString(),
@@ -319,11 +318,12 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                 }
 
                 override fun onChildRemoved(dataSnapshot: DataSnapshot) {
-                    var updatedList : MutableList<NewsfeedItem> =  mutableListOf()
-                    Transformations.map(newsfeed) { list ->
-                        updatedList = (list.filter { it.id != dataSnapshot.key}).toMutableList()
+                    var updatedList : MutableList<NewsfeedItem>
+                    if (!newsfeed.value.isNullOrEmpty()) {
+                        updatedList = (newsfeed.value!!.filter { it.id != dataSnapshot.key }).toMutableList()
+                        Log.d(TAG, "newsfeeditem verwijderd: " + updatedList.size)
+                        newsfeed.postValue(updatedList)
                     }
-                    newsfeed.postValue(updatedList)
                 }
 
                 override fun onChildMoved(dataSnapshot: DataSnapshot, previousChildName: String?) {
