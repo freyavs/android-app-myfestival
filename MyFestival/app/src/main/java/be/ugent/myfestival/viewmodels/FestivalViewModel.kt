@@ -58,7 +58,8 @@ class  FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMo
 
     fun getNewMessageTitle(): MutableLiveData<String> = festivalRepo.newMessageTitle
 
-    /*dankzij firebase zal bij het inladen van de festivals, alles in de cache worden ingeladen waardoor (ook offline)
+    /*
+    dankzij firebase zal bij het inladen van de festivals, alles in de cache worden ingeladen waardoor (ook offline)
     deze functie enkel nuttig zal zijn in randgevallen waar bv het laden van een festival werd stopgezet.
     Het is de bedoeling dat de 4 knoppen dan niet zichtbaar zijn (waarvoor deze functie) aangezien er toch enkel lege data is,
     er zal worden aangegeven dat er internet verbinding moet zijn.
@@ -73,6 +74,6 @@ class  FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMo
     fun getCoordsFestival(): MutableLiveData<List<Double>> = festivalRepo.getCoordsFestival()
 
     fun getStageCoord(): MutableLiveData<HashMap<String,List<Double>>> = festivalRepo.getStageCoords(true)
-    fun getFoodstandCoord(): MutableLiveData<HashMap<String,List<Double>>> = festivalRepo.getStageCoords(false)
 
+    fun getFoodstandCoord(): MutableLiveData<HashMap<String,List<Double>>> = festivalRepo.getStageCoords(false)
 }
