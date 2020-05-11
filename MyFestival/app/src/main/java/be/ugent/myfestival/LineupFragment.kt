@@ -22,10 +22,6 @@ import kotlinx.android.synthetic.main.lineup_fragment.view.*
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-
-/**
- * A simple [Fragment] subclass.
- */
 class LineupFragment : Fragment() {
 
     lateinit var adapter: DayAdapter

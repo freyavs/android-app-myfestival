@@ -5,6 +5,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
@@ -31,13 +32,27 @@ import org.mockito.Mockito
 class uiTestActivity : KoinTest {
 
     @Test
-    fun aChooseAFestival(){
+    fun chooseOrSwitchFestival(){
         ActivityScenario.launch(MainActivity::class.java)
-        onView(withId(R.id.festival_recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()));
-
-
-        //onView(withId(R.id.rv_conference_list)).perform(
-        //            RecyclerViewActions.actionOnItemAtPosition(0, MyViewAction.clickChildViewWithId(R.id. bt_deliver)))
+        //indien de app al een keer is gebruikt is er een id set. daarom kan het zijn dat we reeds op een festival uitkomen
+        //hiervoor dient de trycatch: indien op festival => keer eerst terug
+        //dit is natuurlijk een beetje een hack
+        try {
+            onView(withId(R.id.festival_recycler_view)).perform(
+                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                    0,
+                    click()
+                )
+            );
+        } catch (e: NoMatchingViewException) {
+            onView(withId(R.id.festival_chooser_btn)).perform(click())
+            onView(withId(R.id.festival_recycler_view)).perform(
+                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                    0,
+                    click()
+                )
+            )
+        }
     }
     @Test
     fun newsfeedButtonIsClickable(){
@@ -50,9 +65,26 @@ class uiTestActivity : KoinTest {
         onView(withId(R.id.lineup_btn)).perform(click())
     }
     @Test
+    fun switchDayInFestivalLineup(){
+        ActivityScenario.launch(MainActivity::class.java)
+        onView(withId(R.id.lineup_btn)).perform(click())
+        onView(withText("Zaterdag")).perform(click())
+    }
+    @Test
     fun foodButtonIsClickable(){
         ActivityScenario.launch(MainActivity::class.java)
         onView(withId(R.id.food_btn)).perform(click())
+    }
+    @Test
+    fun menuItemsOpenMenu(){
+        ActivityScenario.launch(MainActivity::class.java)
+        onView(withId(R.id.food_btn)).perform(click())
+        onView(withId(R.id.foodstand_recycler_view)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0,
+                click()
+            )
+        )
     }
     @Test
     fun mapButtonIsClickable(){
