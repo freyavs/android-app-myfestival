@@ -19,12 +19,12 @@ import javax.xml.transform.TransformerFactory
 
 class FestivalRepository(val database: FirebaseDatabase, val storageRef: StorageReference) : FestivalRepositoryInterface {
     var name: MutableLiveData<String> = MutableLiveData()
-
     var nameListener: ValueEventListener? = null
 
     var newsfeed: MutableLiveData<MutableList<NewsfeedItem>> = MutableLiveData()
-    var newMessageTitle: MutableLiveData<String> = MutableLiveData()
     var newsfeedListener: ChildEventListener? = null
+
+    var newMessageTitle: MutableLiveData<String> = MutableLiveData()
     var newsfeedLoaded = false
 
     var foodstands: MutableLiveData<List<FoodStand>> = MutableLiveData()
@@ -40,14 +40,23 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
     var logoListener: ValueEventListener? = null
 
     var coords: MutableLiveData<List<Double>> = MutableLiveData()
+    var coordsListener: ValueEventListener? = null
+
     var concertsCoords: MutableLiveData<HashMap<String, List<Double>>> = MutableLiveData()
+    var concertCoordsListener: ValueEventListener? = null
+
     var foodstandsCoords: MutableLiveData<HashMap<String, List<Double>>> = MutableLiveData()
+    var foodstandCoordsListener: ValueEventListener? = null
 
     val TAG = "myFestivalTag"
 
     var festivalID = ""
 
 
+    /*opmerking: we gaan voor de meeste zaken ervan uit dat de waarden in de databank correct zijn, en dat dus
+    controle van de data al in de webapp gebeurd, er worden hier en daar controles uit gevoerd of sommige velden
+    wel zijn ingevuld (niet null), maar dat betekent dat die velden eerder optioneel kunnen zijn
+     */
 
     // -------------------------- als id wordt gezet --------------------------
 
@@ -75,7 +84,9 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
     }
 
     override fun removeListeners(oldId: String){
-        //remove enkel de listeners als het vorige festival bestond
+        /*remove enkel de listeners als het vorige festival bestond, dit is belangrijk want anders zal je
+        data changes binnenkrijgen van vorige festivals die ooit geselecteerd zijn
+         */
         if (oldId != "") {
             val ref = database.getReference(oldId)
             ref.child("messages").removeEventListener(newsfeedListener!!)
@@ -83,6 +94,9 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
             ref.child("logo").removeEventListener(logoListener!!)
             ref.child("foodstand").removeEventListener(foodstandsListener!!)
             ref.child("stages").removeEventListener(lineupstagesListener!!)
+            ref.child("coords").removeEventListener(coordsListener!!)
+            ref.child("foodstand").removeEventListener(foodstandCoordsListener!!)
+            ref.child("stages").removeEventListener(concertCoordsListener!!)
 
             //alle listeners zullen nooit null zijn behalve de listener op de volledige lijst van festival
             if (festivalListListener != null){
@@ -143,18 +157,25 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
     override fun getCoordsFestival(): MutableLiveData<List<Double>> {
         if (coords.value == null){
             val co = mutableListOf<Double>()
-            database
-                .getReference(festivalID).child("coords")
-                .addListenerForSingleValueEvent(object: ValueEventListener {
-                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        co.add(dataSnapshot.child("lat").value.toString().toDouble())
-                        co.add(dataSnapshot.child("long").value.toString().toDouble())
+            coordsListener = object: ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val lat = dataSnapshot.child("lat").value
+                    val long = dataSnapshot.child("long").value
+                    //als geen coordinaten heeft, niet toevoegen aan kaart
+                    if (lat != null && long != null) {
+                        co.add(lat.toString().toDouble())
+                        co.add(long.toString().toDouble())
                         coords.postValue(co)
                     }
-                    override fun onCancelled(databaseError: DatabaseError) {
-                        Log.d(TAG, "getName:onCancelled", databaseError.toException())
-                    }
-                })
+                }
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Log.d(TAG, "getName:onCancelled", databaseError.toException())
+                }
+            }
+
+            database
+                .getReference(festivalID).child("coords")
+                .addValueEventListener(coordsListener!!)
         }
         return coords
     }
@@ -170,24 +191,37 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
             searchString = "foodstand"
             returnVariable = foodstandsCoords
         }
-        val cco: HashMap<String, List<Double>> = HashMap<String, List<Double>>()
+        val coordsMap: HashMap<String, List<Double>> = HashMap()
+        val listener = object: ValueEventListener{
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (ds in dataSnapshot.children){
+                    val co = mutableListOf<Double>()
+                    val name = ds.child("name").value.toString()
+                    val lat = ds.child("coords").child("lat").value
+                    val long = ds.child("coords").child("long").value
+                    //als geen coordinaten heeft, niet toevoegen aan kaart
+                    if (lat != null && long != null) {
+                        co.add(lat.toString().toDouble())
+                        co.add(long.toString().toDouble())
+                        coordsMap[name] = co
+                    }
+                }
+                returnVariable.postValue(coordsMap)
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.d(TAG, "getName:onCancelled", databaseError.toException())
+            }
+        }
+        //assign de juiste listener
+        if (stage){
+            concertCoordsListener = listener
+        } else {
+            foodstandCoordsListener = listener
+        }
+
         database
             .getReference(festivalID).child(searchString)
-            .addListenerForSingleValueEvent(object: ValueEventListener{
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    for (ds in dataSnapshot.children){
-                        val co = mutableListOf<Double>()
-                        val name = ds.child("name").value.toString()
-                        co.add(ds.child("coords").child("lat").value.toString().toDouble())
-                        co.add(ds.child("coords").child("long").value.toString().toDouble())
-                        cco.put(name,co)
-                    }
-                    returnVariable.postValue(cco)
-                }
-                override fun onCancelled(databaseError: DatabaseError) {
-                    Log.d(TAG, "getName:onCancelled", databaseError.toException())
-                }
-            })
+            .addValueEventListener(listener)
         return returnVariable
     }
 
