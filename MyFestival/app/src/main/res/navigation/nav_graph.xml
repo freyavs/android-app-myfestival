@@ -64,7 +64,7 @@
     <fragment
         android:id="@+id/mapsFragment"
         android:name="be.ugent.myfestival.MapsFragment"
-        android:label="fragment_maps"
+        android:label="@string/map"
         tools:layout="@layout/fragment_maps" />
 
 
