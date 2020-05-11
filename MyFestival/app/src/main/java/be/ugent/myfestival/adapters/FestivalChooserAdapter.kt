@@ -31,6 +31,7 @@ class FestivalChooserAdapter(val clickListener: (FestivalChooser) -> Unit) : Rec
 
         GlideApp.with(holder.imageView.context)
             .load(currentItem.logoRef)
+            .placeholder(R.drawable.no_internet)
             .diskCacheStrategy(DiskCacheStrategy.DATA)
             .into(holder.imageView)
 

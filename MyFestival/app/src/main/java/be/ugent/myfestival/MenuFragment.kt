@@ -42,6 +42,7 @@ class MenuFragment: Fragment() {
 
             GlideApp.with(binding.foodstandImgMenuView.context)
                 .load(foodstand.logoRef)
+                .placeholder(R.drawable.no_internet)
                 .diskCacheStrategy(DiskCacheStrategy.DATA)
                 .into(binding.foodstandImgMenuView)
 

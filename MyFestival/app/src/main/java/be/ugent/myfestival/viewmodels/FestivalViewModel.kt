@@ -52,6 +52,11 @@ class  FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMo
 
     fun getNewMessageTitle(): MutableLiveData<String> = festivalRepo.newMessageTitle
 
+    /*dankzij firebase zal bij het inladen van de festivals, alles in de cache worden ingeladen waardoor
+    deze functie enkel nuttig zal zijn in randgevallen waar bv het laden van een festival werd stopgezet.
+    Het is de bedoeling dat de 4 knoppen dan niet zichtbaar zijn (waarvoor deze functie) aangezien er toch enkel lege data is,
+    en de "no internet" placeholder van het logo zal aangeven dat er moet verbonden worden om data op te halen.
+     */
     fun getLoading() : LiveData<Int> = Transformations.map(festivalRepo.lineupstages){ value ->
         when(value.isNullOrEmpty()) {
             true -> View.INVISIBLE

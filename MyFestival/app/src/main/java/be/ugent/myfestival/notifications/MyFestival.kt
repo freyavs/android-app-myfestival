@@ -5,18 +5,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
-import be.ugent.myfestival.data.FestivalRepository
-import be.ugent.myfestival.data.FestivalRepositoryInterface
-import be.ugent.myfestival.viewmodels.FestivalViewModel
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.ktx.storage
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.viewmodel.dsl.viewModel
-import org.koin.core.context.startKoin
-import org.koin.dsl.module
-import org.koin.android.viewmodel.dsl.viewModel
 
 class MyFestival : Application() {
     companion object {
@@ -31,12 +20,12 @@ class MyFestival : Application() {
 
     fun createNotificationChannels() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel1: NotificationChannel = NotificationChannel(
+            val channel1 = NotificationChannel(
                 CHANNEL_1_ID,
                 "Newsfeed notifications",
                 NotificationManager.IMPORTANCE_HIGH
             )
-            val channel2: NotificationChannel = NotificationChannel(
+            val channel2 = NotificationChannel(
                 CHANNEL_2_ID,
                 "Lineup notifications",
                 NotificationManager.IMPORTANCE_HIGH
