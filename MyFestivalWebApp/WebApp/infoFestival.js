@@ -127,7 +127,7 @@ function addMessage() {
             })
         }
     }
-    if (titel !== '' && bericht !== '') {
+    else if (titel !== '' && bericht !== '') {
         ref = database.ref(id + "/messages");
         let date = new Date().toISOString();
         let message = {
