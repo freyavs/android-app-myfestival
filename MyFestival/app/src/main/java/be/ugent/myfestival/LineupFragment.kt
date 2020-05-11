@@ -44,8 +44,8 @@ class LineupFragment : Fragment() {
 
 
         viewModel.getAllDaysSorted().observe(viewLifecycleOwner, Observer { days ->
-            val map = mapOf("MONDAY" to "Maandag", "TUESDAY" to "Dinsdag", "WEDNESDAY" to "Woensdag",
-            "THURSDAY" to "Donderdag", "FRIDAY" to "Vrijdag", "SATURDAY" to "Zaterdag", "SUNDAY" to "Zondag")
+
+            val map = viewModel.getDaysMap(days.size)
 
             //zorgt dat er op vandaag gestart wordt tenzij vandaag niet tussen de lineup days zit
             val startDay : LocalDate = if (days.contains(viewModel.getToday())){

@@ -17,10 +17,34 @@ class LineupViewModel(private val festivalRepo : FestivalRepository) : ViewModel
         concerts.map{it.start.toLocalDate()}.distinct().sorted()
     }
 
-    /*getStages en getCurrentStages kunnen eigenlijk in 1 functie, maar we kiezen om deze appart te laten staan zodat we ze allebei
-    grondig kunnen testen
-     */
 
+    fun getDaysMap(listSize: Int) : Map<String, String>{
+        if (listSize <= 4) {
+            return mapOf(
+                "MONDAY" to "Maandag",
+                "TUESDAY" to "Dinsdag",
+                "WEDNESDAY" to "Woensdag",
+                "THURSDAY" to "Donderdag",
+                "FRIDAY" to "Vrijdag",
+                "SATURDAY" to "Zaterdag",
+                "SUNDAY" to "Zondag"
+            )
+        }
+        else {
+            return mapOf(
+                "MONDAY" to "Ma",
+                "TUESDAY" to "Di",
+                "WEDNESDAY" to "Wo",
+                "THURSDAY" to "Do",
+                "FRIDAY" to "Vr",
+                "SATURDAY" to "Za",
+                "SUNDAY" to "Zo")
+        }
+    }
+
+    /*getStages en getCurrentStages kunnen eigenlijk in 1 functie, maar we kiezen om deze appart te laten staan zodat we ze allebei
+   grondig kunnen testen
+    */
     fun getStages(day: LocalDate): LiveData<List<Stage>> = Transformations.map(festivalRepo.getLineup()) { stages ->
         val list = mutableListOf<Stage>()
         for (stage in stages){

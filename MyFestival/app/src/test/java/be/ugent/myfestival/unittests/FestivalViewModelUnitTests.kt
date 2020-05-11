@@ -120,12 +120,6 @@ class FestivalViewModelUnitTests {
         verify(mockObserver).onChanged(stages)
     }
 
-   /* @Test
-    fun newsfeedItemSizeIsNullSafe(){
-        whenever(repository.getNewsfeedItems()).thenReturn(MutableLiveData())
-
-        Assert.assertEquals(0, viewModel.getNewsfeedItemsSize())
-    }*/
     @Test
     fun loadingSwitchesToVisibleWhenReady(){
         whenever(repository.lineupstages).thenReturn(MutableLiveData())
