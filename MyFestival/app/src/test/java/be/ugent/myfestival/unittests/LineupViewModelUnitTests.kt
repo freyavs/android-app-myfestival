@@ -15,8 +15,6 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.Month
 
-// tests = 6
-
 class LineupViewModelUnitTests {
     @get:Rule
     @Suppress("unused")
@@ -109,7 +107,6 @@ class LineupViewModelUnitTests {
         lineupViewModel.currentDay.apply { postValue(
             LocalDate.of(2020, Month.APRIL, 26)) }
 
-        //hier zou er een manier nodig zijn om de lijsten te comparen op id, dus een transformatie van de observer?
         verify(mockObserver).onChanged(argForWhich {
             this.size == 1 && stage1.id  == this[0].id
         })
@@ -125,7 +122,7 @@ class LineupViewModelUnitTests {
 
         val day = LocalDate.of(2020, Month.APRIL, 26);
         lineupViewModel.clickedDay(day)
-        //currentday wordt aangepast maar de stages worden niet aangepast in de observer
+
         verify(mockObserver).onChanged(listOf())
         verify(mockObserver, atLeastOnce()).onChanged(
             argForWhich {

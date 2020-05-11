@@ -1,22 +1,17 @@
 package be.ugent.myfestival
 
 import android.content.Context
-import android.content.SharedPreferences
-import android.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
-import androidx.test.rule.ActivityTestRule
 import org.junit.Before
 import org.junit.FixMethodOrder
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
@@ -33,9 +28,7 @@ class uiTestActivity : KoinTest {
         //en zal de test vanop een ander fragment beginnen, wij willen dus steeds dat de test begint vanop het keuzescherm
         val targetContext : Context = getInstrumentation().targetContext
         val preference = targetContext.getSharedPreferences("FestivalPreference", Context.MODE_PRIVATE)
-        val editor = preference?.edit()
-        editor?.putString("ID","")
-        editor?.apply()
+        preference.edit().putString("ID","").apply()
     }
 
     @Test
