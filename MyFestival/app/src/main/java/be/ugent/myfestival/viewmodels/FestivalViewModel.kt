@@ -1,6 +1,7 @@
 package be.ugent.myfestival.viewmodels
 
 import android.content.SharedPreferences
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,7 +15,12 @@ class  FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMo
 
     fun getWelcomeString(): LiveData<String> =
         Transformations.map(festivalRepo.getFestivalName()) { value ->
-            "$value"
+            if (value == ""){
+                "Geen internetverbinding..."
+            }
+            else {
+                value
+            }
         }
 
     fun getFestivalName() = festivalRepo.getFestivalName()
@@ -52,12 +58,12 @@ class  FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMo
 
     fun getNewMessageTitle(): MutableLiveData<String> = festivalRepo.newMessageTitle
 
-    /*dankzij firebase zal bij het inladen van de festivals, alles in de cache worden ingeladen waardoor
+    /*dankzij firebase zal bij het inladen van de festivals, alles in de cache worden ingeladen waardoor (ook offline)
     deze functie enkel nuttig zal zijn in randgevallen waar bv het laden van een festival werd stopgezet.
     Het is de bedoeling dat de 4 knoppen dan niet zichtbaar zijn (waarvoor deze functie) aangezien er toch enkel lege data is,
-    en de "no internet" placeholder van het logo zal aangeven dat er moet verbonden worden om data op te halen.
+    er zal worden aangegeven dat er internet verbinding moet zijn.
      */
-    fun getLoading() : LiveData<Int> = Transformations.map(festivalRepo.lineupstages){ value ->
+    fun getLoading() : LiveData<Int> = Transformations.map(festivalRepo.name){ value ->
         when(value.isNullOrEmpty()) {
             true -> View.INVISIBLE
             else -> View.VISIBLE

@@ -10,6 +10,8 @@ import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.HashMap
 
 class FestivalRepository(val database: FirebaseDatabase, val storageRef: StorageReference) : FestivalRepositoryInterface {
     var name: MutableLiveData<String> = MutableLiveData()
@@ -111,6 +113,16 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
 
     override fun getFestivalName(): MutableLiveData<String> {
         if (name.value == null) {
+            /*als er na 1 seconde nog steeds geen naam is, is er zeker en vast geen internet verbinding en is het festival nog niet kunnen laden,
+            het laden van gebeurt heel snel als die wel al is geladen in cache
+             */
+            Timer().schedule(object : TimerTask() {
+                override fun run() {
+                    if (name.value == null){
+                        name.postValue("")
+                    }
+                }
+            }, 1000)
             nameListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     if (dataSnapshot.exists()) {
