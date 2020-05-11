@@ -3,12 +3,9 @@ package be.ugent.myfestival.integrationtests
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import be.ugent.myfestival.data.FestivalRepository
-import be.ugent.myfestival.models.FestivalChooser
-import be.ugent.myfestival.viewmodels.FestivalChooserViewModel
 import be.ugent.myfestival.viewmodels.FestivalViewModel
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.StorageReference
 import com.nhaarman.mockitokotlin2.*
 import org.junit.Assert

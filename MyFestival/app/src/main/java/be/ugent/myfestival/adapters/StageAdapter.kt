@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -60,20 +61,22 @@ class StageAdapter(private val concertList: List<Concert>) : RecyclerView.Adapte
 
         holder.switch.setOnCheckedChangeListener { _, isChecked ->
             if(isChecked) {
-                //toestand v/d switch onthouden
-                val editor = preference.edit()
-                editor.putBoolean(concert.id,true)
-                editor.apply()
-                //notificatie instellen
-                val intent = Intent(context, ReminderBroadcast::class.java)
-                intent.putExtra("artist", concert.artist)
-                val pendingIntent = PendingIntent.getBroadcast(context, concert.id.hashCode(), intent, 0)
-                val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                alarmManager.cancel(pendingIntent)
-
-                val calendar: Calendar = Calendar.getInstance()
-                calendar.timeInMillis = System.currentTimeMillis()
                 if(concert.start > LocalDateTime.now()) {
+                    //toestand v/d switch onthouden
+                    val editor = preference.edit()
+                    editor.putBoolean(concert.id, true)
+                    editor.apply()
+                    //notificatie instellen
+                    val intent = Intent(context, ReminderBroadcast::class.java)
+                    intent.putExtra("artist", concert.artist)
+                    val pendingIntent =
+                        PendingIntent.getBroadcast(context, concert.id.hashCode(), intent, 0)
+                    val alarmManager =
+                        context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                    alarmManager.cancel(pendingIntent)
+
+                    val calendar: Calendar = Calendar.getInstance()
+                    calendar.timeInMillis = System.currentTimeMillis()
                     calendar.set(
                         concert.start.year,
                         concert.start.monthValue,
@@ -81,8 +84,9 @@ class StageAdapter(private val concertList: List<Concert>) : RecyclerView.Adapte
                         concert.start.hour,
                         concert.start.minute
                     )
+
+                    alarmManager[AlarmManager.RTC_WAKEUP, calendar.timeInMillis] = pendingIntent
                 }
-                alarmManager[AlarmManager.RTC_WAKEUP, calendar.timeInMillis] = pendingIntent
             }
             else {
                 //toestand v/d switch onthouden

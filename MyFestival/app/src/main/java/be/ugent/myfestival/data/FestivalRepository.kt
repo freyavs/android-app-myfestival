@@ -1,21 +1,15 @@
 package be.ugent.myfestival.data
 
 import android.util.Log
-import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import be.ugent.myfestival.models.*
 import com.google.firebase.database.*
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.ktx.storage
-import java.io.File
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
-import javax.xml.transform.TransformerFactory
 
 class FestivalRepository(val database: FirebaseDatabase, val storageRef: StorageReference) : FestivalRepositoryInterface {
     var name: MutableLiveData<String> = MutableLiveData()
@@ -154,7 +148,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
         return logo
     }
 
-    fun getCoordsFestival(): MutableLiveData<List<Double>> {
+    override fun getCoordsFestival(): MutableLiveData<List<Double>> {
         if (coords.value == null){
             val co = mutableListOf<Double>()
             coordsListener = object: ValueEventListener {
@@ -180,7 +174,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
         return coords
     }
 
-    fun getStageCoords(stage: Boolean): MutableLiveData<HashMap<String, List<Double>>> {
+    override fun getStageCoords(stage: Boolean): MutableLiveData<HashMap<String, List<Double>>> {
         val searchString: String
         val returnVariable: MutableLiveData<HashMap<String, List<Double>>>
         if(stage){

@@ -5,18 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import be.ugent.myfestival.R
 import be.ugent.myfestival.models.NewsfeedItem
 import be.ugent.myfestival.utilities.GlideApp
-import be.ugent.myfestival.utilities.InjectorUtils
-import be.ugent.myfestival.viewmodels.FestivalViewModel
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import kotlinx.android.synthetic.main.newsfeed_item.view.*
-import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
 
 class NewsfeedAdapter() : RecyclerView.Adapter<NewsfeedAdapter.NewsItemViewHolder>(){

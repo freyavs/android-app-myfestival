@@ -1,7 +1,6 @@
 package be.ugent.myfestival.integrationtests
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.MutableLiveData
 import be.ugent.myfestival.adapters.DayAdapter
 import be.ugent.myfestival.adapters.FestivalChooserAdapter

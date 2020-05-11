@@ -7,7 +7,6 @@ import be.ugent.myfestival.models.FestivalChooser
 import be.ugent.myfestival.viewmodels.FestivalChooserViewModel
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.StorageReference
 import com.nhaarman.mockitokotlin2.*
 import org.junit.Before

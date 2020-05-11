@@ -1,7 +1,6 @@
 package be.ugent.myfestival.utilities
 
 import be.ugent.myfestival.data.FestivalRepository
-import be.ugent.myfestival.viewmodels.FestivalChooserViewModel
 import be.ugent.myfestival.viewmodels.FestivalChooserViewModelFactory
 import be.ugent.myfestival.viewmodels.FestivalViewModelFactory
 import be.ugent.myfestival.viewmodels.LineupViewModelFactory
