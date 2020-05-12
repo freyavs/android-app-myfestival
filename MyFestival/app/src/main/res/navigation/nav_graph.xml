@@ -65,7 +65,7 @@
         android:id="@+id/mapsFragment"
         android:name="be.ugent.myfestival.MapsFragment"
         android:label="@string/map"
-        tools:layout="@layout/fragment_maps" />
+        tools:layout="@layout/map_fragment" />
 
 
 </navigation>
