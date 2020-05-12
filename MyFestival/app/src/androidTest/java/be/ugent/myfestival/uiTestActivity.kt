@@ -22,7 +22,6 @@ import org.koin.test.KoinTest
 
 
 @RunWith(AndroidJUnit4::class)
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 class uiTestActivity : KoinTest {
 
     @Before
