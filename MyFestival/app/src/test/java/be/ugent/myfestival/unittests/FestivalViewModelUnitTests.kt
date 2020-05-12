@@ -7,6 +7,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import be.ugent.myfestival.data.FestivalRepository
+import be.ugent.myfestival.models.Dish
 import be.ugent.myfestival.models.FoodStand
 import be.ugent.myfestival.models.Stage
 import be.ugent.myfestival.viewmodels.FestivalViewModel
@@ -27,6 +28,21 @@ class FestivalViewModelUnitTests {
     private lateinit var preferences: SharedPreferences
 
     private lateinit var viewModel: FestivalViewModel
+
+    var menu1 = listOf<Dish>(
+        Dish("frietjes", "2", false, false),
+        Dish("stoofvleessaus", "2", false, false),
+        Dish("frikandel", "2", false, false)
+    )
+    var menu2 = listOf<Dish>(
+        Dish("hamburger", "2", false, false),
+        Dish("cheeseburger", "2", false, false),
+        Dish("ribburger", "2", false, false)
+    )
+
+    var foodstand1 = FoodStand("12321", "Frietjes bij Pol", mock(), menu1)
+    var foodstand2 = FoodStand("32123", "Burger Boys", mock(), menu2)
+    val foodstands = listOf(foodstand1,foodstand2)
 
     private val testId1 = "123abc"
     private val testId2 = "456def"
