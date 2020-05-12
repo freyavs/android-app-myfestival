@@ -56,16 +56,27 @@ class FestivalRepositoryUnitTests {
     }
 
     @Test
-    fun gettersCallDatabase_whenFieldsAreNotSet() {
-        repository.getFestivalName()
-        repository.getFestivalLogo()
-        repository.getFestivals()
+    fun getFoodstandListCallDatabase_whenFieldsAreNotSet() {
         repository.getFoodstandList()
-        repository.getLineup()
-        repository.getNewsfeedItems()
+        verify(database).getReference(testId)
+    }
 
-        verify(database, times(6)).getReference(testId)
-        verify(database).reference
+    @Test
+    fun getNewsfeedItemsCallDatabase_whenFieldsAreNotSet() {
+        repository.getNewsfeedItems()
+        verify(database, times(2)).getReference(testId)
+    }
+
+    @Test
+    fun getLineUpCallDatabase_whenFieldsAreNotSet() {
+        repository.getLineup()
+        verify(database).getReference(testId)
+    }
+
+    @Test
+    fun getCoordsFestivalCallDatabase_whenFieldsAreNotSet() {
+        repository.getCoordsFestival()
+        verify(database).getReference(testId)
     }
 
     @Test
