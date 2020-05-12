@@ -65,12 +65,17 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
         logo = MutableLiveData()
         coords = MutableLiveData()
         concertsCoords = MutableLiveData()
+        foodstandsCoords = MutableLiveData()
         newsfeedLoaded = false
 
         //verwijder eventueel de oude listeners
         removeListeners(oldId)
 
         //laad de nieuwe data in
+        initiateData()
+    }
+
+    override fun initiateData(){
         getFoodstandList()
         getNewsfeedItems()
         getLineup()
@@ -198,37 +203,40 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
             searchString = "foodstand"
             returnVariable = foodstandsCoords
         }
-        val coordsMap: HashMap<String, List<Double>> = HashMap()
-        val listener = object: ValueEventListener{
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                for (ds in dataSnapshot.children){
-                    val co = mutableListOf<Double>()
-                    val name = ds.child("name").value.toString()
-                    val lat = ds.child("coords").child("lat").value
-                    val long = ds.child("coords").child("long").value
-                    //als geen coordinaten heeft, niet toevoegen aan kaart
-                    if (lat != null && long != null) {
-                        co.add(lat.toString().toDouble())
-                        co.add(long.toString().toDouble())
-                        coordsMap[name] = co
+        if (returnVariable.value == null) {
+            val coordsMap: HashMap<String, List<Double>> = HashMap()
+            val listener = object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    for (ds in dataSnapshot.children) {
+                        val co = mutableListOf<Double>()
+                        val name = ds.child("name").value.toString()
+                        val lat = ds.child("coords").child("lat").value
+                        val long = ds.child("coords").child("long").value
+                        //als geen coordinaten heeft, niet toevoegen aan kaart
+                        if (lat != null && long != null) {
+                            co.add(lat.toString().toDouble())
+                            co.add(long.toString().toDouble())
+                            coordsMap[name] = co
+                        }
                     }
+                    returnVariable.postValue(coordsMap)
                 }
-                returnVariable.postValue(coordsMap)
-            }
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.d(TAG, "getName:onCancelled", databaseError.toException())
-            }
-        }
-        //assign de juiste listener
-        if (stage){
-            concertCoordsListener = listener
-        } else {
-            foodstandCoordsListener = listener
-        }
 
-        database
-            .getReference(festivalID).child(searchString)
-            .addValueEventListener(listener)
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Log.d(TAG, "getName:onCancelled", databaseError.toException())
+                }
+            }
+            //assign de juiste listener
+            if (stage) {
+                concertCoordsListener = listener
+            } else {
+                foodstandCoordsListener = listener
+            }
+
+            database
+                .getReference(festivalID).child(searchString)
+                .addValueEventListener(listener)
+        }
         return returnVariable
     }
 

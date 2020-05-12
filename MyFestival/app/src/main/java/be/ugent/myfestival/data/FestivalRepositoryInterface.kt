@@ -13,6 +13,8 @@ interface FestivalRepositoryInterface {
 
     fun removeListeners(oldId: String)
 
+    fun initiateData()
+
     fun getId(): String
 
     fun setId(id : String)
