@@ -6,11 +6,11 @@ import android.app.job.JobScheduler
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.Observer
@@ -87,8 +87,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun createNotification(title: String, message: String) {
-            val resultIntent = Intent(this, MainActivity::class.java)
-            val pendingIntent = PendingIntent.getActivity(this, 1, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT)
         val builder =
             NotificationCompat.Builder(this, MyFestival.CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.newsfeed_50dp)
@@ -96,7 +94,6 @@ class MainActivity : AppCompatActivity() {
                 .setContentText(message)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
-                .setContentIntent(pendingIntent)
 
             val randomGen: Random = Random()
             val id = randomGen.nextInt(100)
