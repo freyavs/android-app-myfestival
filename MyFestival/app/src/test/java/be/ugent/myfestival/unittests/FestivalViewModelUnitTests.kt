@@ -7,6 +7,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import be.ugent.myfestival.data.FestivalRepository
+import be.ugent.myfestival.models.FoodStand
 import be.ugent.myfestival.models.Stage
 import be.ugent.myfestival.viewmodels.FestivalViewModel
 import com.nhaarman.mockitokotlin2.*
@@ -136,6 +137,15 @@ class FestivalViewModelUnitTests {
         repository.lineupstages.apply { postValue(listOf(stage)) }
 
         verify(mockObserver).onChanged(View.VISIBLE)
+    }
+
+    @Test
+    fun correctFoodstandReturnedOnGetFoodstand() {
+        val mockObserver = mock<Observer<FoodStand>>()
+        viewModel.getFoodstand("12321").observeForever(mockObserver)
+
+        verify(mockObserver).onChanged(foodstand1)
+
     }
 }
 
