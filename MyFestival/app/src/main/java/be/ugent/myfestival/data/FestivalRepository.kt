@@ -76,6 +76,8 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
     }
 
     override fun initiateData(){
+        getFestivalName()
+        getFestivalLogo()
         getFoodstandList()
         getNewsfeedItems()
         getLineup()
@@ -132,7 +134,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                 .getReference(festivalID).child("name")
                 .addValueEventListener(nameListener!!)
 
-            /*als er na 1,5 seconde nog steeds geen naam is, is er zeker en vast geen internet verbinding en is het festival nog niet kunnen laden,
+            /*als check voor als er geen internet is
               het laden van gebeurt heel snel want die sowieso al in de cache geladen door de festivals lijst (getFestivals)
              */
             Timer().schedule(object : TimerTask() {
@@ -141,7 +143,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                         name.postValue("")
                     }
                 }
-            }, 1500)
+            }, 100)
         }
         return name
     }

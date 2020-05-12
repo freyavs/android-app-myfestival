@@ -80,15 +80,6 @@ class LineupViewModelUnitTests {
     }
 
     @Test
-    fun dateDoesNotChangeWhenNotInFestival(){
-        val mockObserver = mock<Observer<LocalDate>>()
-        lineupViewModel.currentDay.observeForever(mockObserver)
-        lineupViewModel.clickedDay(LocalDate.of(2020, Month.APRIL, 25))
-
-        verify(mockObserver).onChanged(currentDay)
-    }
-
-    @Test
     fun noStagesReturnedWhenDateNotInFestival(){
         lineupViewModel.currentDay.apply { postValue(
             LocalDate.of(2020, Month.APRIL, 20)) }
@@ -123,7 +114,6 @@ class LineupViewModelUnitTests {
         val day = LocalDate.of(2020, Month.APRIL, 26);
         lineupViewModel.clickedDay(day)
 
-        verify(mockObserver).onChanged(listOf())
         verify(mockObserver, atLeastOnce()).onChanged(
             argForWhich {
                 this.size == 1 && stage1.id  == this[0].id
