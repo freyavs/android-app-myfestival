@@ -11,8 +11,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-//aantal unit tests: 4
-
 class FestivalRepositoryUnitTests {
     @get:Rule
     @Suppress("unused")
@@ -24,7 +22,6 @@ class FestivalRepositoryUnitTests {
     private lateinit var storage: StorageReference
 
     private lateinit var reference: DatabaseReference
-    private lateinit var childReference:DatabaseReference
 
     private val testId = "123abc"
 
@@ -34,12 +31,12 @@ class FestivalRepositoryUnitTests {
         database = mock()
         storage = mock()
         reference = mock()
-        childReference = mock()
 
         whenever(database.getReference(any())).thenReturn(reference)
         whenever(database.reference).thenReturn(reference)
-        whenever(reference.child(any())).thenReturn(childReference)
-        whenever(childReference.orderByKey()).thenReturn(childReference)
+        whenever(reference.orderByChild(any())).thenReturn(reference)
+        whenever(reference.child(any())).thenReturn(reference)
+        whenever(reference.orderByKey()).thenReturn(reference)
 
         repository = FestivalRepository(database,storage)
 
@@ -53,6 +50,9 @@ class FestivalRepositoryUnitTests {
         repo.lineupstages.value = mutableListOf(mock())
         repo.logo.value = storage
         repo.festivalList.value = mutableListOf(mock())
+        repo.coords.value = mock()
+        repo.foodstandsCoords.value = mock()
+        repo.concertsCoords.value = mock()
     }
 
     @Test
@@ -82,12 +82,7 @@ class FestivalRepositoryUnitTests {
     @Test
     fun gettersDontCallDatabase_whenFieldsAreSet() {
         fillRepository(repository)
-        repository.getFestivalName()
-        repository.getFestivalLogo()
-        repository.getFestivals()
-        repository.getFoodstandList()
-        repository.getLineup()
-        repository.getNewsfeedItems()
+        repository.initiateData()
 
         verify(database, never()).getReference(testId)
     }
@@ -101,14 +96,17 @@ class FestivalRepositoryUnitTests {
         Assert.assertNull(repository.lineupstages.value)
         Assert.assertNull(repository.foodstands.value)
         Assert.assertTrue(repository.newsfeed.value.isNullOrEmpty())
+        Assert.assertNull(repository.concertsCoords.value)
+        Assert.assertNull(repository.foodstandsCoords.value)
+        Assert.assertNull(repository.coords.value)
     }
 
     @Test
-    fun getFestivalNameCallsDatabase_AfterResetOfValues() {
+    fun allGettersAreCalled_AfterReset() {
         repository.reset("")
 
-        //moet 4x opgeroepen worden voor foodstands, linup, logo en kaart
-        verify(database, times(4)).getReference(testId)
+        //6 getters, newsfeed roept firebase 2 keer op
+        verify(database, times(7)).getReference(testId)
     }
 
 

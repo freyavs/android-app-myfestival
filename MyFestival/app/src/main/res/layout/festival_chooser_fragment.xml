@@ -22,12 +22,22 @@
                 android:background="@drawable/edittext"
                 android:backgroundTintMode="@color/colorAccent"/>
 
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/festival_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
                 android:padding="4dp" />
+
+            <TextView
+                android:id="@+id/loading_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/loading"
+                android:gravity="center"
+                android:textColor="@color/lightGray"
+                android:textSize="30dp"/>
 
         </LinearLayout>
     </RelativeLayout>

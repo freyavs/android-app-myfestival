@@ -10,17 +10,47 @@ import java.time.LocalDate
 
 class LineupViewModel(private val festivalRepo : FestivalRepository) : ViewModel() {
 
-    var currentDay: MutableLiveData<LocalDate> = MutableLiveData(LocalDate.now())
+    var currentDay: MutableLiveData<LocalDate> = MutableLiveData()
+
+    //zodat wanneer we op de lineup zitten, geen extra knoppen worden toegevoegd als een concert wordt toegevoegd/verwijderd
+    var buttonsSet = false
 
     fun getAllDaysSorted() : LiveData<List<LocalDate>> = Transformations.map(festivalRepo.getLineup()) {stages ->
         val concerts = stages.flatMap{ it.concerts }
         concerts.map{it.start.toLocalDate()}.distinct().sorted()
     }
 
-    /*getStages en getCurrentStages kunnen eigenlijk in 1 functie, maar we kiezen om deze appart te laten staan zodat we ze allebei
-    grondig kunnen testen
-     */
+    fun setButtons(bool: Boolean) {
+        buttonsSet = bool
+    }
 
+    fun getDaysMap(listSize: Int) : Map<String, String>{
+        if (listSize <= 4) {
+            return mapOf(
+                "MONDAY" to "Maandag",
+                "TUESDAY" to "Dinsdag",
+                "WEDNESDAY" to "Woensdag",
+                "THURSDAY" to "Donderdag",
+                "FRIDAY" to "Vrijdag",
+                "SATURDAY" to "Zaterdag",
+                "SUNDAY" to "Zondag"
+            )
+        }
+        else {
+            return mapOf(
+                "MONDAY" to "Ma",
+                "TUESDAY" to "Di",
+                "WEDNESDAY" to "Wo",
+                "THURSDAY" to "Do",
+                "FRIDAY" to "Vr",
+                "SATURDAY" to "Za",
+                "SUNDAY" to "Zo")
+        }
+    }
+
+    /*getStages en getCurrentStages kunnen eigenlijk in 1 functie, maar we kiezen om deze appart te laten staan zodat we ze allebei
+   grondig kunnen testen
+    */
     fun getStages(day: LocalDate): LiveData<List<Stage>> = Transformations.map(festivalRepo.getLineup()) { stages ->
         val list = mutableListOf<Stage>()
         for (stage in stages){
@@ -36,8 +66,6 @@ class LineupViewModel(private val festivalRepo : FestivalRepository) : ViewModel
     fun getCurrentStages() : LiveData<List<Stage>> =  Transformations.switchMap(currentDay) { day ->
         getStages(day)
     }
-
-    fun getToday(): LocalDate = LocalDate.now()
 
     fun clickedDay(day: LocalDate) {
         if (currentDay.value !== day) {

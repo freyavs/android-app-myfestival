@@ -1,5 +1,6 @@
 package be.ugent.myfestival.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,12 +32,15 @@ class NewsfeedAdapter() : RecyclerView.Adapter<NewsfeedAdapter.NewsItemViewHolde
         holder.title.text = post.title
         holder.time.text =  DateTimeFormatter.ofPattern("dd/MM HH:mm").format(post.time)
         holder.message.text = post.message
-        if (post.image != null) {
-            GlideApp.with(holder.image.context)
-                .load(post.image)
-                .diskCacheStrategy(DiskCacheStrategy.DATA)
-                .into(holder.image)
-        }
+
+        /*gaat in sommige gevallen null loaden en een glideException gooien maar dat is niet erg, we willen dat
+        er iets laadt, anders vertonen glide en adapter incorrect gedrag
+         */
+        GlideApp.with(holder.image.context)
+            .load(post.image)
+            .diskCacheStrategy(DiskCacheStrategy.DATA)
+            .into(holder.image)
+
     }
 
     override fun getItemCount() = posts.size

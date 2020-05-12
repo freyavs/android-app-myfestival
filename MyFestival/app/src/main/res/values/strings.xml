@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">MyFestival</string>
-    <string name="newsfeed"> Newsfeed </string>
-    <string name="food"> Food </string>
-    <string name="line_up"> Line up </string>
-    <string name="map"> Map </string>
+    <string name="newsfeed"> Nieuwsoverzicht </string>
+    <string name="food"> Eten &amp; Drinken </string>
+    <string name="line_up"> Line-up </string>
+    <string name="map"> Kaart </string>
     <string name="menu"> Menu </string>
 
     <string name="previous_day_button_text">&lt;</string>
@@ -22,8 +22,13 @@
     <string name="swipeR">swipe &gt;&gt;</string>
     <string name="swipeL">&lt;&lt; swipe</string>
 
-    <string name="loading">…</string>
+    <string name="loading">Laden...</string>
     <string name="searchString">naam festival</string>
     <string name="festival">Festival</string>
     <string name="title_activity_maps">Map</string>
+
+    <string name="stages">Podia</string>
+    <string name="foodndrinks">Kraampjes</string>
+    <string name="entrance">Ingang</string>
+    <string name="festicalChooser"> FESTIVAL SELECTIE </string>
 </resources>

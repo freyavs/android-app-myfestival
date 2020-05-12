@@ -37,8 +37,9 @@ class FestivalChooserFragment : Fragment() {
                 handleItemClick(festivalChooser, viewModel)
             }
 
-        viewModel.getFestivals().observe(viewLifecycleOwner, Observer {
-            festivals -> adapter.festivalList = festivals
+        viewModel.getFestivals().observe(viewLifecycleOwner, Observer { festivals ->
+            binding.loadingText.visibility = View.GONE //als festival binnenkomt mag loading tekst weg
+            adapter.festivalList = festivals
             adapter.notifyDataSetChanged()
         })
         //when the text change, the festivals had to change
@@ -82,7 +83,7 @@ class FestivalChooserFragment : Fragment() {
         val editor = preference?.edit()
         editor?.putString("ID",festivalChooser.id)
         editor?.apply()
-        val action = FestivalChooserFragmentDirections.actionFestivalChooserFragmentToHomeFragment2()
+        val action = FestivalChooserFragmentDirections.actionFestivalChooserFragmentToHomeFragment()
         findNavController().navigate(action)
     }
 }

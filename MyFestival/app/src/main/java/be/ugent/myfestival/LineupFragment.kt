@@ -3,6 +3,7 @@ package be.ugent.myfestival
 import android.content.pm.ActivityInfo
 import android.graphics.drawable.StateListDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -20,16 +21,13 @@ import be.ugent.myfestival.viewmodels.FestivalViewModel
 import be.ugent.myfestival.viewmodels.LineupViewModel
 import kotlinx.android.synthetic.main.lineup_fragment.view.*
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-
-/**
- * A simple [Fragment] subclass.
- */
 class LineupFragment : Fragment() {
 
     lateinit var adapter: DayAdapter
-    lateinit var viewModel : FestivalViewModel
+    lateinit var viewModel : LineupViewModel
 
 
     override fun onCreateView(
@@ -40,39 +38,45 @@ class LineupFragment : Fragment() {
         val binding : LineupFragmentBinding = LineupFragmentBinding.inflate(inflater, container, false)
         context ?: return binding.root
 
-        val viewModel by activityViewModels<LineupViewModel> {
+        val vm by activityViewModels<LineupViewModel> {
             InjectorUtils.provideLineupViewModelFactory()
         }
 
-        binding.viewModel = viewModel
+        viewModel = vm
 
 
         viewModel.getAllDaysSorted().observe(viewLifecycleOwner, Observer { days ->
-            val map = mapOf("MONDAY" to "Maandag", "TUESDAY" to "Dinsdag", "WEDNESDAY" to "Woensdag",
-            "THURSDAY" to "Donderdag", "FRIDAY" to "Vrijdag", "SATURDAY" to "Zaterdag", "SUNDAY" to "Zondag")
 
-            //zorgt dat er op vandaag gestart wordt tenzij vandaag niet tussen de lineup days zit
-            val startDay : LocalDate = if (days.contains(viewModel.getToday())){
-                viewModel.getToday()
-            } else {
-                days[0]
-            }
-            for (day in days){
-                val button = RadioButton(this.context)
-                button.setBackgroundResource(R.drawable.radio_background)
-                button.buttonDrawable = StateListDrawable()
-                button.textSize = 25F
-                button.text = map[day.dayOfWeek.toString()]
-                button.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT, 1.0f)
-                button.gravity = Gravity.CENTER_HORIZONTAL or Gravity.CENTER_VERTICAL
-
-                val layout : LinearLayout = binding.root.toggle_group
-                button.setOnClickListener { viewModel.clickedDay(day) }
-                layout.addView(button)
-                //zet de dag goed in viewmodel
-                if (day === startDay){
-                    button.performClick()
+            val map = viewModel.getDaysMap(days.size)
+            if (!viewModel.buttonsSet) {
+                //zorgt dat er op vandaag gestart wordt tenzij vandaag niet tussen de lineup days zit
+                val startDay: LocalDate = if (days.contains(LocalDate.now())) {
+                    LocalDate.now()
+                } else {
+                    days[0]
                 }
+                for (day in days) {
+                    val button = RadioButton(this.context)
+                    button.setBackgroundResource(R.drawable.radio_background)
+                    button.buttonDrawable = StateListDrawable()
+                    button.textSize = 25F
+                    button.text = map[day.dayOfWeek.toString()]
+                    button.layoutParams = LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        1.0f
+                    )
+                    button.gravity = Gravity.CENTER_HORIZONTAL or Gravity.CENTER_VERTICAL
+
+                    val layout: LinearLayout = binding.root.toggle_group
+                    button.setOnClickListener { viewModel.clickedDay(day) }
+                    layout.addView(button)
+                    //zet de dag goed in de view
+                    if (day == startDay) {
+                        button.performClick()
+                    }
+                }
+                viewModel.setButtons(true)
             }
         })
 
@@ -94,6 +98,7 @@ class LineupFragment : Fragment() {
 
     override fun onPause() {
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR;
+        viewModel.setButtons(false)
         super.onPause()
     }
 }

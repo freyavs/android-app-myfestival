@@ -58,14 +58,14 @@
         android:name="be.ugent.myfestival.FestivalChooserFragment"
         android:label="Kies je festival" >
         <action
-            android:id="@+id/action_festivalChooserFragment_to_homeFragment2"
+            android:id="@+id/action_festivalChooserFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/mapsFragment"
         android:name="be.ugent.myfestival.MapsFragment"
-        android:label="fragment_maps"
-        tools:layout="@layout/fragment_maps" />
+        android:label="@string/map"
+        tools:layout="@layout/map_fragment" />
 
 
 </navigation>

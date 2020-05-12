@@ -10,6 +10,8 @@ import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.HashMap
 
 class FestivalRepository(val database: FirebaseDatabase, val storageRef: StorageReference) : FestivalRepositoryInterface {
     var name: MutableLiveData<String> = MutableLiveData()
@@ -63,12 +65,17 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
         logo = MutableLiveData()
         coords = MutableLiveData()
         concertsCoords = MutableLiveData()
+        foodstandsCoords = MutableLiveData()
         newsfeedLoaded = false
 
         //verwijder eventueel de oude listeners
         removeListeners(oldId)
 
         //laad de nieuwe data in
+        initiateData()
+    }
+
+    override fun initiateData(){
         getFoodstandList()
         getNewsfeedItems()
         getLineup()
@@ -124,6 +131,17 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
             database
                 .getReference(festivalID).child("name")
                 .addValueEventListener(nameListener!!)
+
+            /*als er na 1,5 seconde nog steeds geen naam is, is er zeker en vast geen internet verbinding en is het festival nog niet kunnen laden,
+              het laden van gebeurt heel snel want die sowieso al in de cache geladen door de festivals lijst (getFestivals)
+             */
+            Timer().schedule(object : TimerTask() {
+                override fun run() {
+                    if (name.value == null){
+                        name.postValue("")
+                    }
+                }
+            }, 1500)
         }
         return name
     }
@@ -185,37 +203,40 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
             searchString = "foodstand"
             returnVariable = foodstandsCoords
         }
-        val coordsMap: HashMap<String, List<Double>> = HashMap()
-        val listener = object: ValueEventListener{
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                for (ds in dataSnapshot.children){
-                    val co = mutableListOf<Double>()
-                    val name = ds.child("name").value.toString()
-                    val lat = ds.child("coords").child("lat").value
-                    val long = ds.child("coords").child("long").value
-                    //als geen coordinaten heeft, niet toevoegen aan kaart
-                    if (lat != null && long != null) {
-                        co.add(lat.toString().toDouble())
-                        co.add(long.toString().toDouble())
-                        coordsMap[name] = co
+        if (returnVariable.value == null) {
+            val coordsMap: HashMap<String, List<Double>> = HashMap()
+            val listener = object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    for (ds in dataSnapshot.children) {
+                        val co = mutableListOf<Double>()
+                        val name = ds.child("name").value.toString()
+                        val lat = ds.child("coords").child("lat").value
+                        val long = ds.child("coords").child("long").value
+                        //als geen coordinaten heeft, niet toevoegen aan kaart
+                        if (lat != null && long != null) {
+                            co.add(lat.toString().toDouble())
+                            co.add(long.toString().toDouble())
+                            coordsMap[name] = co
+                        }
                     }
+                    returnVariable.postValue(coordsMap)
                 }
-                returnVariable.postValue(coordsMap)
-            }
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.d(TAG, "getName:onCancelled", databaseError.toException())
-            }
-        }
-        //assign de juiste listener
-        if (stage){
-            concertCoordsListener = listener
-        } else {
-            foodstandCoordsListener = listener
-        }
 
-        database
-            .getReference(festivalID).child(searchString)
-            .addValueEventListener(listener)
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Log.d(TAG, "getName:onCancelled", databaseError.toException())
+                }
+            }
+            //assign de juiste listener
+            if (stage) {
+                concertCoordsListener = listener
+            } else {
+                foodstandCoordsListener = listener
+            }
+
+            database
+                .getReference(festivalID).child(searchString)
+                .addValueEventListener(listener)
+        }
         return returnVariable
     }
 
@@ -236,6 +257,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                                 dish!!.id = it.key.toString()
                                 dish
                             }
+                            dishList.sortBy{it.price.toFloat()}
 
                             foodList.add (FoodStand(
                                 ds.key!!,
@@ -254,7 +276,7 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                 }
             }
             database
-                .getReference(festivalID).child("foodstand").orderByKey()
+                .getReference(festivalID).child("foodstand").orderByChild("name")
                 .addValueEventListener(foodstandsListener!!)
         }
         return foodstands
@@ -305,11 +327,11 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                 }
 
                 override fun onChildRemoved(dataSnapshot: DataSnapshot) {
-                    var updatedList : MutableList<NewsfeedItem> =  mutableListOf()
-                    Transformations.map(newsfeed) { list ->
-                        updatedList = (list.filter { it.id != dataSnapshot.key}).toMutableList()
+                    val updatedList : MutableList<NewsfeedItem>
+                    if (!newsfeed.value.isNullOrEmpty()) {
+                        updatedList = (newsfeed.value!!.filter { it.id != dataSnapshot.key }).toMutableList()
+                        newsfeed.postValue(updatedList)
                     }
-                    newsfeed.postValue(updatedList)
                 }
 
                 override fun onChildMoved(dataSnapshot: DataSnapshot, previousChildName: String?) {
@@ -399,6 +421,9 @@ class FestivalRepository(val database: FirebaseDatabase, val storageRef: Storage
                                     ds.key!!,
                                     ds.child("name").value!!.toString(),
                                     logoRef ))
+
+                            //elke keer als festival wordt toegevoegd toon nieuwe in lijst, maar zorg wel dat die gesorteerd blijft
+                            festivalChoosers.sortBy{it.name}
                             festivalList.postValue(festivalChoosers)
                         }
                     }
