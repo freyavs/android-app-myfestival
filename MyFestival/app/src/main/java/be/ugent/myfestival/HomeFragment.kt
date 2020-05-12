@@ -70,6 +70,11 @@ class HomeFragment : Fragment() {
             findNavController().navigate(action)
         }
         binding.festivalChooserHandler = View.OnClickListener {
+            /*wanneer er naar festival selectie scherm gegaan wordt, moeten de listeners verwijderd worden van het festival
+            zodat er geen meldingen,... meer binnenkomen. Als ze toch terugkeren naar hetzelfde festival moet de data niet
+            volledig opnieuw geladen worden aangezien die al in firebase cache zit (foto's zitten in glide cache)
+             */
+            viewModel.removeId()
             val action = HomeFragmentDirections.actionHomeFragmentToFestivalChooserFragment()
             findNavController().navigate(action)
         }
