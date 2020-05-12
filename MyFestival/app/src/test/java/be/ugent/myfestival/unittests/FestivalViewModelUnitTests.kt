@@ -56,6 +56,9 @@ class FestivalViewModelUnitTests {
         whenever(preferences.getString("ID",""))
             .thenReturn(testId1)
 
+        whenever(repository.getFoodstandList())
+            .thenReturn(MutableLiveData(foodstands))
+
         whenever(repository.getId()).thenReturn(testId1)
     }
 
