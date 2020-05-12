@@ -80,12 +80,21 @@ class FestivalViewModelUnitTests {
     }
 
     @Test
-    fun welcomeStringIsFormatted(){
+    fun welcomeStringIsFormattedWhenNameIsNotEmpty(){
         whenever(repository.getFestivalName()).thenReturn( MutableLiveData("TestFest"))
         val mockObserver = mock<Observer<String>>()
         viewModel.getWelcomeString().observeForever(mockObserver)
 
-        verify(mockObserver).onChanged("TestFest")
+        verify(mockObserver).onChanged("Welkom bij TestFest")
+    }
+
+    @Test
+    fun welcomeStringGivesInternetErrorWhenNameIsEmpty(){
+        whenever(repository.getFestivalName()).thenReturn( MutableLiveData(""))
+        val mockObserver = mock<Observer<String>>()
+        viewModel.getWelcomeString().observeForever(mockObserver)
+
+        verify(mockObserver).onChanged("Geen internetverbinding...")
     }
 
     @Test
@@ -121,15 +130,25 @@ class FestivalViewModelUnitTests {
     }
 
     @Test
-    fun loadingSwitchesToVisibleWhenReady(){
-        whenever(repository.lineupstages).thenReturn(MutableLiveData())
+    fun loadingSwitchesToVisibleWhenNameIsNotEmpty(){
+        whenever(repository.name).thenReturn(MutableLiveData())
         val mockObserver = mock<Observer<Int>>()
         viewModel.getLoading().observeForever(mockObserver)
 
-        val stage : Stage = mock()
-        repository.lineupstages.apply { postValue(listOf(stage)) }
+        repository.name.apply { postValue("name") }
 
         verify(mockObserver).onChanged(View.VISIBLE)
+    }
+
+    @Test
+    fun loadingSwitchesToInisibleWhenNameIsEmpty(){
+        whenever(repository.name).thenReturn(MutableLiveData())
+        val mockObserver = mock<Observer<Int>>()
+        viewModel.getLoading().observeForever(mockObserver)
+
+        repository.name.apply { postValue("") }
+
+        verify(mockObserver).onChanged(View.INVISIBLE)
     }
 }
 

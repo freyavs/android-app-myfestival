@@ -19,13 +19,20 @@ class  FestivalViewModel(private val festivalRepo : FestivalRepository) : ViewMo
                 "Geen internetverbinding..."
             }
             else {
-                value
+                "Welkom bij $value"
             }
         }
 
     fun getFestivalName() = festivalRepo.getFestivalName()
 
     fun getCurrentFestivalId() = festivalRepo.getId()
+
+    fun removeId(){
+        //bij reset worden pas de waarden op null gezet
+        val oldId = festivalRepo.getId()
+        festivalRepo.setId("")
+        festivalRepo.removeListeners(oldId)
+    }
 
     fun setId(sharedPreferences: SharedPreferences?){
         val newID = sharedPreferences?.getString("ID","").toString()

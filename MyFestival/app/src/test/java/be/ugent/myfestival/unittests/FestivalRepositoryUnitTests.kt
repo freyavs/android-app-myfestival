@@ -86,11 +86,11 @@ class FestivalRepositoryUnitTests {
     }
 
     @Test
-    fun getFestivalNameCallsDatabase_AfterResetOfValues() {
+    fun allGettersAreCalled_AfterReset() {
         repository.reset("")
-        
-        //moet 4x opgeroepen worden voor foodstands, linup, logo en kaart
-        verify(database, times(4)).getReference(testId)
+
+        //6 getters, newsfeed roept firebase 2 keer op
+        verify(database, times(7)).getReference(testId)
     }
 
 
