@@ -26,6 +26,8 @@ class FestivalRepositoryUnitTests {
     private val testId = "123abc"
 
 
+    //zie ook nog firebase unit test in androidTest map
+
     @Before
     fun setup() {
         database = mock()
@@ -64,6 +66,7 @@ class FestivalRepositoryUnitTests {
     @Test
     fun getNewsfeedItemsCallDatabase_whenFieldsAreNotSet() {
         repository.getNewsfeedItems()
+
         verify(database, times(2)).getReference(testId)
     }
 
@@ -76,6 +79,18 @@ class FestivalRepositoryUnitTests {
     @Test
     fun getCoordsFestivalCallDatabase_whenFieldsAreNotSet() {
         repository.getCoordsFestival()
+        verify(database).getReference(testId)
+    }
+
+    @Test
+    fun getFestivalNameCallDatabase_whenFieldsAreNotSet() {
+        repository.getFestivalName()
+        verify(database).getReference(testId)
+    }
+
+    @Test
+    fun getLogoCallDatabase_whenFieldsAreNotSet() {
+        repository.getFestivalLogo()
         verify(database).getReference(testId)
     }
 
@@ -106,7 +121,30 @@ class FestivalRepositoryUnitTests {
         repository.reset("")
 
         //6 getters, newsfeed roept firebase 2 keer op
-        verify(database, times(7)).getReference(testId)
+        verify(database, times(9)).getReference(testId)
+    }
+
+    @Test
+    fun removeListenerscallsDatabaseToRemoveIfIdIsNotEmpty(){
+        //roep niet initiateData op want we willen juist tellen
+        repository.newsfeedListener = mock()
+        repository.nameListener = mock()
+        repository.logoListener = mock()
+        repository.foodstandsListener = mock()
+        repository.lineupstagesListener = mock()
+        repository.coordsListener = mock()
+        repository.foodstandCoordsListener = mock()
+        repository.concertCoordsListener = mock()
+        repository.removeListeners("notempty")
+
+        verify(reference,times(8)).child(any())
+    }
+
+    @Test
+    fun removeListenersDoenstCallDatabaseToRemove_IfIdIsEmpty(){
+        repository.removeListeners("")
+
+        verify(reference,never()).child(any())
     }
 
 

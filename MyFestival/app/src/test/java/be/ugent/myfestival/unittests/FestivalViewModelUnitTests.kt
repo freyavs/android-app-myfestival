@@ -16,6 +16,7 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.invocation.InvocationOnMock
 
 
 class FestivalViewModelUnitTests {
@@ -29,12 +30,12 @@ class FestivalViewModelUnitTests {
 
     private lateinit var viewModel: FestivalViewModel
 
-    var menu1 = listOf<Dish>(
+    var menu1 = listOf(
         Dish("frietjes", "2", false, false),
         Dish("stoofvleessaus", "2", false, false),
         Dish("frikandel", "2", false, false)
     )
-    var menu2 = listOf<Dish>(
+    var menu2 = listOf(
         Dish("hamburger", "2", false, false),
         Dish("cheeseburger", "2", false, false),
         Dish("ribburger", "2", false, false)
@@ -60,6 +61,7 @@ class FestivalViewModelUnitTests {
             .thenReturn(MutableLiveData(foodstands))
 
         whenever(repository.getId()).thenReturn(testId1)
+
     }
 
 
@@ -92,6 +94,14 @@ class FestivalViewModelUnitTests {
         whenever(repository.getId()).thenReturn("")
 
         Assert.assertFalse(viewModel.hasFestival())
+    }
+
+    @Test
+    fun removeIdSetsFestivalIdEmptyAndRemovesListenersWithOldId(){
+        repository.festivalID = testId1
+        viewModel.removeId()
+        verify(repository).setId("")
+        verify(repository).removeListeners(testId1)
     }
 
     @Test
